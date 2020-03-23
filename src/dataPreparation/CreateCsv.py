@@ -3,6 +3,7 @@ import pandas as pd
 import os
 
 from itertools import combinations
+from random import randrange
 
 NUM_PAIRS = 10
 
@@ -35,9 +36,10 @@ def data_contrastive(images_path='', save_path=''):
     data = []
     list_files = get_files(images_path=images_path, save_path=save_path)
 
-    for files in list_files:
+    for index, files in enumerate(list_files):
         comb = combinations(files, 2)
         list_comb = list(comb)
+
         for pairs in list_comb:
             pair_data = {}
             img1, img2 = pairs
@@ -47,7 +49,28 @@ def data_contrastive(images_path='', save_path=''):
             pair_data['label'] = 0
 
             data.append(pair_data)
+
+        count = 0
+        while count < len(list_comb):
+            for file in files:
+                pair_id = randrange(0, len(list_files))
+                while pair_id == index:
+                    pair_id = randrange(0, len(list_files))
+                
+                pair_file = randrange(0, len(list_files[pair_id]))
+                pair_data = {}
+                pair_data['image_1'] = file
+                pair_data['image_2'] = list_files[pair_id][pair_file]
+                pair_data['label'] = 1
+                data.append(pair_data)
+                count += 1
+
+        
     
     df = pd.DataFrame(data)
     df.to_csv(save_path, index=False)
+
+def triplet_data(images_path='', save_path=''):
+    data = []
+    list_files = get_files(images_path=images_path, save_path=save_path)
             
