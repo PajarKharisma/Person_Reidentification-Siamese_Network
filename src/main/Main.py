@@ -13,9 +13,9 @@ from config.Path import *
 def main():
     start_time = time.time()
     print('Process...')
-    create_csv.contrastive_data(images_path=Path.images, save_path=Path.contrastive_train_csv)
+    # create_csv.contrastive_data(images_path=Path.images, save_path=Path.contrastive_train_csv)
     # create_csv.triplet_data(images_path=Path.images, save_path=Path.triplet_train_csv)
-    # create_partial.create_data(images_path=Path.images, head_path=Path.head_images, body_path=Path.body_images, leg_path=Path.leg_images)
+    create_partial.create_data(images_path=Path.images, head_path=Path.head_images, body_path=Path.body_images, leg_path=Path.leg_images)
     
     # df = pd.read_csv(Path.contrastive_train_csv)
     # print(df['image_1'][47])
