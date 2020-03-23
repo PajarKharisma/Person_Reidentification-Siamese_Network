@@ -1,4 +1,5 @@
 .venv/
 .vscode/
 test/
-dataset/images/
+dataset/cuhk02/images/
+dataset/cuhk03/images/

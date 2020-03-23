@@ -45,6 +45,10 @@ def create_data(images_path='', head_path='', body_path='', leg_path=''):
             img_body = padding(img_body)
             img_leg = padding(img_leg)
 
+            cv2.resize(img_head, img_head)
+            cv2.resize(img_body, img_body)
+            cv2.resize(img_leg, img_leg)
+
             cv2.imwrite(head_path + file, img_head)
             cv2.imwrite(body_path + file, img_body)
             cv2.imwrite(leg_path + file, img_leg)
