@@ -1,11 +1,8 @@
-import cv2
 import pandas as pd
 import os
 
 from itertools import combinations
 from random import randrange
-
-NUM_PAIRS = 10
 
 def get_files(images_path='', save_path=''):
     list_files = []
@@ -35,7 +32,7 @@ def get_files(images_path='', save_path=''):
 def contrastive_data(images_path='', save_path=''):
     data = []
     list_files = get_files(images_path=images_path, save_path=save_path)
-
+    
     for index, files in enumerate(list_files):
         comb = combinations(files, 2)
         list_comb = list(comb)
