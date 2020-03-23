@@ -32,7 +32,7 @@ def get_files(images_path='', save_path=''):
             index = next_index
     return list_files
 
-def data_contrastive(images_path='', save_path=''):
+def contrastive_data(images_path='', save_path=''):
     data = []
     list_files = get_files(images_path=images_path, save_path=save_path)
 
@@ -73,4 +73,25 @@ def data_contrastive(images_path='', save_path=''):
 def triplet_data(images_path='', save_path=''):
     data = []
     list_files = get_files(images_path=images_path, save_path=save_path)
+
+    for index, files in enumerate(list_files):
+        comb = combinations(files, 2)
+        list_comb = list(comb)
+
+        for pairs in list_comb:
+            pair_data = {}
+            img1, img2 = pairs
+
+            pair_data['anchor'] = img1
+            pair_data['positif'] = img2
             
+            pair_id = randrange(0, len(list_files))
+            while pair_id == index:
+                pair_id = randrange(0, len(list_files))
+            
+            pair_file = randrange(0, len(list_files[pair_id]))
+            pair_data['negatif'] = list_files[pair_id][pair_file]
+
+            data.append(pair_data)
+    df = pd.DataFrame(data)
+    df.to_csv(save_path, index=False)
