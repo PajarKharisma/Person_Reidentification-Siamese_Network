@@ -4,6 +4,8 @@ import os
 from itertools import combinations
 from random import randrange
 
+COMPARISON = 1
+
 def get_files(images_path='', save_path=''):
     list_files = []
 
@@ -48,7 +50,7 @@ def contrastive_data(images_path='', save_path=''):
             data.append(pair_data)
 
         count = 0
-        while count < len(list_comb):
+        while count < len(list_comb) * COMPARISON:
             for file in files:
                 pair_id = randrange(0, len(list_files))
                 while pair_id == index:
