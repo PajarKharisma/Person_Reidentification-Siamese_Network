@@ -10,6 +10,7 @@ import torchvision.transforms as transforms
 from torch.utils.data import DataLoader
 
 import pandas as pd
+import matplotlib.pyplot as plt
 
 import src.dataPreparation.CreateCsv as create_csv
 import src.dataPreparation.CreatePartial as create_partial
@@ -32,12 +33,11 @@ def main():
     dataiter = iter(contrastive_dataloader)
     
     example_batch = next(dataiter)
+    
     concatenated = torch.cat((example_batch[0],example_batch[1]),0)
 
     print(example_batch[2].numpy())
     vis.imshow(torchvision.utils.make_grid(concatenated))
-    
-    # vis.imshow(x1)
 
     elapsed_time = time.time() - start_time
     print(time.strftime("Finish in %H:%M:%S", time.gmtime(elapsed_time)))

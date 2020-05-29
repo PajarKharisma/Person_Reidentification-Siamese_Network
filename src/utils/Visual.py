@@ -1,7 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-def imshow(img, text=None,should_save=False):
+def imshow(img, text=None, should_save=False):
     npimg = img.numpy()
     plt.axis("off")
     if text:
