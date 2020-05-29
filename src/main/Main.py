@@ -20,13 +20,12 @@ from src.utils.DatasetLoader import *
 
 from src.config.Path import *
 
-def main():
-    start_time = time.time()
-    print('Process...')
-    # create_csv.contrastive_data(images_path=Path.images, save_path=Path.contrastive_train_csv)
-    # create_csv.triplet_data(images_path=Path.images, save_path=Path.triplet_train_csv)
-    # create_partial.create_data(images_path=Path.images, head_path=Path.head_images, body_path=Path.body_images, leg_path=Path.leg_images)
+def partial_process():
+    create_csv.contrastive_data(images_path=Path.images, save_path=Path.contrastive_train_csv)
+    create_csv.triplet_data(images_path=Path.images, save_path=Path.triplet_train_csv)
+    create_partial.create_data(images_path=Path.images, head_path=Path.head_images, body_path=Path.body_images, leg_path=Path.leg_images)
 
+def dataset_load_process():
     trans = transforms.Compose([transforms.ToTensor()])
     contrastive_dataset = ContrastiveDataset(csv_path=Path.contrastive_train_csv, images_path=Path.images, transform=trans)
     contrastive_dataloader = DataLoader(contrastive_dataset, batch_size=8, shuffle=True)
@@ -38,6 +37,12 @@ def main():
 
     print(example_batch[2].numpy())
     vis.imshow(torchvision.utils.make_grid(concatenated))
+
+def main():
+    start_time = time.time()
+    print('Process...')
+
+    dataset_load_process()
 
     elapsed_time = time.time() - start_time
     print(time.strftime("Finish in %H:%M:%S", time.gmtime(elapsed_time)))
