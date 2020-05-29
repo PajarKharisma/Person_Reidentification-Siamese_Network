@@ -25,24 +25,34 @@ def partial_process():
     create_csv.triplet_data(images_path=Path.images, save_path=Path.triplet_train_csv)
     create_partial.create_data(images_path=Path.images, head_path=Path.head_images, body_path=Path.body_images, leg_path=Path.leg_images)
 
-def dataset_load_process():
+def contrastive_load_process():
     trans = transforms.Compose([transforms.ToTensor()])
     contrastive_dataset = ContrastiveDataset(csv_path=Path.contrastive_train_csv, images_path=Path.images, transform=trans)
     contrastive_dataloader = DataLoader(contrastive_dataset, batch_size=8, shuffle=True)
     dataiter = iter(contrastive_dataloader)
     
     example_batch = next(dataiter)
-    
     concatenated = torch.cat((example_batch[0],example_batch[1]),0)
 
     print(example_batch[2].numpy())
+    vis.imshow(torchvision.utils.make_grid(concatenated))
+
+def triplet_load_process():
+    trans = transforms.Compose([transforms.ToTensor()])
+    triplet_dataset = TripletDataset(csv_path=Path.triplet_train_csv, images_path=Path.images, transform=trans)
+    triplet_dataloader = DataLoader(triplet_dataset, batch_size=1, shuffle=True)
+    dataiter = iter(triplet_dataloader)
+    
+    example_batch = next(dataiter)
+    
+    concatenated = torch.cat((example_batch[0],example_batch[1], example_batch[2]),0)
     vis.imshow(torchvision.utils.make_grid(concatenated))
 
 def main():
     start_time = time.time()
     print('Process...')
 
-    dataset_load_process()
+    triplet_load_process()
 
     elapsed_time = time.time() - start_time
     print(time.strftime("Finish in %H:%M:%S", time.gmtime(elapsed_time)))
