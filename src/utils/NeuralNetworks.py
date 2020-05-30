@@ -15,8 +15,7 @@ class BasicSiameseNetwork(nn.Module):
             nn.ReLU(inplace=True),
             nn.BatchNorm2d(16),
 
-            nn.ReflectionPad2d(1),
-            nn.MaxPool2d(2, stride=2)
+            nn.MaxPool2d(kernel_size=3, stride=2, padding=1),
 
             nn.ReflectionPad2d(1),
             nn.Conv2d(16, 16, kernel_size=3),

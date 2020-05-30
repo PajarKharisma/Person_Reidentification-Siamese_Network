@@ -1,9 +1,11 @@
 import os
+from datetime import datetime
 
 root_dir = os.getcwd()
 
 class Path():
     path = root_dir + '/dataset/cuhk02'
+    model = root_dir + '/model/model-' + str(datetime.now())
 
     images = path + '/images/full/'
     head_images = path + '/images/head/'
