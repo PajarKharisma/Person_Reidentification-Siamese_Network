@@ -18,6 +18,7 @@ import src.dataPreparation.CreatePartial as create_partial
 import src.utils.Visual as vis
 from src.utils.DatasetLoader import *
 from src.utils.LossFunction import *
+from src.utils.NeuralNetworks import *
 
 from src.config.Path import *
 
@@ -53,7 +54,7 @@ def main():
     start_time = time.time()
     print('Process...')
 
-    criterion = ContrastiveLoss()
+    siamese = BasicSiameseNetwork()
 
     elapsed_time = time.time() - start_time
     print(time.strftime("Finish in %H:%M:%S", time.gmtime(elapsed_time)))
