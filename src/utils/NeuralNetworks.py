@@ -6,27 +6,29 @@ class BasicSiameseNetwork(nn.Module):
         super(BasicSiameseNetwork, self).__init__()
         self.cnn1 = nn.Sequential(
             nn.ReflectionPad2d(1),
-            nn.Conv2d(1, 4, kernel_size=3),
+            nn.Conv2d(3, 8, kernel_size=3),
             nn.ReLU(inplace=True),
-            nn.BatchNorm2d(4),
+            nn.BatchNorm2d(8),
             
             nn.ReflectionPad2d(1),
-            nn.Conv2d(4, 8, kernel_size=3),
+            nn.Conv2d(8, 16, kernel_size=3),
             nn.ReLU(inplace=True),
-            nn.BatchNorm2d(8),
-
+            nn.BatchNorm2d(16),
 
             nn.ReflectionPad2d(1),
-            nn.Conv2d(8, 8, kernel_size=3),
+            nn.MaxPool2d(2, stride=2)
+
+            nn.ReflectionPad2d(1),
+            nn.Conv2d(16, 16, kernel_size=3),
             nn.ReLU(inplace=True),
-            nn.BatchNorm2d(8),
+            nn.BatchNorm2d(16),
         )
 
         self.fc1 = nn.Sequential(
-            nn.Linear(8*100*100, 500),
+            nn.Linear(16*30*80, 1000),
             nn.ReLU(inplace=True),
             
-            nn.Linear(500, 500),
+            nn.Linear(1000, 500),
             nn.ReLU(inplace=True),
             
             nn.Linear(500,100),
