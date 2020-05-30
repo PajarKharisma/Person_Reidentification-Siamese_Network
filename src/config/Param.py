@@ -1,4 +1,4 @@
 class Param():
-    train_batch_size = 64
-    train_number_epochs = 10
+    train_batch_size = 256
+    train_number_epochs = 1
     

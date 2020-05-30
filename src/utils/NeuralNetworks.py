@@ -35,13 +35,13 @@ class BasicSiameseNetwork(nn.Module):
             
             nn.Linear(100, 50),
             nn.Sigmoid()
-        )
-            
+        ) 
         
     def forward_once(self, x):
         output = self.cnn1(x)
         output = output.reshape(output.size(0), -1)
         output = self.fc1(output)
+        return output
 
     def forward(self, input1, input2):
         output1 = self.forward_once(input1)

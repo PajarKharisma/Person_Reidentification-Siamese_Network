@@ -7,6 +7,7 @@ sys.path.append(root_dir)
 
 import torch
 import torchvision.utils
+import torch.nn.functional as F
 import torchvision.transforms as transforms
 from torch import optim
 from torch.utils.data import DataLoader
@@ -34,7 +35,7 @@ def contrastive_load_process():
     trans = transforms.Compose([transforms.ToTensor()])
     contrastive_dataset = ContrastiveDataset(csv_path=Path.contrastive_train_csv, images_path=Path.images, transform=trans)
     contrastive_dataloader = DataLoader(contrastive_dataset, batch_size=Param.train_batch_size, shuffle=True)
-    
+
     return contrastive_dataloader
 
 def triplet_load_process():
@@ -56,12 +57,14 @@ def main():
     criterion = ContrastiveLoss()
     optimizer = optim.Adam(net.parameters(), lr=0.0005)
 
-    train_dataloader = contrastive_load_process
+    train_dataloader = contrastive_load_process()
+
     counter = []
     loss_history = []
     iteration_number = 0
 
-    for epoch in range(0, Param.train_batch_size):
+    for epoch in range(0, Param.train_number_epochs):
+        print('Epoch Number', epoch)
         for i, data in enumerate(train_dataloader, 0):
             img0, img1 , label = data
             optimizer.zero_grad()
@@ -70,17 +73,19 @@ def main():
             val = criterion.forward(output1,output2,label)
             loss_contrastive.backward()
             optimizer.step()
-            if i %10 == 0 :
-                print("Epoch number {}\n Current loss {}\n".format(epoch,loss_contrastive.item()))
+            if True or i % 10 == 0:
+                print(i)
+                print("Iteration {}\n Current loss {}\n".format(i,loss_contrastive.item()))
                 iteration_number +=10
                 counter.append(iteration_number)
                 loss_history.append(loss_contrastive.item())
-
-    vis.show_plot(counter,loss_history)
-    torch.save(net, Path.model)
+        print('='*40)
 
     elapsed_time = time.time() - start_time
     print(time.strftime("Finish in %H:%M:%S", time.gmtime(elapsed_time)))
+
+    vis.show_plot(counter,loss_history)
+    torch.save(net, Path.model)
 
 if __name__ == "__main__":
     main()
