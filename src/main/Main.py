@@ -17,6 +17,7 @@ import src.dataPreparation.CreatePartial as create_partial
 
 import src.utils.Visual as vis
 from src.utils.DatasetLoader import *
+from src.utils.LossFunction import *
 
 from src.config.Path import *
 
@@ -52,7 +53,7 @@ def main():
     start_time = time.time()
     print('Process...')
 
-    triplet_load_process()
+    criterion = ContrastiveLoss()
 
     elapsed_time = time.time() - start_time
     print(time.strftime("Finish in %H:%M:%S", time.gmtime(elapsed_time)))
