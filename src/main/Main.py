@@ -33,7 +33,7 @@ def partial_process():
 
 def contrastive_load_process():
     trans = transforms.Compose([transforms.ToTensor()])
-    contrastive_dataset = dsetLoader.ContrastiveDataset(csv_path=Path.small_dataset_csv, images_path=Path.images, transform=trans)
+    contrastive_dataset = dsetLoader.ContrastiveDataset(csv_path=Path.contrastive_train_csv, images_path=Path.images, transform=trans)
     contrastive_dataloader = DataLoader(contrastive_dataset, batch_size=Param.train_batch_size, shuffle=True)
 
     return contrastive_dataloader
@@ -67,6 +67,11 @@ def main():
         print('Epoch Number', epoch)
         for i, data in enumerate(train_dataloader, 0):
             img0, img1 , label = data
+            
+            img0 = img0.to(Param.device)
+            img1 = img1.to(Param.device)
+            label = label.to(Param.device)
+
             optimizer.zero_grad()
             output1, output2 = net(img0,img1)
             loss_contrastive = criterion(output1,output2,label)

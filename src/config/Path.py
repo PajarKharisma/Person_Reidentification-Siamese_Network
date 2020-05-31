@@ -13,6 +13,5 @@ class Path():
     leg_images =path + '/images/leg/'
 
     contrastive_train_csv = path +'/contrastive_train.csv'
-    small_dataset_csv = path +'/contrastive_train-small.csv'
     triplet_train_csv = path + '/triplet_train.csv'
     testing_csv = path + '/testing.csv'
