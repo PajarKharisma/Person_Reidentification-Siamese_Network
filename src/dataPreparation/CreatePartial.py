@@ -3,6 +3,7 @@ import os
 import numpy as np
 
 NUM_PARTIAL = 16
+SIZE = 256
 
 def padding(img):
     rows, cols = img.shape[:2]
@@ -40,9 +41,9 @@ def partial_image(img):
     img_body = padding(img_body)
     img_leg = padding(img_leg)
 
-    img_head = cv2.resize(img_head, (64,64))
-    img_body = cv2.resize(img_body, (64,64))
-    img_leg = cv2.resize(img_leg, (64,64))
+    img_head = cv2.resize(img_head, (SIZE, SIZE))
+    img_body = cv2.resize(img_body, (SIZE, SIZE))
+    img_leg = cv2.resize(img_leg, (SIZE, SIZE))
 
     return img_head, img_body, img_leg
 

@@ -15,13 +15,15 @@ class BasicSiameseNetwork(nn.Module):
             nn.ReLU(inplace=True),
             nn.BatchNorm2d(16),
 
-            nn.MaxPool2d(kernel_size=3, stride=2, padding=1),
+            nn.MaxPool2d(kernel_size=2, stride=2, padding=0),
 
             nn.ReflectionPad2d(1),
             nn.Conv2d(16, 16, kernel_size=3),
             nn.ReLU(inplace=True),
             nn.BatchNorm2d(16),
         )
+
+        self.avgpool = nn.AdaptiveAvgPool2d((30, 80))
 
         self.fc1 = nn.Sequential(
             nn.Linear(16*30*80, 1000),
@@ -39,6 +41,7 @@ class BasicSiameseNetwork(nn.Module):
         
     def forward_once(self, x):
         output = self.cnn1(x)
+        otuput = self.avgpool(output)
         output = output.reshape(output.size(0), -1)
         output = self.fc1(output)
         return output
