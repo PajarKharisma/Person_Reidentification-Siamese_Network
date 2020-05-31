@@ -18,10 +18,10 @@ import matplotlib.pyplot as plt
 import src.dataPreparation.CreateCsv as create_csv
 import src.dataPreparation.CreatePartial as create_partial
 
+import src.nnArch.BasicSiamese as bSiamese
 import src.utils.Visual as vis
-import src.NNArch.BasicSiamese as bSiamese
-from src.utils.DatasetLoader import *
-from src.utils.LossFunction import *
+import src.utils.DatasetLoader as dsetLoader
+import src.utils.LossFunction as lossFunc
 
 from src.config.Path import *
 from src.config.Param import *
@@ -33,14 +33,14 @@ def partial_process():
 
 def contrastive_load_process():
     trans = transforms.Compose([transforms.ToTensor()])
-    contrastive_dataset = ContrastiveDataset(csv_path=Path.contrastive_train_csv, images_path=Path.images, transform=trans)
+    contrastive_dataset = dsetLoader.ContrastiveDataset(csv_path=Path.small_dataset_csv, images_path=Path.images, transform=trans)
     contrastive_dataloader = DataLoader(contrastive_dataset, batch_size=Param.train_batch_size, shuffle=True)
 
     return contrastive_dataloader
 
 def triplet_load_process():
     trans = transforms.Compose([transforms.ToTensor()])
-    triplet_dataset = TripletDataset(csv_path=Path.triplet_train_csv, images_path=Path.images, transform=trans)
+    triplet_dataset = dsetLoader.TripletDataset(csv_path=Path.triplet_train_csv, images_path=Path.images, transform=trans)
     triplet_dataloader = DataLoader(triplet_dataset, batch_size=1, shuffle=True)
     dataiter = iter(triplet_dataloader)
     
@@ -54,7 +54,7 @@ def main():
     print('Process...')
 
     net = bSiamese.BasicSiameseNetwork()
-    criterion = ContrastiveLoss()
+    criterion = lossFunc.ContrastiveLoss()
     optimizer = optim.Adam(net.parameters(), lr=0.0005)
 
     train_dataloader = contrastive_load_process()
@@ -74,8 +74,7 @@ def main():
             loss_contrastive.backward()
             optimizer.step()
             if i % 10 == 0:
-                print(i)
-                print("Iteration {}\n Current loss {}\n".format(i,loss_contrastive.item()))
+                print("Iteration {}\nCurrent loss {}\n".format(i,loss_contrastive.item()))
                 iteration_number +=10
                 counter.append(iteration_number)
                 loss_history.append(loss_contrastive.item())
@@ -85,7 +84,7 @@ def main():
     print(time.strftime("Finish in %H:%M:%S", time.gmtime(elapsed_time)))
 
     vis.show_plot(counter,loss_history)
-    torch.save(net, Path.model)
+    torch.save(net.state_dict(), Path.model)
 
 if __name__ == "__main__":
     main()

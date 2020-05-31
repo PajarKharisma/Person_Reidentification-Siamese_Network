@@ -5,7 +5,7 @@ root_dir = os.getcwd()
 
 class Path():
     path = root_dir + '/dataset/cuhk02'
-    model = root_dir + '/model/model-' + str(uuid.uuid4().hex) + '.pth'
+    model = root_dir + '/models/model-' + str(uuid.uuid4().hex) + '.pth'
 
     images = path + '/images/full/'
     head_images = path + '/images/head/'
