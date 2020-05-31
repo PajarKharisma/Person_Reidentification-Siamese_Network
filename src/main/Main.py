@@ -19,9 +19,9 @@ import src.dataPreparation.CreateCsv as create_csv
 import src.dataPreparation.CreatePartial as create_partial
 
 import src.utils.Visual as vis
+import src.NNArch.BasicSiamese as bSiamese
 from src.utils.DatasetLoader import *
 from src.utils.LossFunction import *
-from src.utils.NeuralNetworks import *
 
 from src.config.Path import *
 from src.config.Param import *
@@ -53,7 +53,7 @@ def main():
     start_time = time.time()
     print('Process...')
 
-    net = BasicSiameseNetwork()
+    net = bSiamese.BasicSiameseNetwork()
     criterion = ContrastiveLoss()
     optimizer = optim.Adam(net.parameters(), lr=0.0005)
 
@@ -73,7 +73,7 @@ def main():
             val = criterion.forward(output1,output2,label)
             loss_contrastive.backward()
             optimizer.step()
-            if True or i % 10 == 0:
+            if i % 10 == 0:
                 print(i)
                 print("Iteration {}\n Current loss {}\n".format(i,loss_contrastive.item()))
                 iteration_number +=10
