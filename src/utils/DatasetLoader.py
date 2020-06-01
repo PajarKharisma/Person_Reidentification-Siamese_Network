@@ -6,12 +6,14 @@ import torch
 import torchvision.transforms as transforms
 from torch.utils.data import Dataset
 
+SIZE = 224
+
 class ContrastiveDataset(Dataset):
-    def __init__(self, csv_path, images_path, transform=None, should_invert=True):
+    def __init__(self, csv_path, images_path, transform=None, resize=False):
         self.images_path = images_path
         self.csv_path = csv_path
         self.transform = transform
-        self.should_invert = should_invert
+        self.resize = resize
         self.df = pd.read_csv(self.csv_path)
     
     def __getitem__(self, index):
@@ -22,14 +24,18 @@ class ContrastiveDataset(Dataset):
         img1 = cv2.cvtColor(img1, cv2.COLOR_BGR2RGB)
         img2 = cv2.cvtColor(img2, cv2.COLOR_BGR2RGB)
 
+        if self.resize:
+            img1 = cv2.resize(img1, (SIZE, SIZE))
+            img2 = cv2.resize(img2, (SIZE, SIZE))
+
         img1 = self.transform(img1)
         img2 = self.transform(img2)
         
         return img1, img2, torch.from_numpy(np.array([label], dtype=np.float32))
     
     def __len__(self):
-        return len(self.df)
-        # return 1014
+        # return len(self.df)
+        return 1014
 
 class TripletDataset(Dataset):
     def __init__(self, csv_path, images_path, transform=None, should_invert=True):

@@ -69,7 +69,7 @@ arch = {
 }
 
 
-def vgg(arch_name, batch_norm):
+def get_model(arch_name, batch_norm):
     layers = make_layers(arch[arch_name], batch_norm=batch_norm)
     model = VGG(layers)
     return model

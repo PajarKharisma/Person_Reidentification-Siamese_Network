@@ -64,8 +64,8 @@ def main():
     iteration_number = 0
 
     for epoch in range(0, Param.train_number_epochs):
-        print('Epoch Number', epoch)
-        for i, data in enumerate(train_dataloader, 0):
+        curr_loss = 0
+        for i, data in enumerate(train_dataloader):
             img0, img1 , label = data
             
             img0 = img0.to(Param.device)
@@ -75,14 +75,15 @@ def main():
             optimizer.zero_grad()
             output1, output2 = net(img0,img1)
             loss_contrastive = criterion(output1,output2,label)
-            val = criterion.forward(output1,output2,label)
             loss_contrastive.backward()
             optimizer.step()
-            if i % 10 == 0:
-                print("Iteration {}\nCurrent loss {}\n".format(i,loss_contrastive.item()))
-                iteration_number +=10
-                counter.append(iteration_number)
-                loss_history.append(loss_contrastive.item())
+
+            curr_loss = loss_contrastive.item()
+            
+        print('Epoch Number : {}'.format(epoch + 1))
+        print('Current loss : {}'.format(curr_loss))
+        counter.append(epoch + 1)
+        loss_history.append(curr_loss)
         print('='*40)
 
     elapsed_time = time.time() - start_time
@@ -92,4 +93,4 @@ def main():
     torch.save(net.state_dict(), Path.model)
 
 if __name__ == "__main__":
-    main()
+    partial_process()
