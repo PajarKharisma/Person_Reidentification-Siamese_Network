@@ -3,7 +3,7 @@ import os
 import time
 from datetime import datetime
 root_dir = os.getcwd()
-sys.path.append('../../')
+sys.path.append(root_dir)
 
 print(root_dir)
 
@@ -20,8 +20,8 @@ import matplotlib.pyplot as plt
 import src.dataPreparation.CreateCsv as create_csv
 import src.dataPreparation.CreatePartial as create_partial
 
-import src.nnArch.BasicSiamese as bSiamese
-import src.nnArch.OneShotArch as osArch
+import src.neuralNetworksArch.BasicSiamese as bSiamese
+import src.neuralNetworksArch.OneShotArch as osArch
 import src.utils.Visual as vis
 import src.utils.DatasetLoader as dsetLoader
 import src.utils.LossFunction as lossFunc
