@@ -10,7 +10,6 @@
 #SBATCH --error=log/result/result-%j.err
 
 #%Module
-module load cuda/10.2
 module load tensorrt/6-cuda10.2
 source .venv/bin/activate
 
