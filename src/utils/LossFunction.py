@@ -21,3 +21,16 @@ class AbsoluteLoss(torch.nn.Module):
 
     def forward(self, output1, output2):
         return torch.mean(torch.abs(output1 - output2))
+
+class TripletLoss(torch.nn.Module):
+
+    def __init__(self, margin=1.0):
+        super(ContrastiveLoss, self).__init__()
+        self.margin = margin
+
+    def forward(self, anchor, positive, negative):
+        d = nn.PairwiseDistance(p=2)
+        distance = d(anchor, positive) - d(anchor, negative) + self.margin 
+        loss = torch.mean(torch.max(distance, torch.zeros_like(distance))) 
+        
+        return loss

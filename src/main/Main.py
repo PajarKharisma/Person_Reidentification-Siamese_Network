@@ -27,7 +27,7 @@ import src.utils.LossFunction as lossFunc
 from src.config.Path import *
 from src.config.Param import *
 
-SAVE_PLOT_PATH = root_dir+'/log/plot/basic-siames.png'
+SAVE_PLOT_PATH = root_dir+'/log/plot/basic-siamese-triplet.png'
 
 def partial_process():
     # create_csv.contrastive_data(images_path=Path.images, save_path=Path.contrastive_train_csv)
@@ -44,22 +44,63 @@ def contrastive_load_process():
 def triplet_load_process():
     trans = transforms.Compose([transforms.ToTensor()])
     triplet_dataset = dsetLoader.TripletDataset(csv_path=Path.triplet_train_csv, images_path=Path.images, transform=trans)
-    triplet_dataloader = DataLoader(triplet_dataset, batch_size=1, shuffle=True)
-    dataiter = iter(triplet_dataloader)
+    triplet_dataloader = DataLoader(triplet_dataset, batch_size=Param.train_batch_size, shuffle=True)
     
-    example_batch = next(dataiter)
-    
-    concatenated = torch.cat((example_batch[0],example_batch[1], example_batch[2]),0)
-    vis.imshow(torchvision.utils.make_grid(concatenated))
+    return triplet_dataloader
 
-def main():
+def triplet_train():
     start_time = time.time()
     print('Process...')
 
     net = bSiamese.BasicSiameseNetwork()
     net.to(Param.device)
-    
+
+    criterion = lossFunc.TripletLoss()
+    optimizer = optim.Adam(net.parameters(), lr=0.0005)
+    train_dataloader = triplet_load_process()
+
+    counter = []
+    loss_history = []
+    iteration_number = 0
+
+    for epoch in range(0, Param.train_number_epochs):
+        curr_loss = 0
+        for i, data in enumerate(train_dataloader):
+            x1, x2, x3 = data
+            
+            x1 = x1.to(Param.device)
+            x2 = x2.to(Param.device)
+            x3 = x3.to(Param.device)
+
+            optimizer.zero_grad()
+            output1, output2, output3 = net(x1, x2, x3)
+            loss_triplet = criterion(output1, output2, output3)
+            loss_triplet.backward()
+            optimizer.step()
+
+            curr_loss = loss_triplet.item()
+            
+        print('Epoch Number : {}'.format(epoch + 1))
+        print('Current loss : {}'.format(curr_loss))
+        counter.append(epoch + 1)
+        loss_history.append(curr_loss)
+        print('='*40)
+
+    elapsed_time = time.time() - start_time
+    print(time.strftime("Finish in %H:%M:%S", time.gmtime(elapsed_time)))
+
+    torch.save(net.state_dict(), Path.model)
+    vis.imsave(counter, loss_history, path=SAVE_PLOT_PATH, xlabel='Epoch', ylabel='loss')
+
+def contrastive_train():
+    start_time = time.time()
+    print('Process...')
+
+    net = bSiamese.BasicSiameseNetwork()
+    net.to(Param.device)
+
     criterion = lossFunc.ContrastiveLoss()
+
     optimizer = optim.Adam(net.parameters(), lr=0.0005)
 
     train_dataloader = contrastive_load_process()
@@ -98,4 +139,4 @@ def main():
     # vis.show_plot(counter,loss_history)
 
 if __name__ == "__main__":
-    main()
+    triplet_load_process()
