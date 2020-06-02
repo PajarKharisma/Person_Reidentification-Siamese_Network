@@ -5,9 +5,6 @@ from datetime import datetime
 root_dir = os.getcwd()
 sys.path.append(root_dir)
 
-print(root_dir)
-return 0
-
 import torch
 import torchvision.utils
 import torch.nn.functional as F
