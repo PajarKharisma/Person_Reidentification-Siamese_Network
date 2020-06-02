@@ -11,6 +11,6 @@
 
 module load cuda/10.2
 module load tensorrt/6-cuda10.2
-source /.venv/bin/activate
+source .venv/bin/activate
 
 python3 src/main/Main.py
