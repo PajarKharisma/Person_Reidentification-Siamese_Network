@@ -1,7 +1,8 @@
 import os
 import uuid
 
-root_dir = os.getcwd()
+# root_dir = os.getcwd()
+root_dir = '/work/dike003'
 
 class Path():
     path = root_dir + '/dataset/cuhk02'

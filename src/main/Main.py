@@ -19,6 +19,7 @@ import src.dataPreparation.CreateCsv as create_csv
 import src.dataPreparation.CreatePartial as create_partial
 
 import src.nnArch.BasicSiamese as bSiamese
+import src.nnArch.OneShotArch as osArch
 import src.utils.Visual as vis
 import src.utils.DatasetLoader as dsetLoader
 import src.utils.LossFunction as lossFunc
@@ -54,6 +55,7 @@ def main():
     print('Process...')
 
     net = bSiamese.BasicSiameseNetwork()
+    # net = osArch.OneShotArch()
     criterion = lossFunc.ContrastiveLoss()
     optimizer = optim.Adam(net.parameters(), lr=0.0005)
 
@@ -62,7 +64,6 @@ def main():
     counter = []
     loss_history = []
     iteration_number = 0
-
     for epoch in range(0, Param.train_number_epochs):
         curr_loss = 0
         for i, data in enumerate(train_dataloader):
@@ -93,4 +94,4 @@ def main():
     torch.save(net.state_dict(), Path.model)
 
 if __name__ == "__main__":
-    partial_process()
+    main()
