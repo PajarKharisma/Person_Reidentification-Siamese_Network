@@ -27,7 +27,7 @@ import src.utils.LossFunction as lossFunc
 from src.config.Path import *
 from src.config.Param import *
 
-SAVE_PLOT_PATH = root_dir+'log/plot/basic-siames.png'
+SAVE_PLOT_PATH = root_dir+'/log/plot/basic-siames.png'
 
 def partial_process():
     # create_csv.contrastive_data(images_path=Path.images, save_path=Path.contrastive_train_csv)
@@ -57,7 +57,8 @@ def main():
     print('Process...')
 
     net = bSiamese.BasicSiameseNetwork()
-    # net = osArch.OneShotArch()
+    net.to(Param.device)
+    
     criterion = lossFunc.ContrastiveLoss()
     optimizer = optim.Adam(net.parameters(), lr=0.0005)
 
