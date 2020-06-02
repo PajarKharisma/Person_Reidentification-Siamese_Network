@@ -4,3 +4,5 @@ test/
 dataset/cuhk02/images/
 dataset/cuhk03/images/
 models/*.pth
+log/result/*.out
+log/plot/*.png
