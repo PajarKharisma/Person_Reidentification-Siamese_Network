@@ -1,11 +1,11 @@
 import os
 import uuid
-
-# root_dir = os.getcwd()
-root_dir = '/work/dike003'
+import platform
 
 class Path():
+    root_dir = os.getcwd() if platform.system() == 'Windows' else '/work/dike003'
     path = root_dir + '/dataset/cuhk02'
+    log_dir = root_dir + '/log/'
     model = root_dir + '/models/model-' + str(uuid.uuid4().hex) + '.pth'
 
     images = path + '/images/full/'

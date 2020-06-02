@@ -91,6 +91,7 @@ def main():
     print(time.strftime("Finish in %H:%M:%S", time.gmtime(elapsed_time)))
 
     vis.show_plot(counter,loss_history)
+    vis.imsave()
     torch.save(net.state_dict(), Path.model)
 
 if __name__ == "__main__":

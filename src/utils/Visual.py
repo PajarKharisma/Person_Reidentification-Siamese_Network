@@ -13,3 +13,9 @@ def imshow(img, text=None, should_save=False):
 def show_plot(iteration,loss):
     plt.plot(iteration,loss)
     plt.show()
+
+def imsave(iteration, loss, path, xlabel='', ylabel=''):
+    plt.plot(iteration,loss)
+    plt.xlabel(xlabel)
+    plt.ylabel(ylabel)
+    plt.savefig(path)
