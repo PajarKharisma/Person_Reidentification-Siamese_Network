@@ -12,6 +12,7 @@ import torchvision.transforms as transforms
 from torch import optim
 from torch.utils.data import DataLoader
 
+import copy
 import pandas as pd
 import matplotlib.pyplot as plt
 
