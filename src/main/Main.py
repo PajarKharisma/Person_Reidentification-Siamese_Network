@@ -27,6 +27,8 @@ import src.utils.LossFunction as lossFunc
 from src.config.Path import *
 from src.config.Param import *
 
+SAVE_PLOT_PATH = root_dir+'log/plot/basic-siames.png'
+
 def partial_process():
     # create_csv.contrastive_data(images_path=Path.images, save_path=Path.contrastive_train_csv)
     # create_csv.triplet_data(images_path=Path.images, save_path=Path.triplet_train_csv)
@@ -90,9 +92,9 @@ def main():
     elapsed_time = time.time() - start_time
     print(time.strftime("Finish in %H:%M:%S", time.gmtime(elapsed_time)))
 
-    vis.show_plot(counter,loss_history)
-    vis.imsave()
     torch.save(net.state_dict(), Path.model)
+    vis.imsave(counter, loss_history, path=SAVE_PLOT_PATH, xlabel='Epoch', ylabel='loss')
+    # vis.show_plot(counter,loss_history)
 
 if __name__ == "__main__":
     main()
