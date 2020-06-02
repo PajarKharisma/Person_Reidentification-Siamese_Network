@@ -139,4 +139,4 @@ def contrastive_train():
     # vis.show_plot(counter,loss_history)
 
 if __name__ == "__main__":
-    triplet_load_process()
+    triplet_train()
