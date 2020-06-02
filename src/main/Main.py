@@ -95,4 +95,4 @@ def main():
     torch.save(net.state_dict(), Path.model)
 
 if __name__ == "__main__":
-    main()
+    partial_process()
