@@ -9,8 +9,9 @@
 #SBATCH --output=log/result/result-%j.out    
 #SBATCH --error=log/result/result-%j.err
 
-module load cuda/10.1
-module load tensorrt/6-cuda10.1
+#%Module
+module load cuda/10.2
+module load tensorrt/6-cuda10.2
 source .venv/bin/activate
 
 python3 src/main/Main.py
