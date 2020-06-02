@@ -25,7 +25,7 @@ class AbsoluteLoss(torch.nn.Module):
 class TripletLoss(torch.nn.Module):
 
     def __init__(self, margin=1.0):
-        super(ContrastiveLoss, self).__init__()
+        super(TripletLoss, self).__init__()
         self.margin = margin
 
     def forward(self, anchor, positive, negative):
