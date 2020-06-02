@@ -61,7 +61,8 @@ def triplet_train():
 
     counter = []
     loss_history = []
-    iteration_number = 0
+    best_loss = 100
+    best_model = None
 
     for epoch in range(0, Param.train_number_epochs):
         curr_loss = 0
@@ -79,6 +80,10 @@ def triplet_train():
             optimizer.step()
 
             curr_loss = loss_triplet.item()
+        
+        if curr_loss < best_loss:
+            best_loss = curr_loss
+            best_model = copy.deepcopy(net)
             
         print('Epoch Number : {}'.format(epoch + 1))
         print('Current loss : {}'.format(curr_loss))
@@ -89,7 +94,7 @@ def triplet_train():
     elapsed_time = time.time() - start_time
     print(time.strftime("Finish in %H:%M:%S", time.gmtime(elapsed_time)))
 
-    torch.save(net.state_dict(), Path.model)
+    torch.save(best_model.state_dict(), Path.model)
     vis.imsave(counter, loss_history, path=SAVE_PLOT_PATH, xlabel='Epoch', ylabel='loss')
 
 def contrastive_train():
@@ -100,14 +105,14 @@ def contrastive_train():
     net.to(Param.device)
 
     criterion = lossFunc.ContrastiveLoss()
-
     optimizer = optim.Adam(net.parameters(), lr=0.0005)
-
     train_dataloader = contrastive_load_process()
 
     counter = []
     loss_history = []
-    iteration_number = 0
+    best_loss = 100
+    best_model = None
+    
     for epoch in range(0, Param.train_number_epochs):
         curr_loss = 0
         for i, data in enumerate(train_dataloader):
@@ -124,7 +129,11 @@ def contrastive_train():
             optimizer.step()
 
             curr_loss = loss_contrastive.item()
-            
+        
+        if curr_loss < best_loss:
+            best_loss = curr_loss
+            best_model = copy.deepcopy(net)
+        
         print('Epoch Number : {}'.format(epoch + 1))
         print('Current loss : {}'.format(curr_loss))
         counter.append(epoch + 1)
@@ -134,9 +143,9 @@ def contrastive_train():
     elapsed_time = time.time() - start_time
     print(time.strftime("Finish in %H:%M:%S", time.gmtime(elapsed_time)))
 
-    torch.save(net.state_dict(), Path.model)
+    torch.save(best_model.state_dict(), Path.model)
     vis.imsave(counter, loss_history, path=SAVE_PLOT_PATH, xlabel='Epoch', ylabel='loss')
     # vis.show_plot(counter,loss_history)
 
 if __name__ == "__main__":
-    triplet_train()
+    contrastive_train()
