@@ -3,7 +3,7 @@ import os
 import time
 from datetime import datetime
 root_dir = os.getcwd()
-sys.path.append(root_dir)
+sys.path.append('../../')
 
 print(root_dir)
 
