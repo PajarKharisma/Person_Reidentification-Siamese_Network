@@ -19,7 +19,7 @@ def get_distances(x1, x2):
 
 def get_acc(x1, x2, label, threshold=0.5):
     distances = get_distances(x1, x2)
-    y_true = label.flatten().detach().numpy()
+    y_true = label.flatten().cpu().numpy()
     y_pred = distance_to_class(distances, threshold)
     return accuracy_score(y_true, y_pred)
 
