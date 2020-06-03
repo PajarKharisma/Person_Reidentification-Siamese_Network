@@ -24,11 +24,14 @@ import src.neuralNetworksArch.OneShotArch as osArch
 import src.utils.Visual as vis
 import src.utils.DatasetLoader as dsetLoader
 import src.utils.LossFunction as lossFunc
+import src.utils.Metrics as metrics
 
 from src.config.Path import *
 from src.config.Param import *
 
-SAVE_PLOT_PATH = root_dir+'/log/plot/basic-siamese-triplet.png'
+SAVE_PLOT_PATH = root_dir+'/log/plot/'
+DATA_SPLIT = 0.9
+THRESHOLD = 0.5
 
 def partial_process():
     # create_csv.contrastive_data(images_path=Path.images, save_path=Path.contrastive_train_csv)
@@ -38,9 +41,16 @@ def partial_process():
 def contrastive_load_process():
     trans = transforms.Compose([transforms.ToTensor()])
     contrastive_dataset = dsetLoader.ContrastiveDataset(csv_path=Path.contrastive_train_csv, images_path=Path.images, transform=trans)
-    contrastive_dataloader = DataLoader(contrastive_dataset, batch_size=Param.train_batch_size, shuffle=True)
 
-    return contrastive_dataloader
+    train_length = int(len(contrastive_dataset) * DATA_SPLIT)
+    val_length = len(contrastive_dataset) - train_length
+
+    train_set, val_set = torch.utils.data.random_split(contrastive_dataset, [train_length, val_length])
+
+    train_dataloader = DataLoader(train_set, batch_size=Param.train_batch_size, shuffle=True)
+    val_dataloader = DataLoader(val_set, batch_size=val_length, shuffle=True)
+
+    return train_dataloader, val_dataloader
 
 def triplet_load_process():
     trans = transforms.Compose([transforms.ToTensor()])
@@ -107,15 +117,28 @@ def contrastive_train():
 
     criterion = lossFunc.ContrastiveLoss()
     optimizer = optim.Adam(net.parameters(), lr=0.0005)
-    train_dataloader = contrastive_load_process()
+    train_dataloader, val_dataloader = contrastive_load_process()
 
-    counter = []
-    loss_history = []
+    history_loss = {
+        'epoch' : [],
+        'train' : [],
+        'val' : []
+    }
+
+    history_acc = {
+        'epoch' : [],
+        'train' : [],
+        'val' : []
+    }
+
     best_loss = 100
     best_model = None
     
     for epoch in range(0, Param.train_number_epochs):
-        curr_loss = 0
+        train_loss = 0
+        train_acc = 0
+        net.train()
+        iteration = 1
         for i, data in enumerate(train_dataloader):
             img0, img1 , label = data
             
@@ -125,28 +148,66 @@ def contrastive_train():
 
             optimizer.zero_grad()
             output1, output2 = net(img0,img1)
-            loss_contrastive = criterion(output1,output2,label)
+
+            loss_contrastive = criterion(output1, output2, label)
             loss_contrastive.backward()
             optimizer.step()
 
-            curr_loss = loss_contrastive.item()
-        
-        if curr_loss < best_loss:
-            best_loss = curr_loss
+            # get loss and acc train
+            train_loss = loss_contrastive.item()
+            train_acc = metrics.get_acc(output1, output2, label, THRESHOLD)
+
+        if train_loss < best_loss:
+            best_loss = train_loss
             best_model = copy.deepcopy(net)
         
+        val_loss = metrics.get_val_loss(net, criterion, val_dataloader)
+        x1, x2, label = metrics.contrastive_validate(net, val_dataloader)
+        val_acc = metrics.get_acc(x1, x2, label, THRESHOLD)
+
         print('Epoch Number : {}'.format(epoch + 1))
-        print('Current loss : {}'.format(curr_loss))
-        counter.append(epoch + 1)
-        loss_history.append(curr_loss)
-        print('='*40)
+        print('-'*40)
+        print('Train loss : {}'.format(train_loss))
+        print('Validation loss : {}'.format(val_loss))
+        print('Train acc : {}'.format(train_acc))
+        print('Validation acc : {}'.format(val_acc))
+
+        history_acc['epoch'].append(epoch+1)
+        history_acc['train'].append(train_acc)
+        history_acc['val'].append(val_acc)
+
+        history_loss['epoch'].append(epoch+1)
+        history_loss['train'].append(train_loss)
+        history_loss['val'].append(val_loss)
+
+        print('='*40, end='\n')
 
     elapsed_time = time.time() - start_time
     print(time.strftime("Finish in %H:%M:%S", time.gmtime(elapsed_time)))
 
     torch.save(best_model.state_dict(), Path.model)
-    vis.imsave(counter, loss_history, path=SAVE_PLOT_PATH, xlabel='Epoch', ylabel='loss')
+    vis.show_plot(
+        history=history_acc,
+        title='Akurasi Train dan Validasi',
+        xlabel='Epoch',
+        ylabel='Akurasi',
+        legend_loc='upper left',
+        path=SAVE_PLOT_PATH+'Model Akurasi.png',
+        should_show=False,
+        should_save=True
+    )
+    
+    vis.show_plot(
+        history=history_loss,
+        title='Loss Train dan Validasi',
+        xlabel='Epoch',
+        ylabel='Loss',
+        legend_loc='upper right',
+        path=SAVE_PLOT_PATH+'Model loss.png',
+        should_show=False,
+        should_save=True
+    )
     # vis.show_plot(counter,loss_history)
 
 if __name__ == "__main__":
-    triplet_train()
+    contrastive_train()

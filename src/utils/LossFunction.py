@@ -3,7 +3,6 @@ import torch.nn.functional as F
 import torch.nn as nn
 
 class ContrastiveLoss(torch.nn.Module):
-
     def __init__(self, margin=1.0):
         super(ContrastiveLoss, self).__init__()
         self.margin = margin
@@ -15,7 +14,6 @@ class ContrastiveLoss(torch.nn.Module):
         return loss_contrastive
 
 class AbsoluteLoss(torch.nn.Module):
-
     def __init__(self):
         pass
 
@@ -23,7 +21,6 @@ class AbsoluteLoss(torch.nn.Module):
         return torch.mean(torch.abs(output1 - output2))
 
 class TripletLoss(torch.nn.Module):
-
     def __init__(self, margin=1.0):
         super(TripletLoss, self).__init__()
         self.margin = margin
