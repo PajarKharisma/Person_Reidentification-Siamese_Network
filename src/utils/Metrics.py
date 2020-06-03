@@ -8,7 +8,7 @@ from sklearn.metrics import accuracy_score
 from src.config.Param import *
 
 def distance_to_class(distances, threshold=0.5):
-    distances = distances.flatten().detach().numpy()
+    distances = distances.flatten().detach().cpu().numpy()
     distances_norm = [abs((1 / (1 + d)) - 1) for d in distances]
     y = [0.0 if d <= threshold else 1.0 for d in distances_norm]
 
