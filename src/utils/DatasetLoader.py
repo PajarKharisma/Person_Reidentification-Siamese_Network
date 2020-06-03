@@ -35,7 +35,7 @@ class ContrastiveDataset(Dataset):
     
     def __len__(self):
         # return len(self.df)
-        return 5000
+        return 2000
 
 class TripletDataset(Dataset):
     def __init__(self, csv_path, images_path, transform=None, should_invert=True):
