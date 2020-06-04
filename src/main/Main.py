@@ -138,6 +138,7 @@ def contrastive_train():
         train_loss = 0
         train_acc = 0
         net.train()
+        iteration = 1
         for i, data in enumerate(train_dataloader):
             img0, img1 , label = data
             
@@ -153,8 +154,9 @@ def contrastive_train():
             optimizer.step()
 
             # get loss and acc train
-            train_loss = (train_loss + loss_contrastive.item()) / 2
-            train_acc = (train_acc + metrics.get_acc(output1, output2, label, THRESHOLD)) / 2
+            train_loss = train_loss + ((loss_contrastive.item() - train_loss) / 2)
+            train_acc = train_acc + ((metrics.get_acc(output1, output2, label, THRESHOLD) - train_acc) / 2)
+            iteration += 1
 
         if train_loss < best_loss:
             best_loss = train_loss
