@@ -1,9 +1,12 @@
 import cv2
+import imutils
 import os
 import numpy as np
+from ..utils import MatrixOps as matOps
 
 NUM_PARTIAL = 16
-SIZE = 224
+IMG_WIDTH = 64
+IMG_HEIGHT = 64
 
 def padding(img):
     rows, cols = img.shape[:2]
@@ -37,9 +40,13 @@ def partial_image(img):
             color = img[i + (rows//NUM_PARTIAL * 8), j]
             img_leg[i,j] = color
     
-    img_head = padding(img_head)
-    img_body = padding(img_body)
-    img_leg = padding(img_leg)
+    # img_head = padding(img_head)
+    # img_body = padding(img_body)
+    # img_leg = padding(img_leg)
+
+    img_head = matOps.resize_no_distortion(img=img_head, desired_width=IMG_WIDTH, desired_height=IMG_HEIGHT)
+    img_body = matOps.resize_no_distortion(img=img_body, desired_width=IMG_WIDTH, desired_height=IMG_HEIGHT)
+    img_leg = matOps.resize_no_distortion(img=img_leg, desired_width=IMG_WIDTH, desired_height=IMG_HEIGHT)
 
     return img_head, img_body, img_leg
 

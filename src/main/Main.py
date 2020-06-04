@@ -211,4 +211,4 @@ def contrastive_train():
     # vis.show_plot(counter,loss_history)
 
 if __name__ == "__main__":
-    contrastive_train()
+    partial_process()
