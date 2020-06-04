@@ -6,6 +6,8 @@ import torch
 import torchvision.transforms as transforms
 from torch.utils.data import Dataset
 
+from . import MatrixOps as matOps
+
 SIZE = 224
 
 class ContrastiveDataset(Dataset):
@@ -62,3 +64,26 @@ class TripletDataset(Dataset):
     
     def __len__(self):
         return len(self.df)
+
+class SinglePairDataset(Dataset):
+    def __init__(self, img1, img2, width, height, transform=None):
+        self.img1 = img1
+        self.img2 = img2
+        self.width = width
+        self.height = height
+        self.transform = transform
+
+    def __getitem__(self, index):
+        self.img1 = cv2.cvtColor(self.img1, cv2.COLOR_BGR2RGB)
+        self.img2 = cv2.cvtColor(self.img2, cv2.COLOR_BGR2RGB)
+
+        self.img1 = matOps.resize_no_distortion(img=self.img1, desired_width=self.width, desired_height=self.height)
+        self.img2 = matOps.resize_no_distortion(img=self.img2, desired_width=self.width, desired_height=self.height)
+
+        self.img1 = self.transform(self.img1)
+        self.img2 = self.transform(self.img2)
+
+        return self.img1, self.img2
+
+    def __len__(self):
+        return 1
