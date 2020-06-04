@@ -181,7 +181,7 @@ def contrastive_train():
         history_loss['train'].append(train_loss)
         history_loss['val'].append(val_loss)
 
-        print('='*40, end='\n')
+        print('='*40, end='\n\n')
 
     elapsed_time = time.time() - start_time
     print(time.strftime("Finish in %H:%M:%S", time.gmtime(elapsed_time)))
