@@ -154,8 +154,8 @@ def contrastive_train():
             optimizer.step()
 
             # get loss and acc train
-            train_loss = train_loss + ((loss_contrastive.item() - train_loss) / 2)
-            train_acc = train_acc + ((metrics.get_acc(output1, output2, label, THRESHOLD) - train_acc) / 2)
+            train_loss = train_loss + ((loss_contrastive.item() - train_loss) / iteration)
+            train_acc = train_acc + ((metrics.get_acc(output1, output2, label, THRESHOLD) - train_acc) / iteration)
             iteration += 1
 
         if train_loss < best_loss:
