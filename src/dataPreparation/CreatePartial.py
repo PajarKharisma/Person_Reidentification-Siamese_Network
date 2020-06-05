@@ -40,13 +40,13 @@ def partial_image(img):
             color = img[i + (rows//NUM_PARTIAL * 8), j]
             img_leg[i,j] = color
     
-    # img_head = padding(img_head)
-    # img_body = padding(img_body)
-    # img_leg = padding(img_leg)
+    img_head = cv2.resize(img_head, (IMG_WIDTH, IMG_HEIGHT))
+    img_body = cv2.resize(img_body, (IMG_WIDTH, IMG_HEIGHT))
+    img_leg = cv2.resize(img_leg, (IMG_WIDTH, IMG_HEIGHT))
 
-    img_head = matOps.resize_no_distortion(img=img_head, desired_width=IMG_WIDTH, desired_height=IMG_HEIGHT)
-    img_body = matOps.resize_no_distortion(img=img_body, desired_width=IMG_WIDTH, desired_height=IMG_HEIGHT)
-    img_leg = matOps.resize_no_distortion(img=img_leg, desired_width=IMG_WIDTH, desired_height=IMG_HEIGHT)
+    # img_head = matOps.resize_no_distortion(img=img_head, desired_width=IMG_WIDTH, desired_height=IMG_HEIGHT)
+    # img_body = matOps.resize_no_distortion(img=img_body, desired_width=IMG_WIDTH, desired_height=IMG_HEIGHT)
+    # img_leg = matOps.resize_no_distortion(img=img_leg, desired_width=IMG_WIDTH, desired_height=IMG_HEIGHT)
 
     return img_head, img_body, img_leg
 
