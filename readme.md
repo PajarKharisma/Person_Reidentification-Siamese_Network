@@ -4,3 +4,7 @@
 - https://github.com/pytorch/vision/blob/master/torchvision/models/vgg.py
 - https://github.com/harveyslash/Facial-Similarity-with-Siamese-Networks-in-Pytorch/blob/master/Siamese-networks-medium.ipynb
 - https://www.pyimagesearch.com/2015/02/02/just-open-sourced-personal-imutils-package-series-opencv-convenience-functions/
+
+#### Pretrained model
+- https://github.com/Cadene/pretrained-models.pytorch
+- https://github.com/weiaicunzai/pytorch-cifar100/tree/master/models
