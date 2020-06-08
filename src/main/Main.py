@@ -88,7 +88,7 @@ def training(model, loss_function, dataset, data_type):
     for epoch in range(0, Param.train_number_epochs):
         train_loss = 0
         train_acc = 0
-        net.train()
+        model.train()
         iteration = 1
         for i, data in enumerate(train_dataloader):
             x1, x2 , x3 = data
