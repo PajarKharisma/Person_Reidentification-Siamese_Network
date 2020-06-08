@@ -21,10 +21,10 @@ def get_acc(x1, x2, x3, threshold=0.5, data_type='PAIR'):
     if data_type == 'PAIR':   
         y_true = x3.flatten().cpu().numpy()
     else:
-        y_true = np.full((1, len(x1)), 1.0)
+        y_true = np.full((len(x1)), 0.0)
     
     distances = get_distances(x1, x2)
-    y_pred = distance_to_class(distances, threshold)
+    y_pred = distance_to_class(distances, 0.1)
     return accuracy_score(y_true, y_pred)
 
 def get_val_loss(base_model, loss_func, dataset, data_type='PAIR'):
