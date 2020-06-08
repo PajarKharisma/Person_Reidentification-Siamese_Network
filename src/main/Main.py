@@ -139,7 +139,6 @@ def training(model, loss_function, dataset, data_type):
 
         print('='*40, end='\n\n')
 
-    torch.save(best_model.state_dict(), Path.model)
     vis.show_plot(
         history=history_acc,
         title='Akurasi Train dan Validasi',
@@ -161,12 +160,12 @@ def training(model, loss_function, dataset, data_type):
         should_show=False,
         should_save=True
     )
+
     # vis.show_plot(counter,loss_history)
+    torch.save(best_model.state_dict(), Path.model)
+    vis.imsave(counter, loss_history, path=SAVE_PLOT_PATH, xlabel='Epoch', ylabel='loss')
 
-def triplet_train():
-    start_time = time.time()
-    print('Process...')
-
+def contrastive_train():
     model = bSiamese.BasicSiameseNetwork()
     model.to(Param.device)
 
@@ -180,113 +179,25 @@ def triplet_train():
         data_type='PAIR'
     )
 
-    elapsed_time = time.time() - start_time
-    print(time.strftime("Finish in %H:%M:%S", time.gmtime(elapsed_time)))
+def triplet_train():
+    model = bSiamese.BasicSiameseNetwork()
+    model.to(Param.device)
 
-    torch.save(best_model.state_dict(), Path.model)
-    vis.imsave(counter, loss_history, path=SAVE_PLOT_PATH, xlabel='Epoch', ylabel='loss')
+    criterion = lossFunc.TripletLoss()
+    dataset = triplet_load_process()
 
-def contrastive_train():
+    training(
+        model=model,
+        loss_function=criterion,
+        dataset=dataset,
+        data_type='TRIPLET'
+    )
+
+if __name__ == "__main__":
     start_time = time.time()
     print('Process...')
 
-    net = bSiamese.BasicSiameseNetwork()
-    net.to(Param.device)
-
-    criterion = lossFunc.ContrastiveLoss()
-    optimizer = optim.Adam(net.parameters(), lr=0.0005)
-    train_dataloader, val_dataloader = contrastive_load_process()
-
-    history_loss = {
-        'epoch' : [],
-        'train' : [],
-        'val' : []
-    }
-
-    history_acc = {
-        'epoch' : [],
-        'train' : [],
-        'val' : []
-    }
-
-    best_loss = 100
-    best_model = None
-    
-    for epoch in range(0, Param.train_number_epochs):
-        train_loss = 0
-        train_acc = 0
-        net.train()
-        iteration = 1
-        for i, data in enumerate(train_dataloader):
-            img0, img1 , label = data
-            
-            img0 = img0.to(Param.device)
-            img1 = img1.to(Param.device)
-            label = label.to(Param.device)
-
-            optimizer.zero_grad()
-            output1, output2 = net(img0,img1)
-
-            loss_contrastive = criterion(output1, output2, label)
-            loss_contrastive.backward()
-            optimizer.step()
-
-            # get loss and acc train
-            train_loss = train_loss + ((loss_contrastive.item() - train_loss) / iteration)
-            train_acc = train_acc + ((metrics.get_acc(output1, output2, label, THRESHOLD) - train_acc) / iteration)
-            iteration += 1
-
-        if train_loss < best_loss:
-            best_loss = train_loss
-            best_model = copy.deepcopy(net)
-        
-        val_loss = metrics.get_val_loss(net, criterion, val_dataloader)
-        x1, x2, label = metrics.contrastive_validate(net, val_dataloader)
-        val_acc = metrics.get_acc(x1, x2, label, THRESHOLD)
-
-        print('Epoch Number : {}'.format(epoch + 1))
-        print('-'*40)
-        print('Train loss : {}'.format(train_loss))
-        print('Validation loss : {}'.format(val_loss))
-        print('Train acc : {}'.format(train_acc))
-        print('Validation acc : {}'.format(val_acc))
-
-        history_acc['epoch'].append(epoch+1)
-        history_acc['train'].append(train_acc)
-        history_acc['val'].append(val_acc)
-
-        history_loss['epoch'].append(epoch+1)
-        history_loss['train'].append(train_loss)
-        history_loss['val'].append(val_loss)
-
-        print('='*40, end='\n\n')
+    triplet_train()
 
     elapsed_time = time.time() - start_time
     print(time.strftime("Finish in %H:%M:%S", time.gmtime(elapsed_time)))
-
-    torch.save(best_model.state_dict(), Path.model)
-    vis.show_plot(
-        history=history_acc,
-        title='Akurasi Train dan Validasi',
-        xlabel='Epoch',
-        ylabel='Akurasi',
-        legend_loc='upper left',
-        path=SAVE_PLOT_PATH+'Model Akurasi.png',
-        should_show=False,
-        should_save=True
-    )
-    
-    vis.show_plot(
-        history=history_loss,
-        title='Loss Train dan Validasi',
-        xlabel='Epoch',
-        ylabel='Loss',
-        legend_loc='upper right',
-        path=SAVE_PLOT_PATH+'Model loss.png',
-        should_show=False,
-        should_save=True
-    )
-    # vis.show_plot(counter,loss_history)
-
-if __name__ == "__main__":
-    triplet_train()
