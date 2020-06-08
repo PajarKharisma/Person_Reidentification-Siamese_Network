@@ -65,48 +65,123 @@ def triplet_load_process():
 
     return train_dataloader, val_dataloader
 
-def triplet_train():
-    start_time = time.time()
-    print('Process...')
-
-    net = bSiamese.BasicSiameseNetwork()
-    net.to(Param.device)
-
-    criterion = lossFunc.TripletLoss()
+def training(model, loss_function, dataset, data_type):
+    criterion = loss_function
+    train_dataloader, val_dataloader = dataset
     optimizer = optim.Adam(net.parameters(), lr=0.0005)
-    train_dataloader = triplet_load_process()
 
-    counter = []
-    loss_history = []
+    history_loss = {
+        'epoch' : [],
+        'train' : [],
+        'val' : []
+    }
+
+    history_acc = {
+        'epoch' : [],
+        'train' : [],
+        'val' : []
+    }
+
     best_loss = 100
     best_model = None
-
+    
     for epoch in range(0, Param.train_number_epochs):
-        curr_loss = 0
+        train_loss = 0
+        train_acc = 0
+        net.train()
+        iteration = 1
         for i, data in enumerate(train_dataloader):
-            x1, x2, x3 = data
+            x1, x2 , x3 = data
             
             x1 = x1.to(Param.device)
             x2 = x2.to(Param.device)
             x3 = x3.to(Param.device)
 
             optimizer.zero_grad()
-            output1, output2, output3 = net(x1, x2, x3)
-            loss_triplet = criterion(output1, output2, output3)
-            loss_triplet.backward()
+            if data_type == 'PAIR':
+                output1, output2 = model(x1, x2)
+                output3 = x3
+            else:
+                output1, output2, output3 = model(x1, x2, x3)
+
+            loss_value = criterion(output1, output2, output3)
+            loss_value.backward()
+
             optimizer.step()
 
-            curr_loss = loss_triplet.item()
-        
-        if curr_loss < best_loss:
-            best_loss = curr_loss
+            # get loss and acc train
+            train_loss = train_loss + ((loss_value.item() - train_loss) / iteration)
+            train_acc = train_acc + ((metrics.get_acc(output1, output2, label, THRESHOLD, data_type) - train_acc) / iteration)
+            iteration += 1
+
+        if train_loss < best_loss:
+            best_loss = train_loss
             best_model = copy.deepcopy(net)
-            
+        
+        val_loss = metrics.get_val_loss(model, criterion, val_dataloader)
+        x1, x2, x3 = metrics.validate(model, val_dataloader, data_type)
+        val_acc = metrics.get_acc(x1, x2, x3, THRESHOLD)
+
         print('Epoch Number : {}'.format(epoch + 1))
-        print('Current loss : {}'.format(curr_loss))
-        counter.append(epoch + 1)
-        loss_history.append(curr_loss)
-        print('='*40)
+        print('-'*40)
+        print('Train loss : {}'.format(train_loss))
+        print('Validation loss : {}'.format(val_loss))
+        print('Train acc : {}'.format(train_acc))
+        print('Validation acc : {}'.format(val_acc))
+
+        history_acc['epoch'].append(epoch+1)
+        history_acc['train'].append(train_acc)
+        history_acc['val'].append(val_acc)
+
+        history_loss['epoch'].append(epoch+1)
+        history_loss['train'].append(train_loss)
+        history_loss['val'].append(val_loss)
+
+        print('='*40, end='\n\n')
+
+    elapsed_time = time.time() - start_time
+    print(time.strftime("Finish in %H:%M:%S", time.gmtime(elapsed_time)))
+
+    torch.save(best_model.state_dict(), Path.model)
+    vis.show_plot(
+        history=history_acc,
+        title='Akurasi Train dan Validasi',
+        xlabel='Epoch',
+        ylabel='Akurasi',
+        legend_loc='upper left',
+        path=SAVE_PLOT_PATH+'Model Akurasi.png',
+        should_show=False,
+        should_save=True
+    )
+    
+    vis.show_plot(
+        history=history_loss,
+        title='Loss Train dan Validasi',
+        xlabel='Epoch',
+        ylabel='Loss',
+        legend_loc='upper right',
+        path=SAVE_PLOT_PATH+'Model loss.png',
+        should_show=False,
+        should_save=True
+    )
+    # vis.show_plot(counter,loss_history)
+
+def triplet_train():
+    start_time = time.time()
+    print('Process...')
+
+    model = bSiamese.BasicSiameseNetwork()
+    model.to(Param.device)
+
+    criterion = lossFunc.TripletLoss()
+    dataset = contrastive_load_process()
+
+    training(
+        model=model,
+        loss_function=criterion,
+        dataset=dataset,
+        data_type='PAIR'
+    )
 
     elapsed_time = time.time() - start_time
     print(time.strftime("Finish in %H:%M:%S", time.gmtime(elapsed_time)))
@@ -217,4 +292,4 @@ def contrastive_train():
     # vis.show_plot(counter,loss_history)
 
 if __name__ == "__main__":
-    contrastive_train()
+    triplet_train()
