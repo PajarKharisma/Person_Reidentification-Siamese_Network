@@ -57,8 +57,8 @@ def triplet_load_process():
     trans = transforms.Compose([transforms.ToTensor()])
     triplet_dataset = dsetLoader.TripletDataset(csv_path=Path.triplet_train_csv, images_path=Path.images, transform=trans)
     
-    train_length = int(len(contrastive_dataset) * DATA_SPLIT)
-    val_length = len(contrastive_dataset) - train_length
+    train_length = int(len(triplet_dataset) * DATA_SPLIT)
+    val_length = len(triplet_dataset) - train_length
 
     train_dataloader = DataLoader(train_set, batch_size=Param.train_batch_size, shuffle=True)
     val_dataloader = DataLoader(val_set, batch_size=val_length, shuffle=True)
