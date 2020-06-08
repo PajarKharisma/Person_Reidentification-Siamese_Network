@@ -20,14 +20,17 @@ class AbsoluteLoss(torch.nn.Module):
     def forward(self, output1, output2):
         return torch.mean(torch.abs(output1 - output2))
 
-class TripletLoss(torch.nn.Module):
+class TripletLoss(nn.Module):
     def __init__(self, margin=1.0):
         super(TripletLoss, self).__init__()
         self.margin = margin
-
-    def forward(self, anchor, positive, negative):
-        d = nn.PairwiseDistance(p=2)
-        distance = d(anchor, positive) - d(anchor, negative) + self.margin 
-        loss = torch.mean(torch.max(distance, torch.zeros_like(distance))) 
         
-        return loss
+    def calc_euclidean(self, x1, x2):
+        return (x1 - x2).pow(2).sum(1)
+    
+    def forward(self, anchor: torch.Tensor, positive: torch.Tensor, negative: torch.Tensor) -> torch.Tensor:
+        distance_positive = self.calc_euclidean(anchor, positive)
+        distance_negative = self.calc_euclidean(anchor, negative)
+        losses = torch.relu(distance_positive - distance_negative + self.margin)
+
+        return losses.mean()

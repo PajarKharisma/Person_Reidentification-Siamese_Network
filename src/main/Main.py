@@ -106,7 +106,6 @@ def training(model, loss_function, dataset, data_type):
             else:
                 output1, output2, output3 = model(x1, x2, x3)
 
-            print(i)
             loss_value = criterion(output1, output2, output3)
             loss_value.backward()
 
