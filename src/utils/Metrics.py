@@ -28,6 +28,7 @@ def get_acc(x1, x2, x3, threshold=0.5, data_type='PAIR'):
     return accuracy_score(y_true, y_pred)
 
 def get_val_loss(base_model, loss_func, dataset, data_type='PAIR'):
+    torch.cuda.empty_cache()
     model = copy.deepcopy(base_model)
     model.eval()
     model.zero_grad()
@@ -47,6 +48,7 @@ def get_val_loss(base_model, loss_func, dataset, data_type='PAIR'):
     return loss_func.forward(output1, output2, x3).item()
 
 def validate(base_model, dataset, data_type='PAIR'):
+    torch.cuda.empty_cache()
     model = copy.deepcopy(base_model)
     model.eval()
     model.zero_grad()
