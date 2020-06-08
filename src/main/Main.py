@@ -91,7 +91,6 @@ def training(model, loss_function, dataset, data_type):
         train_loss = 0
         train_acc = 0
         model.train()
-        iteration = 1
         for i, data in enumerate(train_dataloader):
             print(i)
             torch.cuda.empty_cache()
@@ -117,9 +116,8 @@ def training(model, loss_function, dataset, data_type):
             optimizer.step()
 
             # get loss and acc train
-            train_loss = train_loss + ((loss_value.item() - train_loss) / iteration)
-            train_acc = train_acc + ((metrics.get_acc(output1, output2, output3, THRESHOLD, data_type) - train_acc) / iteration)
-            iteration += 1
+            train_loss = train_loss + ((loss_value.item() - train_loss) / (i + 1))
+            train_acc = train_acc + ((metrics.get_acc(output1, output2, output3, THRESHOLD, data_type) - train_acc) / (i + 1))
 
         if train_loss < best_loss:
             best_loss = train_loss
