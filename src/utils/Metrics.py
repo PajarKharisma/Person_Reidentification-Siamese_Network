@@ -44,6 +44,9 @@ def get_val_loss(base_model, loss_func, dataset, data_type='PAIR'):
             output3 = x3
         else:
             output1, output2, output3 = model(x1, x2, x3)
+            print('output1', output1.shape)
+            print('output2', output2.shape)
+            print('output3', output3.shape)
 
     return loss_func.forward(output1, output2, output3).item()
 
