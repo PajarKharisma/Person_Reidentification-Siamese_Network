@@ -93,6 +93,7 @@ def training(model, loss_function, dataset, data_type):
         model.train()
         iteration = 1
         for i, data in enumerate(train_dataloader):
+            print(i)
             x1, x2 , x3 = data
             
             x1 = x1.to(Param.device)
@@ -104,10 +105,10 @@ def training(model, loss_function, dataset, data_type):
                 output1, output2 = model(x1, x2)
                 output3 = x3
             else:
-                # output1, output2, output3 = model(x1, x2, x3)
-                output1 = model.forward_once(x1)
-                output2 = model.forward_once(x2)
-                output3 = model.forward_once(x3)
+                output1, output2, output3 = model(x1, x2, x3)
+                # output1 = model.forward_once(x1)
+                # output2 = model.forward_once(x2)
+                # output3 = model.forward_once(x3)
 
             loss_value = criterion(output1, output2, output3)
             loss_value.backward()

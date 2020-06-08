@@ -30,6 +30,7 @@ def get_acc(x1, x2, x3, threshold=0.5, data_type='PAIR'):
 def get_val_loss(base_model, loss_func, dataset, data_type='PAIR'):
     model = copy.deepcopy(base_model)
     model.eval()
+    model.zero_grad()
     with torch.no_grad():
         dataiter = iter(dataset)
         x1, x2, x3 = next(dataiter)
@@ -48,6 +49,7 @@ def get_val_loss(base_model, loss_func, dataset, data_type='PAIR'):
 def validate(base_model, dataset, data_type='PAIR'):
     model = copy.deepcopy(base_model)
     model.eval()
+    model.zero_grad()
     with torch.no_grad():
         dataiter = iter(dataset)
         x1, x2, x3 = next(dataiter)
