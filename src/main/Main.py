@@ -105,9 +105,12 @@ def training(model, loss_function, dataset, data_type):
                 output3 = x3
             else:
                 output1, output2, output3 = model(x1, x2, x3)
+                print(output1.shape)
+                print(output2.shape)
+                print(output3.shape)
 
             loss_value = criterion(output1, output2, output3)
-            loss_value.backward(allow_unreachable=False)
+            loss_value.backward()
 
             optimizer.step()
 
