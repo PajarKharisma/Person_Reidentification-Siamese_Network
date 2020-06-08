@@ -22,9 +22,10 @@ class TripletLoss(torch.nn.Module):
         d1 = F.pairwise_distance(anchor, positive, keepdim=True)
         d2 = F.pairwise_distance(anchor, negative, keepdim=True)
         distance = d1 + d2
-        print('d1',d1)
-        print('d2',d2)
-        print('distance',distance)
+        print('d1',d1.shape)
+        print('d2',d2.shape)
+        print('distance',distance.shape)
+        print('='*40)
         distance = d1 - d2 + self.margin 
         loss = torch.mean(torch.max(distance, torch.zeros_like(distance)))
         
