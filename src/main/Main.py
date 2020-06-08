@@ -94,6 +94,7 @@ def training(model, loss_function, dataset, data_type):
         iteration = 1
         for i, data in enumerate(train_dataloader):
             print(i)
+            torch.cuda.empty_cache()
             x1, x2 , x3 = data
             
             x1 = x1.to(Param.device)
