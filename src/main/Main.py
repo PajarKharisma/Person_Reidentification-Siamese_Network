@@ -106,6 +106,10 @@ def training(model, loss_function, dataset, data_type):
                 output3 = x3
             else:
                 output1, output2, output3 = model(x1, x2, x3)
+                print('output 1', output1.shape)
+                print('output 2', output2.shape)
+                print('output 3', output3.shape)
+                print('='*40)
                 # output1 = model.forward_once(x1)
                 # output2 = model.forward_once(x2)
                 # output3 = model.forward_once(x3)
