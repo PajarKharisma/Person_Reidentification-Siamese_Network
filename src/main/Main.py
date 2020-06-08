@@ -60,6 +60,8 @@ def triplet_load_process():
     train_length = int(len(triplet_dataset) * DATA_SPLIT)
     val_length = len(triplet_dataset) - train_length
 
+    train_set, val_set = torch.utils.data.random_split(triplet_dataset, [train_length, val_length])
+
     train_dataloader = DataLoader(train_set, batch_size=Param.train_batch_size, shuffle=True)
     val_dataloader = DataLoader(val_set, batch_size=val_length, shuffle=True)
 
