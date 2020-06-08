@@ -26,7 +26,7 @@ class ContrastiveDataset(Dataset):
         img1 = cv2.cvtColor(img1, cv2.COLOR_BGR2RGB)
         img2 = cv2.cvtColor(img2, cv2.COLOR_BGR2RGB)
 
-        if self.resize not None:
+        if self.resize != None:
             img1 = cv2.resize(img1, (self.resize[0], self.resize[1]))
             img2 = cv2.resize(img2, (self.resize[0], self.resize[1]))
 
