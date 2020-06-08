@@ -95,7 +95,6 @@ def training(model, loss_function, dataset, data_type):
         for i, data in enumerate(train_dataloader):
             print(i)
             torch.cuda.empty_cache()
-            torch.cuda.clear_memory_allocated()
             x1, x2 , x3 = data
             
             x1 = x1.to(Param.device)
