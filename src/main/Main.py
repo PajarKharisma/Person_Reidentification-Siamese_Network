@@ -206,7 +206,7 @@ if __name__ == "__main__":
     start_time = time.time()
     print('Process...')
 
-    contrastive_train()
+    triplet_train()
 
     elapsed_time = time.time() - start_time
     print(time.strftime("Finish in %H:%M:%S", time.gmtime(elapsed_time)))

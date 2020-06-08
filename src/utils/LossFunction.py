@@ -13,21 +13,22 @@ class ContrastiveLoss(torch.nn.Module):
 
         return loss_contrastive
 
-class AbsoluteLoss(torch.nn.Module):
-    def __init__(self):
-        pass
-
-    def forward(self, output1, output2):
-        return torch.mean(torch.abs(output1 - output2))
-
 class TripletLoss(torch.nn.Module):
     def __init__(self, margin=1.0):
         super(TripletLoss, self).__init__()
         self.margin = margin
 
     def forward(self, anchor, positive, negative):
-        d = nn.PairwiseDistance(p=2)
-        distance = d(anchor, positive) - d(anchor, negative) + self.margin 
-        loss = torch.mean(torch.max(distance, torch.zeros_like(distance))) 
+        d1 = F.PairwiseDistance(anchor, positive, keepdim=True)
+        d2 = F.PairwiseDistance(anchor, negative, keepdim=True)
+        distance = d1 - d2 + self.margin 
+        loss = torch.mean(torch.max(distance, torch.zeros_like(distance)))
         
         return loss
+
+class AbsoluteLoss(torch.nn.Module):
+    def __init__(self):
+        pass
+
+    def forward(self, output1, output2):
+        return torch.mean(torch.abs(output1 - output2))
