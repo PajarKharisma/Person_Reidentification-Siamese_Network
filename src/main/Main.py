@@ -116,7 +116,7 @@ def training(model, loss_function, dataset, data_type):
 
         if train_loss < best_loss:
             best_loss = train_loss
-            best_model = copy.deepcopy(net)
+            best_model = copy.deepcopy(model)
         
         val_loss = metrics.get_val_loss(model, criterion, val_dataloader)
         x1, x2, x3 = metrics.validate(model, val_dataloader, data_type)
