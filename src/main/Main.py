@@ -11,6 +11,7 @@ import torch.nn.functional as F
 import torchvision.transforms as transforms
 from torch import optim
 from torch.utils.data import DataLoader
+from torchsummary import summary
 
 import copy
 import pandas as pd
@@ -55,9 +56,14 @@ def contrastive_load_process():
 def triplet_load_process():
     trans = transforms.Compose([transforms.ToTensor()])
     triplet_dataset = dsetLoader.TripletDataset(csv_path=Path.triplet_train_csv, images_path=Path.images, transform=trans)
-    triplet_dataloader = DataLoader(triplet_dataset, batch_size=Param.train_batch_size, shuffle=True)
     
-    return triplet_dataloader
+    train_length = int(len(contrastive_dataset) * DATA_SPLIT)
+    val_length = len(contrastive_dataset) - train_length
+
+    train_dataloader = DataLoader(train_set, batch_size=Param.train_batch_size, shuffle=True)
+    val_dataloader = DataLoader(val_set, batch_size=val_length, shuffle=True)
+
+    return train_dataloader, val_dataloader
 
 def triplet_train():
     start_time = time.time()
@@ -211,4 +217,4 @@ def contrastive_train():
     # vis.show_plot(counter,loss_history)
 
 if __name__ == "__main__":
-    partial_process()
+    contrastive_train()

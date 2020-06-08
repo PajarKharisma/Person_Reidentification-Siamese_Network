@@ -11,7 +11,7 @@ from . import MatrixOps as matOps
 SIZE = 224
 
 class ContrastiveDataset(Dataset):
-    def __init__(self, csv_path, images_path, transform=None, resize=False):
+    def __init__(self, csv_path, images_path, transform=None, resize=None):
         self.images_path = images_path
         self.csv_path = csv_path
         self.transform = transform
@@ -26,9 +26,9 @@ class ContrastiveDataset(Dataset):
         img1 = cv2.cvtColor(img1, cv2.COLOR_BGR2RGB)
         img2 = cv2.cvtColor(img2, cv2.COLOR_BGR2RGB)
 
-        if self.resize:
-            img1 = cv2.resize(img1, (SIZE, SIZE))
-            img2 = cv2.resize(img2, (SIZE, SIZE))
+        if self.resize not None:
+            img1 = cv2.resize(img1, (self.resize[0], self.resize[1]))
+            img2 = cv2.resize(img2, (self.resize[0], self.resize[1]))
 
         img1 = self.transform(img1)
         img2 = self.transform(img2)

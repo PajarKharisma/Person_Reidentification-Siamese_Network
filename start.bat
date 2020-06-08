@@ -1,4 +1,4 @@
 @echo off
-python src\main\Main.py %*
+python src\main\PrintModel.py %*
 pause
 call "clear-cache.sh"
