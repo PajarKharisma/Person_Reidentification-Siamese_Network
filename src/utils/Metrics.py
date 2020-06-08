@@ -24,7 +24,7 @@ def get_acc(x1, x2, x3, threshold=0.5, data_type='PAIR'):
         y_true = np.full((len(x1)), 0.0)
     
     distances = get_distances(x1, x2)
-    y_pred = distance_to_class(distances, 0.1)
+    y_pred = distance_to_class(distances, threshold)
     return accuracy_score(y_true, y_pred)
 
 def get_val_loss(base_model, loss_func, dataset, data_type='PAIR'):
@@ -64,9 +64,6 @@ def validate(base_model, dataset, data_type='PAIR'):
             output3 = x3
         else:
             output1, output2, output3 = model(x1,x2,x3)
-            print('output1', output1.shape)
-            print('output2', output2.shape)
-            print('output3', output3.shape)
 
         return output1, output2, output3
     

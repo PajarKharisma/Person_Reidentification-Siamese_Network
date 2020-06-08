@@ -165,9 +165,7 @@ def training(model, loss_function, dataset, data_type):
         should_save=True
     )
 
-    # vis.show_plot(counter,loss_history)
     torch.save(best_model.state_dict(), Path.model)
-    vis.imsave(counter, loss_history, path=SAVE_PLOT_PATH, xlabel='Epoch', ylabel='loss')
 
 def contrastive_train():
     model = bSiamese.BasicSiameseNetwork()
