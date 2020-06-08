@@ -56,7 +56,7 @@ def validate(base_model, dataset, data_type='PAIR'):
         x2 = x2.to(Param.device)
         x3 = label.to(Param.device)
 
-        if data_type = 'PAIR':
+        if data_type == 'PAIR':
             output1, output2 = model(x1,x2)
             output3 = x3
         else:
