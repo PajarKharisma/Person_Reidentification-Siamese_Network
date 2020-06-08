@@ -139,9 +139,6 @@ def training(model, loss_function, dataset, data_type):
 
         print('='*40, end='\n\n')
 
-    elapsed_time = time.time() - start_time
-    print(time.strftime("Finish in %H:%M:%S", time.gmtime(elapsed_time)))
-
     torch.save(best_model.state_dict(), Path.model)
     vis.show_plot(
         history=history_acc,
