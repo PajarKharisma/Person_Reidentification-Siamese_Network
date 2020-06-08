@@ -188,6 +188,8 @@ def triplet_train():
     criterion = lossFunc.TripletLoss()
     dataset = triplet_load_process()
 
+    print('start_training')
+
     training(
         model=model,
         loss_function=criterion,
