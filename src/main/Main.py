@@ -68,7 +68,7 @@ def triplet_load_process():
 def training(model, loss_function, dataset, data_type):
     criterion = loss_function
     train_dataloader, val_dataloader = dataset
-    optimizer = optim.Adam(net.parameters(), lr=0.0005)
+    optimizer = optim.Adam(model.parameters(), lr=0.0005)
 
     history_loss = {
         'epoch' : [],
