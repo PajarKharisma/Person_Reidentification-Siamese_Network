@@ -111,7 +111,7 @@ def training(model, loss_function, dataset, data_type):
 
             # get loss and acc train
             train_loss = train_loss + ((loss_value.item() - train_loss) / iteration)
-            train_acc = train_acc + ((metrics.get_acc(output1, output2, label, THRESHOLD, data_type) - train_acc) / iteration)
+            train_acc = train_acc + ((metrics.get_acc(output1, output2, output3, THRESHOLD, data_type) - train_acc) / iteration)
             iteration += 1
 
         if train_loss < best_loss:
