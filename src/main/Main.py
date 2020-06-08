@@ -170,7 +170,7 @@ def triplet_train():
     model = bSiamese.BasicSiameseNetwork()
     model.to(Param.device)
 
-    criterion = lossFunc.TripletLoss()
+    criterion = lossFunc.ContrastiveLoss()
     dataset = contrastive_load_process()
 
     training(
