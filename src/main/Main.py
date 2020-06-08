@@ -118,7 +118,7 @@ def training(model, loss_function, dataset, data_type):
 
             # get loss and acc train
             train_loss = train_loss + ((loss_value.item() - train_loss) / iteration)
-            # train_acc = train_acc + ((metrics.get_acc(output1, output2, output3, THRESHOLD, data_type) - train_acc) / iteration)
+            train_acc = train_acc + ((metrics.get_acc(output1, output2, output3, THRESHOLD, data_type) - train_acc) / iteration)
             iteration += 1
 
         if train_loss < best_loss:
@@ -126,8 +126,8 @@ def training(model, loss_function, dataset, data_type):
             best_model = copy.deepcopy(model)
         
         val_loss = metrics.get_val_loss(model, criterion, val_dataloader)
-        # x1, x2, x3 = metrics.validate(model, val_dataloader, data_type)
-        # val_acc = metrics.get_acc(x1, x2, x3, THRESHOLD)
+        x1, x2, x3 = metrics.validate(model, val_dataloader, data_type)
+        val_acc = metrics.get_acc(x1, x2, x3, THRESHOLD)
 
         print('Epoch Number : {}'.format(epoch + 1))
         print('-'*40)
@@ -206,7 +206,7 @@ if __name__ == "__main__":
     start_time = time.time()
     print('Process...')
 
-    triplet_train()
+    contrastive_train()
 
     elapsed_time = time.time() - start_time
     print(time.strftime("Finish in %H:%M:%S", time.gmtime(elapsed_time)))
