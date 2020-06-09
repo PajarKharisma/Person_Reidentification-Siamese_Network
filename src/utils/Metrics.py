@@ -13,7 +13,6 @@ def distance_to_class(distances, threshold=0.5, margin=1.0, data_type='PAIR'):
         distances_norm = [abs((1 / (1 + d)) - 1) for d in distances]
         y = [0.0 if d <= threshold else 1.0 for d in distances_norm]
     else:
-        margin = len(distances[0])
         dist_p = distances[0].flatten().detach().cpu().numpy()
         dist_n = distances[1].flatten().detach().cpu().numpy()
         y = []
