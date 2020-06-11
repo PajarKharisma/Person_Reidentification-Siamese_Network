@@ -105,9 +105,6 @@ def training(model, loss_function, dataset, data_type):
                 output3 = x3
             else:
                 output1, output2, output3 = model(x1, x2, x3)
-                # output1 = model.forward_once(x1)
-                # output2 = model.forward_once(x2)
-                # output3 = model.forward_once(x3)
 
             loss_value = criterion(output1, output2, output3)
             loss_value.backward()
