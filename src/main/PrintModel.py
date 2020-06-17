@@ -11,8 +11,8 @@ from torchsummary import summary
 import src.neuralNetworksArch.VggArch as vgg
 import src.neuralNetworksArch.BasicSiamese as bSiamese
 import src.neuralNetworksArch.NasnetMobile as nasnet
+import src.neuralNetworksArch.AdaptiveSpatialFeature as asf
 
-# model = vgg.get_model('vgg16', True)
-model = nasnet.NASNetAMobile()
-# print(model)
-summary(model, (3,224,224))
+model = asf.AdaptiveSpatialFeature()
+print(model)
+summary(model, [(3, 60, 160), (3, 60, 160)])

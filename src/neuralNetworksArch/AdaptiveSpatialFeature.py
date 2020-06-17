@@ -1,46 +1,58 @@
 import torch.nn as nn
 
-class BasicSiameseNetwork(nn.Module):
+class AdaptiveSpatialFeature(nn.Module):
 
     def __init__(self):
-        super(BasicSiameseNetwork, self).__init__()
+        super(AdaptiveSpatialFeature, self).__init__()
         self.cnn1 = nn.Sequential(
+            # conv1 pool1
             nn.ReflectionPad2d(1),
             nn.Conv2d(3, 8, kernel_size=3),
             nn.ReLU(inplace=True),
             nn.BatchNorm2d(8),
+            nn.MaxPool2d(kernel_size=2, stride=2, padding=0),
             
+            # conv12
             nn.ReflectionPad2d(1),
             nn.Conv2d(8, 16, kernel_size=3),
             nn.ReLU(inplace=True),
             nn.BatchNorm2d(16),
 
-            nn.MaxPool2d(kernel_size=2, stride=2, padding=0),
-
+            # conv3
             nn.ReflectionPad2d(1),
-            nn.Conv2d(16, 16, kernel_size=3),
+            nn.Conv2d(16, 32, kernel_size=3),
             nn.ReLU(inplace=True),
-            nn.BatchNorm2d(16),
+            nn.BatchNorm2d(32),
+
+            # conv4 pool4
+            nn.ReflectionPad2d(1),
+            nn.Conv2d(32, 64, kernel_size=3),
+            nn.ReLU(inplace=True),
+            nn.BatchNorm2d(64),
+            nn.MaxPool2d(kernel_size=2, stride=2, padding=0)
         )
 
-        self.avgpool = nn.AdaptiveAvgPool2d((30, 80))
+        self.avgpool = nn.AdaptiveAvgPool2d((15, 40))
 
         self.fc1 = nn.Sequential(
-            nn.Linear(16*30*80, 1000),
+            nn.Linear(64*15*40, 4096),
             nn.ReLU(inplace=True),
+            nn.Dropout(),
             
-            nn.Linear(1000, 500),
+            nn.Linear(4096, 2048),
             nn.ReLU(inplace=True),
+            nn.Dropout(),
             
-            nn.Linear(500,100),
+            nn.Linear(2048, 1024),
             nn.ReLU(inplace=True),
+            nn.Dropout(),
             
-            nn.Linear(100, 50),
-            nn.Sigmoid()
+            nn.Linear(1024, 512),
+            nn.Softmax(dim=1)
         )
 
         self._initialize_weights()
-        
+
     def forward_once(self, x):
         output = self.cnn1(x)
         output = self.avgpool(output)
