@@ -32,10 +32,10 @@ class AdaptiveSpatialFeature(nn.Module):
             nn.MaxPool2d(kernel_size=2, stride=2, padding=0)
         )
 
-        self.avgpool = nn.AdaptiveAvgPool2d((15, 40))
+        self.avgpool = nn.AdaptiveAvgPool2d((40, 15))
 
         self.fc1 = nn.Sequential(
-            nn.Linear(64*15*40, 4096),
+            nn.Linear(64*40*15, 4096),
             nn.ReLU(inplace=True),
             nn.Dropout(),
             

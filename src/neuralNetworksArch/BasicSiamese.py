@@ -23,10 +23,10 @@ class BasicSiameseNetwork(nn.Module):
             nn.BatchNorm2d(16),
         )
 
-        self.avgpool = nn.AdaptiveAvgPool2d((30, 80))
+        self.avgpool = nn.AdaptiveAvgPool2d((80, 30))
 
         self.fc1 = nn.Sequential(
-            nn.Linear(16*30*80, 1000),
+            nn.Linear(16*80*30, 1000),
             nn.ReLU(inplace=True),
             
             nn.Linear(1000, 500),
