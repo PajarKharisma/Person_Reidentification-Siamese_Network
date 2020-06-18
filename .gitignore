@@ -7,3 +7,4 @@ models/*.pth
 log/result/*.out
 log/plot/*.png
 pengujian/
+lib/
