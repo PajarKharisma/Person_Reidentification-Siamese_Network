@@ -13,7 +13,8 @@ import src.neuralNetworksArch.BasicSiamese as bSiamese
 import src.neuralNetworksArch.NasnetMobile as nasnet
 import src.neuralNetworksArch.AdaptiveSpatialFeature as asf
 import src.neuralNetworksArch.BstCnn as btsCnn
+import src.neuralNetworksArch.McbCnn as mcbCnn
 
-model = btsCnn.BstCnn()
+model = mcbCnn.McbCnn()
 # print(model)
 summary(model, [(3, 60, 160), (3, 60, 160)])

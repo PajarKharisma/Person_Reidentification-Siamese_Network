@@ -8,3 +8,8 @@
 #### Pretrained model
 - https://github.com/Cadene/pretrained-models.pytorch
 - https://github.com/weiaicunzai/pytorch-cifar100/tree/master/models
+
+### Compact Bilinear Pooling
+- https://github.com/gdlg/pytorch_compact_bilinear_pooling
+- https://github.com/DeepInsight-PCALab/CompactBilinearPooling-Pytorch
+- https://gist.github.com/vadimkantorov/d9b56f9b85f1f4ce59ffecf893a1581a

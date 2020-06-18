@@ -40,10 +40,10 @@ class BstCnn(nn.Module):
 
         self.maxpool = nn.MaxPool2d(kernel_size=2, stride=2, padding=0)
 
-        self.avgpool = nn.AdaptiveAvgPool2d((40, 15))
+        self.avgpool = nn.AdaptiveAvgPool2d((15, 40))
 
         self.fc = nn.Sequential(
-            nn.Linear(16*40*15, 4096),
+            nn.Linear(16*15*40, 4096),
             nn.ReLU(inplace=True),
             nn.Dropout(),
             
