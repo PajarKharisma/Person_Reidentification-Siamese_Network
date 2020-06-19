@@ -55,9 +55,13 @@ def get_val_loss(model, loss_func, dataset, data_type='PAIR'):
         else:
             output1, output2, output3 = model(x1, x2, x3)
     
-    del model
+    result = loss_func.forward(output1, output2, output3).item()
 
-    return loss_func.forward(output1, output2, output3).item()
+    del model
+    del loss_func
+    torch.cuda.empty_cache()
+
+    return result
 
 def validate(model, dataset, data_type='PAIR'):
     model.eval()
@@ -77,5 +81,6 @@ def validate(model, dataset, data_type='PAIR'):
             output1, output2, output3 = model(x1,x2,x3)
 
     del model
+    torch.cuda.empty_cache()
     return output1, output2, output3
     
