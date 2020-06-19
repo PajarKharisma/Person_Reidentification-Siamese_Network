@@ -126,6 +126,9 @@ def training(model, loss_function, dataset, data_type):
         # x1, x2, x3 = metrics.validate(model, val_dataloader, data_type)
         # val_acc = metrics.get_acc(x1, x2, x3, THRESHOLD, data_type)
 
+        val_loss = 0
+        val_acc = 0
+
         print('Epoch Number : {}'.format(epoch + 1))
         print('-'*40)
         print('Train loss : {}'.format(train_loss))
