@@ -23,6 +23,7 @@ import src.dataPreparation.CreatePartial as create_partial
 import src.neuralNetworksArch.BasicSiamese as bSiamese
 import src.neuralNetworksArch.OneShotArch as osArch
 import src.neuralNetworksArch.AdaptiveSpatialFeature as asf
+import src.neuralNetworksArch.BstCnn as bst
 
 import src.utils.Visual as vis
 import src.utils.DatasetLoader as dsetLoader
@@ -167,7 +168,7 @@ def training(model, loss_function, dataset, data_type):
     torch.save(best_model.state_dict(), Path.model)
 
 def contrastive_train():
-    model = asf.AdaptiveSpatialFeature()
+    model = bst.BstCnn()
     model.to(Param.device)
 
     criterion = lossFunc.ContrastiveLoss()

@@ -48,7 +48,7 @@ class AdaptiveSpatialFeature(nn.Module):
             nn.Dropout(),
             
             nn.Linear(1024, 512),
-            nn.Softmax(dim=1)
+            nn.Sigmoid()
         )
 
         self._initialize_weights()

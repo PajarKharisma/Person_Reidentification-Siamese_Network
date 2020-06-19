@@ -1,0 +1,49 @@
+# Basic Siamese
+----------------------------------------
+Total params: 77,920,884
+Trainable params: 77,920,884
+Non-trainable params: 0
+----------------------------------------
+Input size (MB): 3164.06
+Forward/backward pass size (MB): 15.85
+Params size (MB): 297.24
+Estimated Total Size (MB): 3477.16
+
+================================================================
+
+# Adaptive Spatial Feature
+----------------------------------------
+Total params: 336,657,792
+Trainable params: 336,657,792
+Non-trainable params: 0
+----------------------------------------
+Input size (MB): 3164.06
+Forward/backward pass size (MB): 20.33
+Params size (MB): 1284.25
+Estimated Total Size (MB): 4468.64
+
+================================================================
+
+# Body Structure Based
+----------------------------------------
+Total params: 100,694,624
+Trainable params: 100,694,624
+Non-trainable params: 0
+----------------------------------------
+Input size (MB): 3164.06
+Forward/backward pass size (MB): 22.42
+Params size (MB): 384.12
+Estimated Total Size (MB): 3570.61
+
+================================================================
+
+# Multipart Compact Bilinear
+----------------------------------------
+Total params: 35,550,528
+Trainable params: 35,550,528
+Non-trainable params: 0
+----------------------------------------
+Input size (MB): 3164.06
+Forward/backward pass size (MB): 18.27
+Params size (MB): 135.61
+Estimated Total Size (MB): 3317.95
