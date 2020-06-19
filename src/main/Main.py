@@ -22,6 +22,8 @@ import src.dataPreparation.CreatePartial as create_partial
 
 import src.neuralNetworksArch.BasicSiamese as bSiamese
 import src.neuralNetworksArch.OneShotArch as osArch
+import src.neuralNetworksArch.AdaptiveSpatialFeature as asf
+
 import src.utils.Visual as vis
 import src.utils.DatasetLoader as dsetLoader
 import src.utils.LossFunction as lossFunc
@@ -165,7 +167,7 @@ def training(model, loss_function, dataset, data_type):
     torch.save(best_model.state_dict(), Path.model)
 
 def contrastive_train():
-    model = bSiamese.BasicSiameseNetwork()
+    model = asf.AdaptiveSpatialFeature()
     model.to(Param.device)
 
     criterion = lossFunc.ContrastiveLoss()
@@ -198,7 +200,7 @@ if __name__ == "__main__":
     start_time = time.time()
     print('Process...')
 
-    triplet_train()
+    contrastive_train()
 
     elapsed_time = time.time() - start_time
     print(time.strftime("Finish in %H:%M:%S", time.gmtime(elapsed_time)))
