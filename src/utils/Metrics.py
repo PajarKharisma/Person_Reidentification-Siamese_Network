@@ -39,15 +39,16 @@ def get_acc(x1, x2, x3, threshold=0.5, data_type='PAIR'):
     return accuracy_score(y_true, y_pred)
 
 def get_val_loss(model, loss_func, dataset, data_type='PAIR'):
+    model.to('cpu')
     model.eval()
     model.zero_grad()
     with torch.no_grad():
         dataiter = iter(dataset)
         x1, x2, x3 = next(dataiter)
 
-        x1 = x1.to(Param.device)
-        x2 = x2.to(Param.device)
-        x3 = x3.to(Param.device)
+        x1 = x1.to('cpu')
+        x2 = x2.to('cpu')
+        x3 = x3.to('cpu')
 
         if data_type == 'PAIR':
             output1, output2 = model(x1,x2)
@@ -62,20 +63,20 @@ def get_val_loss(model, loss_func, dataset, data_type='PAIR'):
     del x1
     del x2
     del x3
-    torch.cuda.empty_cache()
 
     return result
 
 def validate(model, dataset, data_type='PAIR'):
+    model.to('cpu')
     model.eval()
     model.zero_grad()
     with torch.no_grad():
         dataiter = iter(dataset)
         x1, x2, x3 = next(dataiter)
 
-        x1 = x1.to(Param.device)
-        x2 = x2.to(Param.device)
-        x3 = x3.to(Param.device)
+        x1 = x1.to('cpu')
+        x2 = x2.to('cpu')
+        x3 = x3.to('cpu')
 
         if data_type == 'PAIR':
             output1, output2 = model(x1,x2)
