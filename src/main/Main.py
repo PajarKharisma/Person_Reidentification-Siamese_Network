@@ -24,6 +24,7 @@ import src.neuralNetworksArch.BasicSiamese as bSiamese
 import src.neuralNetworksArch.OneShotArch as osArch
 import src.neuralNetworksArch.AdaptiveSpatialFeature as asf
 import src.neuralNetworksArch.BstCnn as bst
+import src.neuralNetworksArch.McbCnn as mcb
 
 import src.utils.Visual as vis
 import src.utils.DatasetLoader as dsetLoader
@@ -129,12 +130,23 @@ def training(model, loss_function, dataset, data_type):
         x1, x2, x3 = metrics.validate(val_model, val_dataloader, data_type)
         val_acc = metrics.get_acc(x1, x2, x3, THRESHOLD, data_type)
 
-        print('Epoch Number : {}'.format(epoch + 1))
-        print('-'*40)
-        print('Train loss : {}'.format(train_loss))
-        print('Validation loss : {}'.format(val_loss))
-        print('Train acc : {}'.format(train_acc))
-        print('Validation acc : {}'.format(val_acc))
+        output_str = ''
+        output_str += 'Epoch Number : {}'.format(epoch + 1) + '\n'
+        output_str += '-'*40 + '\n'
+        output_str += 'Train loss : {}'.format(train_loss) + '\n'
+        output_str += 'Validation loss : {}'.format(val_loss) + '\n'
+        output_str += 'Train acc : {}'.format(train_acc) + '\n'
+        output_str += 'Validation acc : {}'.format(val_acc) += '\n'
+
+        # print('Epoch Number : {}'.format(epoch + 1))
+        # print('-'*40)
+        # print('Train loss : {}'.format(train_loss))
+        # print('Validation loss : {}'.format(val_loss))
+        # print('Train acc : {}'.format(train_acc))
+        # print('Validation acc : {}'.format(val_acc))
+
+        sys.stdout.write(output_str)
+        sys.stdout.flush()
 
         history_acc['epoch'].append(epoch+1)
         history_acc['train'].append(train_acc)
@@ -171,7 +183,7 @@ def training(model, loss_function, dataset, data_type):
     torch.save(best_model.state_dict(), Path.model)
 
 def contrastive_train():
-    model = bst.BstCnn()
+    model = mcb.McbCnn()
     model.to(Param.device)
 
     criterion = lossFunc.ContrastiveLoss()
@@ -202,7 +214,8 @@ def triplet_train():
 
 if __name__ == "__main__":
     start_time = time.time()
-    print('Process...')
+    sys.stdout.write('Process...')
+    sys.stdout.flush()
 
     contrastive_train()
 
