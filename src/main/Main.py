@@ -89,6 +89,7 @@ def training(model, loss_function, dataset, data_type):
 
     best_loss = 100
     best_model = None
+    val_model = None
     
     for epoch in range(0, Param.train_number_epochs):
         train_loss = 0
@@ -122,8 +123,10 @@ def training(model, loss_function, dataset, data_type):
             best_loss = train_loss
             best_model = copy.deepcopy(model)
         
-        val_loss = metrics.get_val_loss(model, criterion, val_dataloader, data_type)
-        x1, x2, x3 = metrics.validate(model, val_dataloader, data_type)
+        val_model = copy.deepcopy(model)
+        val_model.to('cpu')
+        val_loss = metrics.get_val_loss(val_model, criterion, val_dataloader, data_type)
+        x1, x2, x3 = metrics.validate(val_model, val_dataloader, data_type)
         val_acc = metrics.get_acc(x1, x2, x3, THRESHOLD, data_type)
 
         print('Epoch Number : {}'.format(epoch + 1))

@@ -38,18 +38,12 @@ def get_acc(x1, x2, x3, threshold=0.5, data_type='PAIR'):
     
     return accuracy_score(y_true, y_pred)
 
-def get_val_loss(base_model, loss_func, dataset, data_type='PAIR'):
-    model = copy.deepcopy(base_model)
-    model.to('cpu')
+def get_val_loss(model, loss_func, dataset, data_type='PAIR'):
     model.eval()
     model.zero_grad()
     with torch.no_grad():
         dataiter = iter(dataset)
         x1, x2, x3 = next(dataiter)
-
-        x1 = x1.to('cpu')
-        x2 = x2.to('cpu')
-        x3 = x3.to('cpu')
 
         if data_type == 'PAIR':
             output1, output2 = model(x1,x2)
@@ -59,27 +53,19 @@ def get_val_loss(base_model, loss_func, dataset, data_type='PAIR'):
     
     result = loss_func.forward(output1, output2, output3).item()
 
-    del base_model
     del model
-    del loss_func
     del x1
     del x2
     del x3
 
     return result
 
-def validate(base_model, dataset, data_type='PAIR'):
-    model = copy.deepcopy(base_model)
-    model.to('cpu')
+def validate(model, dataset, data_type='PAIR'):
     model.eval()
     model.zero_grad()
     with torch.no_grad():
         dataiter = iter(dataset)
         x1, x2, x3 = next(dataiter)
-
-        x1 = x1.to('cpu')
-        x2 = x2.to('cpu')
-        x3 = x3.to('cpu')
 
         if data_type == 'PAIR':
             output1, output2 = model(x1,x2)
@@ -87,11 +73,9 @@ def validate(base_model, dataset, data_type='PAIR'):
         else:
             output1, output2, output3 = model(x1,x2,x3)
 
-    del base_model
     del model
     del x1
     del x2
     del x3
-    torch.cuda.empty_cache()
     return output1, output2, output3
     
