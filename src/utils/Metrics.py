@@ -55,6 +55,8 @@ def get_val_loss(base_model, loss_func, dataset, data_type='PAIR'):
             output3 = x3
         else:
             output1, output2, output3 = model(x1, x2, x3)
+    
+    del model
 
     return loss_func.forward(output1, output2, output3).item()
 
@@ -76,5 +78,6 @@ def validate(base_model, dataset, data_type='PAIR'):
         else:
             output1, output2, output3 = model(x1,x2,x3)
 
-        return output1, output2, output3
+    del model
+    return output1, output2, output3
     
