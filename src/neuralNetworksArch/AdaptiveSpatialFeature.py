@@ -37,14 +37,14 @@ class AdaptiveSpatialFeature(nn.Module):
         self.fc1 = nn.Sequential(
             nn.Linear(64*15*40, 4096),
             nn.ReLU(inplace=True),
-            nn.Dropout(p=0.2),
+            nn.Dropout(p=0.2, inplace=True),
             
             nn.Linear(4096, 2048),
             nn.ReLU(inplace=True),
-            nn.Dropout(p=0.2),
+            nn.Dropout(p=0.2, inplace=True),
             
             nn.Linear(2048, 1024),
-            nn.Sigmoid()
+            nn.Softmax(dim=1)
         )
 
         self._initialize_weights()
