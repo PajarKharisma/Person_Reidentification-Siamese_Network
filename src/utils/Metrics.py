@@ -59,6 +59,9 @@ def get_val_loss(model, loss_func, dataset, data_type='PAIR'):
 
     del model
     del loss_func
+    del x1
+    del x2
+    del x3
     torch.cuda.empty_cache()
 
     return result
@@ -81,6 +84,9 @@ def validate(model, dataset, data_type='PAIR'):
             output1, output2, output3 = model(x1,x2,x3)
 
     del model
+    del x1
+    del x2
+    del x3
     torch.cuda.empty_cache()
     return output1, output2, output3
     
