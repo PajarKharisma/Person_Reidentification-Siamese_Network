@@ -136,7 +136,7 @@ def training(model, loss_function, dataset, data_type):
         output_str += 'Train loss : {}'.format(train_loss) + '\n'
         output_str += 'Validation loss : {}'.format(val_loss) + '\n'
         output_str += 'Train acc : {}'.format(train_acc) + '\n'
-        output_str += 'Validation acc : {}'.format(val_acc) += '\n'
+        output_str += 'Validation acc : {}'.format(val_acc) + '\n'
 
         # print('Epoch Number : {}'.format(epoch + 1))
         # print('-'*40)
