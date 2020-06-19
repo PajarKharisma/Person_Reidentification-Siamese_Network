@@ -95,6 +95,7 @@ def training(model, loss_function, dataset, data_type):
         train_acc = 0
         model.train()
         for i, data in enumerate(train_dataloader):
+            print(i)
             torch.cuda.empty_cache()
             x1, x2 , x3 = data
             
