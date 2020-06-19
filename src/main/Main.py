@@ -138,13 +138,6 @@ def training(model, loss_function, dataset, data_type):
         output_str += 'Train acc : {}'.format(train_acc) + '\n'
         output_str += 'Validation acc : {}'.format(val_acc) + '\n'
 
-        # print('Epoch Number : {}'.format(epoch + 1))
-        # print('-'*40)
-        # print('Train loss : {}'.format(train_loss))
-        # print('Validation loss : {}'.format(val_loss))
-        # print('Train acc : {}'.format(train_acc))
-        # print('Validation acc : {}'.format(val_acc))
-
         sys.stdout.write(output_str)
         sys.stdout.flush()
 
@@ -214,7 +207,7 @@ def triplet_train():
 
 if __name__ == "__main__":
     start_time = time.time()
-    sys.stdout.write('Process...')
+    sys.stdout.write('Process...\n')
     sys.stdout.flush()
 
     contrastive_train()
