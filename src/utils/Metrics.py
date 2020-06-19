@@ -38,7 +38,8 @@ def get_acc(x1, x2, x3, threshold=0.5, data_type='PAIR'):
     
     return accuracy_score(y_true, y_pred)
 
-def get_val_loss(model, loss_func, dataset, data_type='PAIR'):
+def get_val_loss(base_model, loss_func, dataset, data_type='PAIR'):
+    model = copy.deepcopy(base_model)
     model.to('cpu')
     model.eval()
     model.zero_grad()
@@ -58,6 +59,7 @@ def get_val_loss(model, loss_func, dataset, data_type='PAIR'):
     
     result = loss_func.forward(output1, output2, output3).item()
 
+    del base_model
     del model
     del loss_func
     del x1
@@ -66,7 +68,8 @@ def get_val_loss(model, loss_func, dataset, data_type='PAIR'):
 
     return result
 
-def validate(model, dataset, data_type='PAIR'):
+def validate(base_model, dataset, data_type='PAIR'):
+    model = copy.deepcopy(base_model)
     model.to('cpu')
     model.eval()
     model.zero_grad()
@@ -84,6 +87,7 @@ def validate(model, dataset, data_type='PAIR'):
         else:
             output1, output2, output3 = model(x1,x2,x3)
 
+    del base_model
     del model
     del x1
     del x2
