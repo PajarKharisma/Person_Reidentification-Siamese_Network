@@ -38,8 +38,7 @@ def get_acc(x1, x2, x3, threshold=0.5, data_type='PAIR'):
     
     return accuracy_score(y_true, y_pred)
 
-def get_val_loss(base_model, loss_func, dataset, data_type='PAIR'):
-    model = copy.deepcopy(base_model)
+def get_val_loss(model, loss_func, dataset, data_type='PAIR'):
     model.eval()
     model.zero_grad()
     with torch.no_grad():
@@ -60,8 +59,7 @@ def get_val_loss(base_model, loss_func, dataset, data_type='PAIR'):
 
     return loss_func.forward(output1, output2, output3).item()
 
-def validate(base_model, dataset, data_type='PAIR'):
-    model = copy.deepcopy(base_model)
+def validate(model, dataset, data_type='PAIR'):
     model.eval()
     model.zero_grad()
     with torch.no_grad():
