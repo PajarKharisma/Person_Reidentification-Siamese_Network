@@ -176,7 +176,7 @@ def training(model, loss_function, dataset, data_type):
     torch.save(best_model.state_dict(), Path.model)
 
 def contrastive_train():
-    model = asf.AdaptiveSpatialFeature()
+    model = bst.BstCnn()
     model.to(Param.device)
 
     criterion = lossFunc.ContrastiveLoss()
