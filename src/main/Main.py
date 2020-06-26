@@ -176,7 +176,7 @@ def training(model, loss_function, dataset, data_type):
     torch.save(best_model.state_dict(), Path.model)
 
 def contrastive_train():
-    model = bst.BstCnn()
+    model = bSiamese.BasicSiameseNetwork()
     model.to(Param.device)
 
     criterion = lossFunc.ContrastiveLoss()
