@@ -27,7 +27,7 @@ class TestNN(nn.Module):
         self.avgpool = nn.AdaptiveAvgPool2d((40, 15))
 
         self.fc1 = nn.Sequential(
-            nn.Linear(16*64*32, 1000),
+            nn.Linear(16*40*15, 1000),
             nn.ReLU(inplace=True),
             
             nn.Linear(1000, 500),
