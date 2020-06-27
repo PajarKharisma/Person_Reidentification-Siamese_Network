@@ -207,7 +207,7 @@ def test_train():
         model.train()
         for i, data in enumerate(train_dataloader):
             torch.cuda.empty_cache()
-            x1, x2 , labels = data
+            x1, x2 , labels.int() = data
             
             x1 = x1.to(Param.device)
             x2 = x2.to(Param.device)
@@ -216,8 +216,8 @@ def test_train():
             optimizer.zero_grad()
 
             outputs = model(x1, x2)
-            labels = labels.long()
-            labels = F.one_hot(labels, 2)
+            # labels = labels.long()
+            # labels = F.one_hot(labels, 2)
 
             loss_value = criterion(outputs, labels)
             loss_value.backward()
@@ -226,8 +226,8 @@ def test_train():
 
             # get loss and acc train
             train_loss = train_loss + ((loss_value.item() - train_loss) / (i + 1))
-            y_true = torch.argmax(labels, dim=1).numpy()
-            y_pred = torch.argmax(outputs, dim=1).numpy()
+            y_true = labels.cpu().numpy()
+            y_pred = torch.argmax(outputs, dim=1).cpu().numpy()
             acc = accuracy_score(y_true, y_pred)
             val_acc = val_acc + ((acc - val_acc) / (i + 1))
 

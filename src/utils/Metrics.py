@@ -70,7 +70,7 @@ def get_val_test_metrics(model, dataset, loss_func):
     val_acc = 0
     with torch.no_grad():
         for i, data in enumerate(dataset):
-            x1, x2 , labels = data
+            x1, x2 , labels.int() = data
             
             x1 = x1.to(Param.device)
             x2 = x2.to(Param.device)
@@ -79,16 +79,14 @@ def get_val_test_metrics(model, dataset, loss_func):
             optimizer.zero_grad()
 
             outputs = model(x1, x2)
-            labels = labels.long()
-            labels = F.one_hot(labels, 2)
 
             loss_value = criterion(outputs, labels).item()
 
             # get loss and acc train
             vall_loss = vall_loss + ((loss_value - vall_loss) / (i + 1))
             
-            y_true = torch.argmax(labels, dim=1).numpy()
-            y_pred = torch.argmax(outputs, dim=1).numpy()
+            y_true = labels.cpu().numpy()
+            y_pred = torch.argmax(outputs, dim=1).cpu().numpy()
             acc = accuracy_score(y_true, y_pred)
             val_acc = val_acc + ((acc - val_acc) / (i + 1))
 
