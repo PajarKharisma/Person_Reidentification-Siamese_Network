@@ -18,25 +18,47 @@ class BasicSiameseNetwork(nn.Module):
             nn.MaxPool2d(kernel_size=2, stride=2, padding=0),
 
             nn.ReflectionPad2d(1),
-            nn.Conv2d(16, 16, kernel_size=3),
+            nn.Conv2d(16, 32, kernel_size=3),
             nn.ReLU(inplace=True),
-            nn.BatchNorm2d(16),
+            nn.BatchNorm2d(32),
+
+            nn.ReflectionPad2d(1),
+            nn.Conv2d(32, 64, kernel_size=3),
+            nn.ReLU(inplace=True),
+            nn.BatchNorm2d(64),
+
+            nn.MaxPool2d(kernel_size=2, stride=2, padding=0),
+
+            nn.ReflectionPad2d(1),
+            nn.Conv2d(64, 128, kernel_size=3),
+            nn.ReLU(inplace=True),
+            nn.BatchNorm2d(128),
+
+            nn.MaxPool2d(kernel_size=2, stride=2, padding=0),
         )
 
-        self.avgpool = nn.AdaptiveAvgPool2d((64, 32))
+        self.avgpool = nn.AdaptiveAvgPool2d((16, 8))
 
         self.fc1 = nn.Sequential(
-            nn.Linear(16*64*32, 1000),
+            nn.Linear(128*16*8, 4096),
             nn.ReLU(inplace=True),
+            nn.Dropout(),
             
-            nn.Linear(1000, 500),
+            nn.Linear(4096, 2048),
             nn.ReLU(inplace=True),
+            nn.Dropout(),
             
-            nn.Linear(500,100),
+            nn.Linear(2048, 1024),
             nn.ReLU(inplace=True),
+            nn.Dropout(),
             
-            nn.Linear(100, 50),
-            nn.Sigmoid()
+            nn.Linear(1025, 512),
+            nn.ReLU(inplace=True),
+            nn.Dropout(),
+
+            nn.Linear(512, 256),
+            nn.ReLU(inplace=True)
+            # nn.Sigmoid()
         )
 
         self._initialize_weights()
