@@ -231,7 +231,7 @@ def test_train():
             y_true = labels.cpu().numpy()
             y_pred = torch.argmax(outputs, dim=1).cpu().numpy()
             acc = accuracy_score(y_true, y_pred)
-            val_acc = val_acc + ((acc - val_acc) / (i + 1))
+            train_acc = train_acc + ((acc - train_acc) / (i + 1))
 
         if train_loss < best_loss:
             best_loss = train_loss
