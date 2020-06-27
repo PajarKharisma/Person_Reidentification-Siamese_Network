@@ -78,7 +78,7 @@ def get_val_test_metrics(model, dataset, loss_func):
 
             outputs = model(x1, x2)
 
-            loss_value = criterion(outputs, labels).item()
+            loss_value = loss_func(outputs, labels).item()
 
             # get loss and acc train
             vall_loss = vall_loss + ((loss_value - vall_loss) / (i + 1))
