@@ -56,7 +56,8 @@ class BstCnn(nn.Module):
             nn.Dropout(p=0.2),
             
             nn.Linear(1024, 512),
-            nn.Sigmoid()
+            nn.Softmax(dim=1)
+            # nn.Sigmoid()
         )
 
         self._initialize_weights()
