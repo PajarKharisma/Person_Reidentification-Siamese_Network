@@ -74,7 +74,7 @@ def get_val_test_metrics(model, dataset, loss_func):
             
             x1 = x1.to(Param.device)
             x2 = x2.to(Param.device)
-            labels = labels.to(Param.device).long()
+            labels = labels.to(Param.device).long().flatten()
 
             outputs = model(x1, x2)
 
