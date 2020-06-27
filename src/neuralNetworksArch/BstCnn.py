@@ -89,7 +89,7 @@ class BstCnn(nn.Module):
             return output1, output2
         else:
             output3 = self.forward_once(input3)
-            return output1, output2, output3        
+            return output1, output2, output3
 
     def _initialize_weights(self):
         for m in self.modules():

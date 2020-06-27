@@ -25,6 +25,7 @@ import src.neuralNetworksArch.OneShotArch as osArch
 import src.neuralNetworksArch.AdaptiveSpatialFeature as asf
 import src.neuralNetworksArch.BstCnn as bst
 import src.neuralNetworksArch.McbCnn as mcb
+import src.neuralNetworksArch.VggArch as vgg
 
 import src.utils.Visual as vis
 import src.utils.DatasetLoader as dsetLoader
@@ -190,7 +191,7 @@ def contrastive_train():
     )
 
 def triplet_train():
-    model = bSiamese.BasicSiameseNetwork()
+    model = vgg.get_model('vgg_mpkp', True)
     model.to(Param.device)
 
     criterion = lossFunc.TripletLoss()

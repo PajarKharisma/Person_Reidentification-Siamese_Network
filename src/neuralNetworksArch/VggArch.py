@@ -6,9 +6,11 @@ class VGG(nn.Module):
     def __init__(self, features, num_classes=1000, init_weights=True):
         super(VGG, self).__init__()
         self.features = features
-        self.avgpool = nn.AdaptiveAvgPool2d((7, 7))
+        # self.avgpool = nn.AdaptiveAvgPool2d((7, 7))
+        self.avgpool = nn.AdaptiveAvgPool2d((20, 7))
         self.classifier = nn.Sequential(
-            nn.Linear(512 * 7 * 7, 4096),
+            # nn.Linear(512 * 7 * 7, 4096),
+            nn.Linear(512 * 20 * 7, 4096),
             nn.ReLU(True),
             nn.Dropout(),
             nn.Linear(4096, 4096),
@@ -26,10 +28,14 @@ class VGG(nn.Module):
         x = self.classifier(x)
         return x
 
-    def forward(self, x1, x2):
-        x1 = self.forward_once(x1)
-        x2 = self.forward_once(x2)
-        return x1, x2
+    def forward(self, input1, input2, input3=None):
+        output1 = self.forward_once(input1)
+        output2 = self.forward_once(input2)
+        if input3 == None:
+            return output1, output2
+        else:
+            output3 = self.forward_once(input3)
+            return output1, output2, output3
 
     def _initialize_weights(self):
         for m in self.modules():
@@ -62,6 +68,7 @@ def make_layers(arch, batch_norm=False):
 
 
 arch = {
+    'vgg_mpkp' : [64, 64, 128, 128, 'M', 256, 256, 256, 512, 512, 512, 'M', 512, 512, 512, 'M'],
     'vgg11' : [64, 'M', 128, 'M', 256, 256, 'M', 512, 512, 'M', 512, 512, 'M'],
     'vgg13' : [64, 64, 'M', 128, 128, 'M', 256, 256, 'M', 512, 512, 'M', 512, 512, 'M'],
     'vgg16' : [64, 64, 'M', 128, 128, 'M', 256, 256, 256, 'M', 512, 512, 512, 'M', 512, 512, 512, 'M'],
