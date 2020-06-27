@@ -126,7 +126,7 @@ def training(model, loss_function, dataset, data_type):
             best_model = copy.deepcopy(model)
         
         val_model = copy.deepcopy(model)
-        val_loss, val_acc = metrics.get_val_metrics(val_model, val_dataloader, criterion, data_type)
+        val_loss, val_acc = metrics.get_val_metrics(val_model, val_dataloader, criterion, THRESHOLD, data_type)
 
         output_str = ''
         output_str += 'Epoch Number : {}'.format(epoch + 1) + '\n'
