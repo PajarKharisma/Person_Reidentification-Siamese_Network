@@ -76,8 +76,6 @@ def get_val_test_metrics(model, dataset, loss_func):
             x2 = x2.to(Param.device)
             labels = labels.to(Param.device).long()
 
-            optimizer.zero_grad()
-
             outputs = model(x1, x2)
 
             loss_value = criterion(outputs, labels).item()
