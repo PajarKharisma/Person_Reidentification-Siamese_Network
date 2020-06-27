@@ -12,7 +12,7 @@ class AdaptiveSpatialFeature(nn.Module):
             nn.BatchNorm2d(8),
             nn.MaxPool2d(kernel_size=2, stride=2, padding=0),
             
-            # conv12
+            # conv2
             nn.ReflectionPad2d(1),
             nn.Conv2d(8, 16, kernel_size=3),
             nn.ReLU(inplace=True),
@@ -32,10 +32,10 @@ class AdaptiveSpatialFeature(nn.Module):
             nn.MaxPool2d(kernel_size=2, stride=2, padding=0)
         )
 
-        self.avgpool = nn.AdaptiveAvgPool2d((15, 40))
+        self.avgpool = nn.AdaptiveAvgPool2d((32, 16))
 
         self.fc1 = nn.Sequential(
-            nn.Linear(64*15*40, 4096),
+            nn.Linear(64*32*16, 4096),
             nn.ReLU(inplace=True),
             nn.Dropout(p=0.2),
             
@@ -44,7 +44,8 @@ class AdaptiveSpatialFeature(nn.Module):
             nn.Dropout(p=0.2),
             
             nn.Linear(2048, 1024),
-            nn.Sigmoid()
+            nn.ReLU(inplace=True)
+            # nn.Sigmoid()
         )
 
         self._initialize_weights()
