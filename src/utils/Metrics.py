@@ -81,7 +81,7 @@ def get_val_test_metrics(model, dataset, loss_func):
             loss_value = loss_func(outputs, labels).item()
 
             # get loss and acc train
-            vall_loss = vall_loss + ((loss_value - vall_loss) / (i + 1))
+            val_loss = val_loss + ((loss_value - val_loss) / (i + 1))
             
             y_true = labels.cpu().numpy()
             y_pred = torch.argmax(outputs, dim=1).cpu().numpy()
