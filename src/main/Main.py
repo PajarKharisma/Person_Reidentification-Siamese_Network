@@ -211,7 +211,7 @@ def test_train():
             
             x1 = x1.to(Param.device)
             x2 = x2.to(Param.device)
-            labels = labels.to(Param.device).int()
+            labels = labels.to(Param.device).long()
 
             optimizer.zero_grad()
 
