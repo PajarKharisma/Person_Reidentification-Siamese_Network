@@ -65,6 +65,7 @@ class TestNN(nn.Module):
         output2 = self.forward_once(input2)
         if input3 == None:
             input_cat = torch.cat((output1, output2, output2, output1), 0)
+            print(input_cat.size())
             final_output = self.fc2(input_cat)
             return final_output
         else:
