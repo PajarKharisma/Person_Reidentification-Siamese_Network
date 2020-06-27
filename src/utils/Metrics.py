@@ -62,3 +62,34 @@ def get_val_metrics(model, dataset, loss_func, threshold=0.5, data_type='PAIR'):
             val_acc = val_acc + ((get_acc(output1, output2, output3, threshold, data_type) - val_acc) / (i + 1))
 
     return val_loss, val_acc
+
+def get_val_test_metrics(model, dataset, loss_func):
+    model.eval()
+    model.zero_grad()
+    val_loss = 0
+    val_acc = 0
+    with torch.no_grad():
+        for i, data in enumerate(dataset):
+            x1, x2 , labels = data
+            
+            x1 = x1.to(Param.device)
+            x2 = x2.to(Param.device)
+            labels = labels.to(Param.device)
+
+            optimizer.zero_grad()
+
+            outputs = model(x1, x2)
+            labels = labels.long()
+            labels = F.one_hot(labels, 2)
+
+            loss_value = criterion(outputs, labels).item()
+
+            # get loss and acc train
+            vall_loss = vall_loss + ((loss_value - vall_loss) / (i + 1))
+            
+            y_true = torch.argmax(labels, dim=1).numpy()
+            y_pred = torch.argmax(outputs, dim=1).numpy()
+            acc = accuracy_score(y_true, y_pred)
+            val_acc = val_acc + ((acc - val_acc) / (i + 1))
+
+    return val_loss, val_acc
