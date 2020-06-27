@@ -317,7 +317,7 @@ if __name__ == "__main__":
     sys.stdout.write('Process...\n')
     sys.stdout.flush()
 
-    contrastive_train()
+    test_train()
 
     elapsed_time = time.time() - start_time
     print(time.strftime("Finish in %H:%M:%S", time.gmtime(elapsed_time)))
