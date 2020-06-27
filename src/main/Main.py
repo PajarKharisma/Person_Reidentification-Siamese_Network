@@ -54,7 +54,7 @@ def contrastive_load_process():
     train_set, val_set = torch.utils.data.random_split(contrastive_dataset, [train_length, val_length])
 
     train_dataloader = DataLoader(train_set, batch_size=Param.train_batch_size, shuffle=True)
-    val_dataloader = DataLoader(val_set, batch_size=val_length, shuffle=True)
+    val_dataloader = DataLoader(val_set, batch_size=Param.train_batch_size * 2, shuffle=True)
 
     return train_dataloader, val_dataloader
 
@@ -68,7 +68,7 @@ def triplet_load_process():
     train_set, val_set = torch.utils.data.random_split(triplet_dataset, [train_length, val_length])
 
     train_dataloader = DataLoader(train_set, batch_size=Param.train_batch_size, shuffle=True)
-    val_dataloader = DataLoader(val_set, batch_size=val_length, shuffle=True)
+    val_dataloader = DataLoader(val_set, batch_size=Param.train_batch_size * 2, shuffle=True)
 
     return train_dataloader, val_dataloader
 
@@ -126,10 +126,10 @@ def training(model, loss_function, dataset, data_type):
             best_model = copy.deepcopy(model)
         
         val_model = copy.deepcopy(model)
-        val_model.to('cpu')
-        val_loss = metrics.get_val_loss(val_model, criterion, val_dataloader, data_type)
-        x1, x2, x3 = metrics.validate(val_model, val_dataloader, data_type)
-        val_acc = metrics.get_acc(x1, x2, x3, THRESHOLD, data_type)
+        val_loss, val_acc = metrics.get_val_metrics(val_model, val_dataloader, criterion, data_type)
+        # val_loss = metrics.get_val_loss(val_model, criterion, val_dataloader, data_type)
+        # x1, x2, x3 = metrics.validate(val_model, val_dataloader, data_type)
+        # val_acc = metrics.get_acc(x1, x2, x3, THRESHOLD, data_type)
 
         output_str = ''
         output_str += 'Epoch Number : {}'.format(epoch + 1) + '\n'
