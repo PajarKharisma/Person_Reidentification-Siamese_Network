@@ -6,6 +6,7 @@ root_dir = os.getcwd()
 sys.path.append(root_dir)
 
 import torch
+import torch.nn as nn
 import torchvision.utils
 import torch.nn.functional as F
 import torchvision.transforms as transforms
