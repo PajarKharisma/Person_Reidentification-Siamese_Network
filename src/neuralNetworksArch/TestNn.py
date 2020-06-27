@@ -63,6 +63,7 @@ class TestNN(nn.Module):
     def forward(self, input1, input2, input3=None):
         output1 = self.forward_once(input1)
         output2 = self.forward_once(input2)
+        print('Output1 :', output1.size())
         if input3 == None:
             input_cat = torch.cat((output1, output2, output2, output1), 0)
             print(input_cat.size())
