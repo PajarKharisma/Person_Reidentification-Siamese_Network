@@ -174,7 +174,7 @@ def training(model, loss_function, dataset, data_type):
 
     torch.save(best_model.state_dict(), Path.model)
 
-def test_train(model, loss_function, dataset, data_type):
+def test_train():
     model = testNN.TestNN()
     model.to(Param.device)
 
