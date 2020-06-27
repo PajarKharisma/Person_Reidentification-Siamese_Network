@@ -35,7 +35,7 @@ from src.config.Path import *
 from src.config.Param import *
 
 SAVE_PLOT_PATH = root_dir+'/log/plot/'
-DATA_SPLIT = 0.9
+DATA_SPLIT = 0.8
 THRESHOLD = 0.5
 
 def partial_process():
@@ -176,7 +176,7 @@ def training(model, loss_function, dataset, data_type):
     torch.save(best_model.state_dict(), Path.model)
 
 def contrastive_train():
-    model = bSiamese.BasicSiameseNetwork()
+    model = bst.BstCnn()
     model.to(Param.device)
 
     criterion = lossFunc.ContrastiveLoss()
