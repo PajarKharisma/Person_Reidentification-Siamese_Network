@@ -70,11 +70,11 @@ def get_val_test_metrics(model, dataset, loss_func):
     val_acc = 0
     with torch.no_grad():
         for i, data in enumerate(dataset):
-            x1, x2 , labels.int() = data
+            x1, x2 , labels = data
             
             x1 = x1.to(Param.device)
             x2 = x2.to(Param.device)
-            labels = labels.to(Param.device)
+            labels = labels.to(Param.device).int()
 
             optimizer.zero_grad()
 

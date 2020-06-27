@@ -207,11 +207,11 @@ def test_train():
         model.train()
         for i, data in enumerate(train_dataloader):
             torch.cuda.empty_cache()
-            x1, x2 , labels.int() = data
+            x1, x2 , labels = data
             
             x1 = x1.to(Param.device)
             x2 = x2.to(Param.device)
-            labels = labels.to(Param.device)
+            labels = labels.to(Param.device).int()
 
             optimizer.zero_grad()
 
