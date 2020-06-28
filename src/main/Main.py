@@ -59,8 +59,8 @@ def contrastive_load_process():
 
     train_set, val_set = torch.utils.data.random_split(contrastive_dataset, [train_length, val_length])
 
-    train_dataloader = DataLoader(train_set, batch_size=Param.train_batch_size, shuffle=False)
-    val_dataloader = DataLoader(val_set, batch_size=Param.train_batch_size * 2, shuffle=False)
+    train_dataloader = DataLoader(train_set, batch_size=Param.train_batch_size, shuffle=True)
+    val_dataloader = DataLoader(val_set, batch_size=Param.train_batch_size * 2, shuffle=True)
 
     return train_dataloader, val_dataloader
 
