@@ -1,4 +1,6 @@
 import torch
+from src.config.Path import *
+from src.config.Param import *
 
 def save_checkpoint(save_dir, model, optimizer, epoch):
     checkpoint = {
