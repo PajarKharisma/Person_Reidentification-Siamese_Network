@@ -286,7 +286,7 @@ def test_train():
     torch.save(best_model.state_dict(), Path.model)
 
 def contrastive_train():
-    model = bst.BstCnn()
+    model = bst.BstCnn(pretrained = False)
     model.to(Param.device)
 
     criterion = lossFunc.ContrastiveLoss()
