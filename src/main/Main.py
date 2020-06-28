@@ -179,7 +179,7 @@ def training(model, loss_function, dataset, optimizer, loss, epoch_number=0, dat
 
     ckp.save_checkpoint(
         save_dir=Path.save_model,
-        model=best_model,
+        model=model,
         optimizer=optimizer,
         epoch=Param.train_number_epochs + epoch_number,
         loss=best_loss
