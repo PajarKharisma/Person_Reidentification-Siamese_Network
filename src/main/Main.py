@@ -289,7 +289,7 @@ def test_train():
     torch.save(best_model.state_dict(), Path.model)
 
 def contrastive_train():
-    model = bst.BstCnn(pretrained = True)
+    model = bst.BstCnn()
     model.to(Param.device)
 
     optimizer = optim.Adam(model.parameters(), lr=0.0005)
