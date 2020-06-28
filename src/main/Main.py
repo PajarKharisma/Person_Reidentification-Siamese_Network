@@ -39,7 +39,7 @@ from src.config.Path import *
 from src.config.Param import *
 
 SAVE_PLOT_PATH = root_dir+'/log/plot/'
-MODEL_PATH = root_dir+'/models/base-models.pth'
+MODEL_PATH = root_dir+'/models/base-model.pth'
 DATA_SPLIT = 0.8
 THRESHOLD = 0.5
 INPUT_SIZE = (64, 128)
