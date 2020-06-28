@@ -39,6 +39,7 @@ from src.config.Path import *
 from src.config.Param import *
 
 SAVE_PLOT_PATH = root_dir+'/log/plot/'
+MODEL_PATH = root_dir+'/models/base-models.pth'
 DATA_SPLIT = 0.8
 THRESHOLD = 0.5
 INPUT_SIZE = (64, 128)
@@ -286,7 +287,8 @@ def test_train():
     torch.save(best_model.state_dict(), Path.model)
 
 def contrastive_train():
-    model = bst.BstCnn(pretrained = False)
+    model = bst.BstCnn(pretrained = True)
+    model.load_state_dict(torch.load(MODEL_PATH, map_location=Param.device))
     model.to(Param.device)
 
     criterion = lossFunc.ContrastiveLoss()
