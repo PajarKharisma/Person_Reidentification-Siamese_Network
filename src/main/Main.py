@@ -41,6 +41,7 @@ from src.config.Param import *
 SAVE_PLOT_PATH = root_dir+'/log/plot/'
 DATA_SPLIT = 0.8
 THRESHOLD = 0.5
+INPUT_SIZE = (64, 128)
 
 def partial_process():
     # create_csv.contrastive_data(images_path=Path.images, save_path=Path.contrastive_train_csv)
@@ -49,7 +50,7 @@ def partial_process():
 
 def contrastive_load_process():
     trans = transforms.Compose([transforms.ToTensor()])
-    contrastive_dataset = dsetLoader.ContrastiveDataset(csv_path=Path.contrastive_train_csv, images_path=Path.images, transform=trans)
+    contrastive_dataset = dsetLoader.ContrastiveDataset(csv_path=Path.contrastive_train_csv, images_path=Path.images, transform=trans, resize=INPUT_SIZE)
 
     train_length = int(len(contrastive_dataset) * DATA_SPLIT)
     val_length = len(contrastive_dataset) - train_length
@@ -285,7 +286,7 @@ def test_train():
     torch.save(best_model.state_dict(), Path.model)
 
 def contrastive_train():
-    model = asf.AdaptiveSpatialFeature()
+    model = bst.BstCnn()
     model.to(Param.device)
 
     criterion = lossFunc.ContrastiveLoss()
@@ -319,7 +320,7 @@ if __name__ == "__main__":
     sys.stdout.write('Process...\n')
     sys.stdout.flush()
 
-    test_train()
+    contrastive_train()
 
     elapsed_time = time.time() - start_time
     print(time.strftime("Finish in %H:%M:%S", time.gmtime(elapsed_time)))

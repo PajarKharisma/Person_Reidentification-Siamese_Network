@@ -8,8 +8,6 @@ from torch.utils.data import Dataset
 
 from . import MatrixOps as matOps
 
-SIZE = 224
-
 class ContrastiveDataset(Dataset):
     def __init__(self, csv_path, images_path, transform=None, resize=None):
         self.images_path = images_path
