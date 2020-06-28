@@ -313,6 +313,8 @@ def contrastive_train():
     criterion = lossFunc.ContrastiveLoss()
     dataset = contrastive_load_process()
 
+    sys.stdout.write('current loss '+str(loss)+'\n')
+
     training(
         model=model,
         loss_function=criterion,
