@@ -78,7 +78,7 @@ def triplet_load_process():
 
     return train_dataloader, val_dataloader
 
-def training(model, loss_function, dataset, optimizer, epoch_number=0, loss=sys.float_info.max, data_type='PAIR'):
+def training(model, loss_function, dataset, optimizer, loss, epoch_number=0, data_type='PAIR'):
     criterion = loss_function
     train_dataloader, val_dataloader = dataset
     optimizer = optimizer
@@ -299,6 +299,8 @@ def contrastive_train():
     model = model.to(Param.device)
 
     optimizer = optim.Adam(model.parameters(), lr=0.0005)
+    epoch = 0
+    loss = sys.float_info.max
 
     if(Param.pretrained == True):
         model, optimizer, epoch, loss = ckp.load_checkpoint(
@@ -316,8 +318,8 @@ def contrastive_train():
         loss_function=criterion,
         dataset=dataset,
         optimizer=optimizer,
-        epoch_number=epoch,
         loss=loss,
+        epoch_number=epoch,
         data_type='PAIR'
     )
 
