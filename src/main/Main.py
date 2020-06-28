@@ -34,6 +34,7 @@ import src.utils.Visual as vis
 import src.utils.DatasetLoader as dsetLoader
 import src.utils.LossFunction as lossFunc
 import src.utils.Metrics as metrics
+import src.utils.Checkpoint as ckp
 
 from src.config.Path import *
 from src.config.Param import *
@@ -77,10 +78,10 @@ def triplet_load_process():
 
     return train_dataloader, val_dataloader
 
-def training(model, loss_function, dataset, data_type):
+def training(model, loss_function, dataset, optimizer, data_type):
     criterion = loss_function
     train_dataloader, val_dataloader = dataset
-    optimizer = optim.Adam(model.parameters(), lr=0.0005)
+    optimizer = optimizer
 
     history_loss = {
         'epoch' : [],
@@ -176,7 +177,8 @@ def training(model, loss_function, dataset, data_type):
         should_save=True
     )
 
-    torch.save(best_model.state_dict(), Path.model)
+    ckp.save_checkpoint(Path.save_model, best_model, optimizer, Param.epoch)
+    # torch.save(best_model.state_dict(), Path.model)
 
 def test_train():
     model = testNN.TestNN()
@@ -288,9 +290,9 @@ def test_train():
 
 def contrastive_train():
     model = bst.BstCnn(pretrained = True)
-    model.load_state_dict(torch.load(MODEL_PATH, map_location=Param.device))
     model.to(Param.device)
 
+    optimizer = optim.Adam(model.parameters(), lr=0.0005)
     criterion = lossFunc.ContrastiveLoss()
     dataset = contrastive_load_process()
 
@@ -298,6 +300,7 @@ def contrastive_train():
         model=model,
         loss_function=criterion,
         dataset=dataset,
+        optimizer=optimizer,
         data_type='PAIR'
     )
 
@@ -305,6 +308,7 @@ def triplet_train():
     model = vgg.get_model('vgg_mpkp', True)
     model.to(Param.device)
 
+    optimizer = optim.Adam(model.parameters(), lr=0.0005)
     criterion = lossFunc.TripletLoss()
     dataset = triplet_load_process()
 
@@ -314,6 +318,7 @@ def triplet_train():
         model=model,
         loss_function=criterion,
         dataset=dataset,
+        optimizer=optimizer,
         data_type='TRIPLET'
     )
 

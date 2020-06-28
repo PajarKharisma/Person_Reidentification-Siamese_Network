@@ -2,7 +2,7 @@ import torch
 import torch.nn as nn
 
 class BstCnn(nn.Module):
-    def __init__(self, pretrained=False):
+    def __init__(self):
         super(BstCnn, self).__init__()
 
         self.conv5x5_1 = nn.Sequential(
@@ -61,8 +61,7 @@ class BstCnn(nn.Module):
             # nn.Sigmoid()
         )
 
-        if pretrained == False:
-            self._initialize_weights()
+        self._initialize_weights()
 
     def forward_once(self, x):
         out_5x5 = self.conv5x5_1(x)
