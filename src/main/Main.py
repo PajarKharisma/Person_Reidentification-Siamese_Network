@@ -78,7 +78,7 @@ def triplet_load_process():
 
     return train_dataloader, val_dataloader
 
-def training(model, loss_function, dataset, optimizer, epoch_number=0 data_type):
+def training(model, loss_function, dataset, optimizer, epoch_number=0, data_type):
     criterion = loss_function
     train_dataloader, val_dataloader = dataset
     optimizer = optimizer
