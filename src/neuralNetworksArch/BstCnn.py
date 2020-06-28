@@ -2,7 +2,7 @@ import torch
 import torch.nn as nn
 
 class BstCnn(nn.Module):
-    def __init__(self, , pretrained=False):
+    def __init__(self, pretrained=False):
         super(BstCnn, self).__init__()
 
         self.conv5x5_1 = nn.Sequential(
