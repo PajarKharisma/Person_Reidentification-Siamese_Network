@@ -177,7 +177,7 @@ def training(model, loss_function, dataset, optimizer, data_type):
         should_save=True
     )
 
-    ckp.save_checkpoint(Path.save_model, best_model, optimizer, Param.epoch)
+    ckp.save_checkpoint(Path.save_model, best_model, optimizer, Param.train_number_epochs)
     # torch.save(best_model.state_dict(), Path.model)
 
 def test_train():
