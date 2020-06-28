@@ -305,7 +305,7 @@ def contrastive_train():
         )
     
     model = model.to(Param.device)
-    optimizer = optimizer.cpu()
+    # optimizer = optimizer.cpu()
 
 
     criterion = lossFunc.ContrastiveLoss()
