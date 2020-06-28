@@ -78,7 +78,7 @@ def triplet_load_process():
 
     return train_dataloader, val_dataloader
 
-def training(model, loss_function, dataset, optimizer, epoch_number=0, data_type='PAIR'):
+def training(model, loss_function, dataset, optimizer, epoch_number=0, loss=sys.float_info.max, data_type='PAIR'):
     criterion = loss_function
     train_dataloader, val_dataloader = dataset
     optimizer = optimizer
@@ -95,7 +95,7 @@ def training(model, loss_function, dataset, optimizer, epoch_number=0, data_type
         'val' : []
     }
 
-    best_loss = 100
+    best_loss = loss
     best_model = None
     val_model = None
     
@@ -181,7 +181,8 @@ def training(model, loss_function, dataset, optimizer, epoch_number=0, data_type
         save_dir=Path.save_model,
         model=best_model,
         optimizer=optimizer,
-        epoch=Param.train_number_epochs + epoch_number
+        epoch=Param.train_number_epochs + epoch_number,
+        loss=best_loss
     )
     # torch.save(best_model.state_dict(), Path.model)
 
@@ -296,16 +297,15 @@ def test_train():
 def contrastive_train():
     model = bst.BstCnn()
     model = model.to(Param.device)
-    
+
     optimizer = optim.Adam(model.parameters(), lr=0.0005)
 
     if(Param.pretrained == True):
-        model, optimizer, epoch = ckp.load_checkpoint(
+        model, optimizer, epoch, loss = ckp.load_checkpoint(
             load_dir=Path.load_model,
             model=model,
             optimizer=optimizer
         )
-    # optimizer = optimizer.cpu()
 
 
     criterion = lossFunc.ContrastiveLoss()
@@ -317,6 +317,7 @@ def contrastive_train():
         dataset=dataset,
         optimizer=optimizer,
         epoch_number=epoch,
+        loss=loss,
         data_type='PAIR'
     )
 
