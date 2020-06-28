@@ -295,6 +295,8 @@ def test_train():
 
 def contrastive_train():
     model = bst.BstCnn()
+    model = model.to(Param.device)
+    
     optimizer = optim.Adam(model.parameters(), lr=0.0005)
 
     if(Param.pretrained == True):
@@ -303,8 +305,6 @@ def contrastive_train():
             model=model,
             optimizer=optimizer
         )
-    
-    model = model.to(Param.device)
     # optimizer = optimizer.cpu()
 
 
