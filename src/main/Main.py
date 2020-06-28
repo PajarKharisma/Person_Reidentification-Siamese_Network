@@ -78,7 +78,7 @@ def triplet_load_process():
 
     return train_dataloader, val_dataloader
 
-def training(model, loss_function, dataset, optimizer, epoch_number=0, data_type):
+def training(model, loss_function, dataset, optimizer, epoch_num=0, data_type):
     criterion = loss_function
     train_dataloader, val_dataloader = dataset
     optimizer = optimizer
@@ -181,7 +181,7 @@ def training(model, loss_function, dataset, optimizer, epoch_number=0, data_type
         save_dir=Path.save_model,
         model=best_model,
         optimizer=optimizer,
-        epoch=Param.train_number_epochs + epoch_number
+        epoch=Param.train_number_epochs + epoch_num
     )
     # torch.save(best_model.state_dict(), Path.model)
 
@@ -313,7 +313,7 @@ def contrastive_train():
         loss_function=criterion,
         dataset=dataset,
         optimizer=optimizer,
-        epoch_number=epoch,
+        epoch_num=epoch,
         data_type='PAIR'
     )
 
