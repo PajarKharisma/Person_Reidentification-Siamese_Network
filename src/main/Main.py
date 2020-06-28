@@ -96,8 +96,11 @@ def training(model, loss_function, dataset, optimizer, loss, epoch_number=0, dat
     }
 
     best_loss = loss
-    best_model = None
     val_model = None
+    best_model = None
+
+    if Param.pretrained == True:
+        best_model = copy.deepcopy(model)
     
     for epoch in range(0, Param.train_number_epochs):
         train_loss = 0
@@ -179,7 +182,7 @@ def training(model, loss_function, dataset, optimizer, loss, epoch_number=0, dat
 
     ckp.save_checkpoint(
         save_dir=Path.save_model,
-        model=model,
+        model=best_model,
         optimizer=optimizer,
         epoch=Param.train_number_epochs + epoch_number,
         loss=best_loss
@@ -312,8 +315,6 @@ def contrastive_train():
 
     criterion = lossFunc.ContrastiveLoss()
     dataset = contrastive_load_process()
-
-    sys.stdout.write('current loss '+str(loss)+'\n')
 
     training(
         model=model,
