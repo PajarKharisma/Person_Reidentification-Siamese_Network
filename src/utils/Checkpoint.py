@@ -1,10 +1,14 @@
 import torch
+from scipy import stats
+
 from src.config.Path import *
 from src.config.Param import *
 
 def save_checkpoint(desc, save_dir, model, optimizer, loss, epoch, dist):
     checkpoint = {
         'desc' : desc,
+        'threshold' : float(stats.mode(Param.threshold_list, axis=None)),
+        'threshold_list' : Param.threshold_list,
         'epoch': epoch,
         'loss' : loss,
         'dist' : dist,
@@ -15,7 +19,5 @@ def save_checkpoint(desc, save_dir, model, optimizer, loss, epoch, dist):
 
 def load_checkpoint(load_dir, model, optimizer):
     checkpoint = torch.load(load_dir, map_location=Param.device)
-    model.load_state_dict(checkpoint['state_dict'])
-    optimizer.load_state_dict(checkpoint['optimizer'])
 
-    return model, optimizer, checkpoint['epoch'], checkpoint['loss'], checkpoint['dist'], checkpoint['desc']
+    return checkpoint

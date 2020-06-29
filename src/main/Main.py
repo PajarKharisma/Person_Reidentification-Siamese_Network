@@ -200,14 +200,22 @@ def contrastive_train():
     loss = sys.float_info.max
 
     if(Param.pretrained == True):
-        model, optimizer, epoch, loss, dist, _ = ckp.load_checkpoint(
+        checkpoint  = ckp.load_checkpoint(
             load_dir=Path.load_model,
             model=model,
             optimizer=optimizer
         )
+        
+        model.load_state_dict(checkpoint['state_dict'])
+        optimizer.load_state_dict(checkpoint['optimizer'])
+        epoch = checkpoint['epoch']
+        loss = checkpoint['loss']
     
-        Param.min_dist = dist[0]
-        Param.max_dist = dist[1]
+        Param.min_dist = checkpoint['dist'][0]
+        Param.max_dist = checkpoint['dist'][1]
+
+        best_threshold = checkpoint['threshold']
+        Param.threshold_list = checkpoint['threshold_list']
 
     criterion = lossFunc.ContrastiveLoss()
     dataset = contrastive_load_process()
