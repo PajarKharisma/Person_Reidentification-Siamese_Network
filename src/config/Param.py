@@ -6,11 +6,11 @@ class Param():
     #Hyperparameter
     device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
     train_batch_size = 32
-    train_number_epochs = 10
+    train_number_epochs = 50
     data_split = 0.8
     input_size = (64,128)
     threshold = 0.5
-    pretrained = True
+    pretrained = False
     data_type = 'PAIR'
     desc = '#1 Body Structure Based Triplet ' + str(datetime.datetime.now())
 
