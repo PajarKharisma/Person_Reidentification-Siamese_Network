@@ -7,7 +7,7 @@ from src.config.Param import *
 def save_checkpoint(desc, save_dir, model, optimizer, loss, epoch, dist):
     checkpoint = {
         'desc' : desc,
-        'threshold' : float(stats.mode(Param.threshold_list, axis=None)),
+        'threshold' : float(stats.mode(Param.threshold_list, axis=None)[0]),
         'threshold_list' : Param.threshold_list,
         'epoch': epoch,
         'loss' : loss,
