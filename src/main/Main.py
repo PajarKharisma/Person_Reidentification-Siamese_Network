@@ -217,17 +217,22 @@ def contrastive_train():
         best_threshold = checkpoint['threshold']
         Param.threshold_list = checkpoint['threshold_list']
 
-    criterion = lossFunc.ContrastiveLoss()
-    dataset = contrastive_load_process()
+    print('epoch : ',epoch)
+    print('loss : ',loss)
+    print('threshold : ',best_threshold)
+    print('threshold list : ',Param.threshold_list)
 
-    training(
-        model=model,
-        loss_function=criterion,
-        dataset=dataset,
-        optimizer=optimizer,
-        loss=loss,
-        epoch_number=epoch
-    )
+    # criterion = lossFunc.ContrastiveLoss()
+    # dataset = contrastive_load_process()
+
+    # training(
+    #     model=model,
+    #     loss_function=criterion,
+    #     dataset=dataset,
+    #     optimizer=optimizer,
+    #     loss=loss,
+    #     epoch_number=epoch
+    # )
 
 def triplet_train():
     model = vgg.get_model('vgg_mpkp', True)
