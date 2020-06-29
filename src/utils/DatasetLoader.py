@@ -34,7 +34,7 @@ class ContrastiveDataset(Dataset):
         return img1, img2, torch.from_numpy(np.array([label], dtype=np.float32))
     
     def __len__(self):
-        return len(self.df) // 500
+        return len(self.df)
         # return 1000
 
 class TripletDataset(Dataset):
