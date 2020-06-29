@@ -9,6 +9,7 @@ class Path():
     log_dir = root_dir + '/log/'
     save_model = root_dir + '/models/model-' + str(uuid.uuid4().hex) + '.pth'
     load_model = root_dir + '/models/pretrained-model.pth'
+    save_plot = root_dir+'/log/plot/'
 
     images = path + '/images/full/'
     head_images = path + '/images/head/'
