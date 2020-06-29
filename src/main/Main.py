@@ -125,8 +125,8 @@ def training(model, loss_function, dataset, optimizer, loss, epoch_number=0):
             dist = metrics.get_distances(output1, output2)
             max_dist = float(torch.max(dist))
             min_dist = float(torch.min(dist))
-            Param.max_dist = max_dist if max_dist > Param.max_dist
-            Param.min_dist = min_dist if min_dist < Param.min_dist
+            Param.max_dist = max_dist if max_dist > Param.max_dist else Param.max_dist
+            Param.min_dist = min_dist if min_dist < Param.min_dist else Param.min_dist
 
             train_loss = train_loss + ((loss_value.item() - train_loss) / (i + 1))
             train_acc = train_acc + ((metrics.get_acc(output1, output2, output3) - train_acc) / (i + 1))
