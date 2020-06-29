@@ -33,9 +33,9 @@ def get_acc(x1, x2, x3):
     if Param.data_type == 'PAIR':   
         y_true = x3.flatten().cpu().numpy()
         distances = [get_distances(x1, x2)]
-        y_preds = np.array([distance_to_class(distances=distances, threshold=tresh) for thresh in threshold])
-        accs = np.array([accuracy_score(y_true, y_pred) for y_pred in y_preds])
-        acc = np.max(accs)
+        y_preds = [distance_to_class(distances=distances, threshold=tresh) for thresh in threshold]
+        accs = [accuracy_score(y_true, y_pred) for y_pred in y_preds]
+        acc = max(accs)
     else:
         y_true = np.full((len(x1)), 0.0)
         dist_a = get_distances(x1,x2)
