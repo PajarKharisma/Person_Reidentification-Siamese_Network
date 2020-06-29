@@ -1,5 +1,6 @@
 import torch
 import torch.nn.functional as F
+from torch.autograd import Variable
 
 import copy
 import numpy as np
@@ -13,11 +14,11 @@ def normalize_data(val, max_val, min_val):
 def get_distances(x1, x2):
     return F.pairwise_distance(x1, x2, keepdim = True)
 
-def distance_to_class(distances, margin=1.0):
+def distance_to_class(distances, threshold=0.5, margin=1.0):
     if Param.data_type == 'PAIR':
         distances = distances[0].flatten().detach().cpu().numpy()
         distances_norm = [normalize_data(d, Param.max_dist, Param.min_dist) for d in distances]
-        y = [0.0 if d <= Param.threshold else 1.0 for d in distances_norm]
+        y = [0.0 if d <= threshold else 1.0 for d in distances_norm]
     else:
         dist_p = distances[0].flatten().detach().cpu().numpy()
         dist_n = distances[1].flatten().detach().cpu().numpy()
@@ -28,18 +29,22 @@ def distance_to_class(distances, margin=1.0):
     return np.array(y)
 
 def get_acc(x1, x2, x3):
+    threshold =  np.arange(0,1,0.05)
     if Param.data_type == 'PAIR':   
         y_true = x3.flatten().cpu().numpy()
         distances = [get_distances(x1, x2)]
-        y_pred = distance_to_class(distances=distances)
+        y_preds = np.array([distance_to_class(distances=distances, threshold=tresh) for thresh in threshold])
+        accs = np.array([accuracy_score(y_true, y_pred) for y_pred in y_preds])
+        acc = np.max(accs)
     else:
         y_true = np.full((len(x1)), 0.0)
         dist_a = get_distances(x1,x2)
         dist_b = get_distances(x1,x3)
         distances = [dist_a, dist_b]
         y_pred = distance_to_class(distances=distances)
+        acc = accuracy_score(y_true, y_pred)
     
-    return accuracy_score(y_true, y_pred)
+    return acc
 
 def get_val_metrics(model, dataset, loss_func):
     model.eval()
@@ -49,9 +54,9 @@ def get_val_metrics(model, dataset, loss_func):
     with torch.no_grad():
         for i, data in enumerate(dataset):
             x1, x2, x3 = data
-            x1 = x1.to(Param.device)
-            x2 = x2.to(Param.device)
-            x3 = x3.to(Param.device)
+            x1 = Variable(x1.to(Param.device))
+            x2 = Variable(x2.to(Param.device))
+            x3 = Variable(x3.to(Param.device))
 
             if Param.data_type == 'PAIR':
                 output1, output2 = model(x1, x2)
