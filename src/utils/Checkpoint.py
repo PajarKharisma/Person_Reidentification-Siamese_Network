@@ -18,4 +18,4 @@ def load_checkpoint(load_dir, model, optimizer):
     model.load_state_dict(checkpoint['state_dict'])
     optimizer.load_state_dict(checkpoint['optimizer'])
 
-    return model, optimizer, checkpoint['epoch'], checkpoint['loss'], checkpoint['dist'], desc
+    return model, optimizer, checkpoint['epoch'], checkpoint['loss'], checkpoint['dist'], checkpoint['desc']
