@@ -8,7 +8,7 @@ class Path():
     path = root_dir + '/dataset/cuhk03'
     log_dir = root_dir + '/log/'
     save_model = root_dir + '/models/model-' + str(uuid.uuid4().hex) + '.pth'
-    load_model = root_dir + '/models/base-model.pth'
+    load_model = root_dir + '/models/pretrained-model.pth'
 
     images = path + '/images/full/'
     head_images = path + '/images/head/'
