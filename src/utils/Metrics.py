@@ -30,10 +30,10 @@ def distance_to_class(distances, threshold=0.5, margin=1.0):
 
 def get_acc(x1, x2, x3):
     threshold =  np.arange(0,1,0.05)
-    if Param.data_type == 'PAIR':   
+    if Param.data_type == 'PAIR':
         y_true = x3.flatten().cpu().numpy()
         distances = [get_distances(x1, x2)]
-        y_preds = [distance_to_class(distances=distances, threshold=tresh) for thresh in threshold]
+        y_preds = [distance_to_class(distances=distances, threshold=thresh) for thresh in threshold]
         accs = [accuracy_score(y_true, y_pred) for y_pred in y_preds]
         acc = max(accs)
     else:
