@@ -222,8 +222,7 @@ def contrastive_train():
         dataset=dataset,
         optimizer=optimizer,
         loss=loss,
-        epoch_number=epoch,
-        data_type='PAIR'
+        epoch_number=epoch
     )
 
 def triplet_train():
