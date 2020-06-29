@@ -11,6 +11,7 @@ import torchvision.utils
 import torch.nn.functional as F
 import torchvision.transforms as transforms
 from torch import optim
+from torch.autograd import Variable
 from torch.utils.data import DataLoader
 from torchsummary import summary
 
@@ -42,7 +43,7 @@ from src.config.Param import *
 SAVE_PLOT_PATH = root_dir+'/log/plot/'
 MODEL_PATH = root_dir+'/models/base-model.pth'
 DATA_SPLIT = 0.8
-THRESHOLD = 0.5
+THRESHOLD = 2.0
 INPUT_SIZE = (64, 128)
 
 def partial_process():
@@ -110,9 +111,9 @@ def training(model, loss_function, dataset, optimizer, loss, epoch_number=0, dat
             torch.cuda.empty_cache()
             x1, x2 , x3 = data
             
-            x1 = x1.to(Param.device)
-            x2 = x2.to(Param.device)
-            x3 = x3.to(Param.device)
+            x1 = Variable(x1.to(Param.device))
+            x2 = Variable(x2.to(Param.device))
+            x3 = Variable(x3.to(Param.device))
 
             optimizer.zero_grad()
             if data_type == 'PAIR':
