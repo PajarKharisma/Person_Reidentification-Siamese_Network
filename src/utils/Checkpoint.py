@@ -2,11 +2,11 @@ import torch
 from src.config.Path import *
 from src.config.Param import *
 
-def save_checkpoint(save_dir, model, optimizer, loss, epoch):
+def save_checkpoint(save_dir, model, optimizer, loss, epoch, dist):
     checkpoint = {
         'epoch': epoch,
         'loss' : loss,
-        'dist' : (Param.min_dist, Param.max_dist),
+        'dist' : dist,
         'state_dict': model.state_dict(),
         'optimizer': optimizer.state_dict()
     }

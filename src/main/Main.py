@@ -123,8 +123,8 @@ def training(model, loss_function, dataset, optimizer, loss, epoch_number=0):
 
             # get loss and acc train
             dist = metrics.get_distances(output1, output2)
-            max_dist = torch.max(dist)
-            min_dist = torch.min(dist)
+            max_dist = float(torch.max(dist))
+            min_dist = float(torch.min(dist))
             Param.max_dist = max_dist if max_dist > Param.max_dist
             Param.min_dist = min_dist if min_dist < Param.min_dist
 
