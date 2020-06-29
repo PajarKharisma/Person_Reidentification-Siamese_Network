@@ -2,8 +2,9 @@ import torch
 from src.config.Path import *
 from src.config.Param import *
 
-def save_checkpoint(save_dir, model, optimizer, loss, epoch, dist):
+def save_checkpoint(desc, save_dir, model, optimizer, loss, epoch, dist):
     checkpoint = {
+        'desc' : desc,
         'epoch': epoch,
         'loss' : loss,
         'dist' : dist,
@@ -17,4 +18,4 @@ def load_checkpoint(load_dir, model, optimizer):
     model.load_state_dict(checkpoint['state_dict'])
     optimizer.load_state_dict(checkpoint['optimizer'])
 
-    return model, optimizer, checkpoint['epoch'], checkpoint['loss'], checkpoint['dist']
+    return model, optimizer, checkpoint['epoch'], checkpoint['loss'], checkpoint['dist'], desc

@@ -180,6 +180,7 @@ def training(model, loss_function, dataset, optimizer, loss, epoch_number=0):
     )
 
     ckp.save_checkpoint(
+        desc=Param.desc,
         save_dir=Path.save_model,
         model=best_model,
         optimizer=optimizer,
@@ -198,10 +199,8 @@ def contrastive_train():
     epoch = 0
     loss = sys.float_info.max
 
-    print('min_dist : ',Param.min_dist)
-    print('max_dist : ',Param.max_dist)
     if(Param.pretrained == True):
-        model, optimizer, epoch, loss, dist = ckp.load_checkpoint(
+        model, optimizer, epoch, loss, dist, desc = ckp.load_checkpoint(
             load_dir=Path.load_model,
             model=model,
             optimizer=optimizer
@@ -210,20 +209,17 @@ def contrastive_train():
         Param.min_dist = dist[0]
         Param.max_dist = dist[1]
 
-    print('min_dist : ',Param.min_dist)
-    print('max_dist : ',Param.max_dist)
+    criterion = lossFunc.ContrastiveLoss()
+    dataset = contrastive_load_process()
 
-    # criterion = lossFunc.ContrastiveLoss()
-    # dataset = contrastive_load_process()
-
-    # training(
-    #     model=model,
-    #     loss_function=criterion,
-    #     dataset=dataset,
-    #     optimizer=optimizer,
-    #     loss=loss,
-    #     epoch_number=epoch
-    # )
+    training(
+        model=model,
+        loss_function=criterion,
+        dataset=dataset,
+        optimizer=optimizer,
+        loss=loss,
+        epoch_number=epoch
+    )
 
 def triplet_train():
     model = vgg.get_model('vgg_mpkp', True)
