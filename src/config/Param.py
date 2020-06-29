@@ -1,6 +1,7 @@
 import torch
 import sys
 import datetime
+import numpy as np
 
 class Param():
     #Hyperparameter
