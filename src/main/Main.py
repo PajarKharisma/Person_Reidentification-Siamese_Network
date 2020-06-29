@@ -123,10 +123,10 @@ def training(model, loss_function, dataset, optimizer, loss, epoch_number=0):
 
             # get loss and acc train
             dist = metrics.get_distances(output1, output2)
-            max_dist = float(torch.max(dist))
-            min_dist = float(torch.min(dist))
-            Param.max_dist = max_dist if max_dist > Param.max_dist else Param.max_dist
-            Param.min_dist = min_dist if min_dist < Param.min_dist else Param.min_dist
+            Param.max_dist = float(torch.max(dist))
+            Param.min_dist = float(torch.min(dist))
+            # Param.max_dist = max_dist if max_dist > Param.max_dist else Param.max_dist
+            # Param.min_dist = min_dist if min_dist < Param.min_dist else Param.min_dist
 
             train_loss = train_loss + ((loss_value.item() - train_loss) / (i + 1))
             train_acc = train_acc + ((metrics.get_acc(output1, output2, output3) - train_acc) / (i + 1))
@@ -210,20 +210,17 @@ def contrastive_train():
         Param.min_dist = dist[0]
         Param.max_dist = dist[1]
 
-    print('min_dist : ',Param.min_dist)
-    print('max_dist : ',Param.max_dist)
-    
-    # criterion = lossFunc.ContrastiveLoss()
-    # dataset = contrastive_load_process()
+    criterion = lossFunc.ContrastiveLoss()
+    dataset = contrastive_load_process()
 
-    # training(
-    #     model=model,
-    #     loss_function=criterion,
-    #     dataset=dataset,
-    #     optimizer=optimizer,
-    #     loss=loss,
-    #     epoch_number=epoch
-    # )
+    training(
+        model=model,
+        loss_function=criterion,
+        dataset=dataset,
+        optimizer=optimizer,
+        loss=loss,
+        epoch_number=epoch
+    )
 
 def triplet_train():
     model = vgg.get_model('vgg_mpkp', True)

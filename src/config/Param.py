@@ -9,7 +9,7 @@ class Param():
     data_split = 0.8
     input_size = (64,128)
     threshold = 0.5
-    pretrained = True
+    pretrained = False
     data_type = 'PAIR'
 
     max_dist = 0
