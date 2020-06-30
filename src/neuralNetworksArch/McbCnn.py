@@ -1,6 +1,6 @@
 import torch
 import torch.nn as nn
-from compact_bilinear_pooling import CountSketch, CompactBilinearPooling
+from src.utils.CompactBiinearPooling import CountSketch, CompactBilinearPooling
 
 class ConvNetwork_1(nn.Module):
     def __init__(self):
