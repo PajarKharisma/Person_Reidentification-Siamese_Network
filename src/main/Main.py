@@ -219,6 +219,7 @@ def contrastive_train():
 
     print('epoch : ',epoch)
     print('loss : ',loss)
+    print('dist : ',checkpoint['dist'])
     print('threshold : ',best_threshold)
     print('threshold list : ',Param.threshold_list)
 
