@@ -11,7 +11,7 @@ class Param():
     data_split = 0.8
     input_size = (64,128)
     threshold = np.arange(0.1, 1, 0.05)
-    pretrained = False
+    pretrained = True
     data_type = 'PAIR'
     desc = '#1 Body Structure Based Triplet ' + str(datetime.datetime.now())
 
