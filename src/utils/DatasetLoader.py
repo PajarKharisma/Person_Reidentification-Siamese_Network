@@ -66,7 +66,7 @@ class TripletDataset(Dataset):
         return anc, pos, neg
     
     def __len__(self):
-        return len(self.df) // 10
+        return len(self.df) // 2
 
 class SinglePairDataset(Dataset):
     def __init__(self, img1, img2, width, height, transform=None):
