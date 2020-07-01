@@ -193,7 +193,7 @@ def training(model, loss_function, dataset, optimizer, loss, epoch_number=0):
 
 def contrastive_train():
     # model = bst.BstCnn()
-    model = bSiamese.BasicSiameseNetwork()
+    model = asf.AdaptiveSpatialFeature()
     model = model.to(Param.device)
 
     optimizer = optim.Adam(model.parameters(), lr=0.0005)
@@ -280,7 +280,7 @@ if __name__ == "__main__":
     sys.stdout.write('Process using '+str(Param.device)+'\n')
     sys.stdout.flush()
 
-    triplet_train()
+    contrastive_train()
 
     elapsed_time = time.time() - start_time
     print(time.strftime("Finish in %H:%M:%S", time.gmtime(elapsed_time)))

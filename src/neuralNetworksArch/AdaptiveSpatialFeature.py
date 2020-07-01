@@ -44,7 +44,8 @@ class AdaptiveSpatialFeature(nn.Module):
             nn.Dropout(p=0.2),
             
             nn.Linear(2048, 1024),
-            nn.ReLU(inplace=True)
+            nn.Softmax(dim=1)
+            # nn.ReLU(inplace=True)
             # nn.Sigmoid()
         )
 

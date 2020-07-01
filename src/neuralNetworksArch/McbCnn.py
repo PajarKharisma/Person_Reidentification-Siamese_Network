@@ -55,10 +55,10 @@ class PartNetworkOnce(nn.Module):
             nn.BatchNorm2d(64)
         )
 
-        self.avgpool = nn.AdaptiveAvgPool2d((11, 4))
+        self.avgpool = nn.AdaptiveAvgPool2d((4, 12))
 
         self.fc = nn.Sequential(
-            nn.Linear(64*11*4, 100),
+            nn.Linear(64*4*12, 100),
             nn.ReLU(inplace=True)
         )
 
@@ -73,23 +73,23 @@ class PartNetwork(nn.Module):
     def __init__(self):
         super(PartNetwork, self).__init__()
 
-        self.net_up = PartNetworkOnce()
-        self.net_bot = PartNetworkOnce()
-
-        self.fc = nn.Sequential(
-            nn.Linear(200, 500),
-            nn.ReLU(inplace=True)
-        )
+        self.net_1 = PartNetworkOnce()
+        self.net_2 = PartNetworkOnce()
+        self.net_3 = PartNetworkOnce()
+        self.net_4 = PartNetworkOnce()
 
     def forward(self, x):
-        x_up = x[:,:,:8,:]
-        x_bot = x[:,:,-8:,:]
+        x_1 = x[:,:,:8,:]
+        x_2 = x[:,:,8:16,:]
+        x_3 = x[:,:,16:24,:]
+        x_4 = x[:,:,24:32,:]
 
-        out_up = self.net_up(x_up)
-        out_bot = self.net_bot(x_bot)
+        out_1 = self.net_1(x_1)
+        out_2 = self.net_2(x_2)
+        out_3 = self.net_3(x_3)
+        out_4 = self.net_4(x_4)
 
-        output = torch.cat([out_up, out_bot], 1)
-        output = self.fc(output)
+        output = torch.cat([out_1, out_2, out_3, out_4], 1)
 
         return output
 
@@ -108,10 +108,10 @@ class McbCnn(nn.Module):
 
         self.compact_bil_layer = CompactBilinearPooling(64, 64, 400)
 
-        self.avgpool = nn.AdaptiveAvgPool2d((4, 10))
+        self.avgpool = nn.AdaptiveAvgPool2d((8, 4))
 
         self.fc = nn.Sequential(
-            nn.Linear(400*4*10, 1000),
+            nn.Linear(400*8*4, 1000),
             nn.ReLU(inplace=True)
         )
 
