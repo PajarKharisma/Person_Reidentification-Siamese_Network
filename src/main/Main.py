@@ -192,7 +192,8 @@ def training(model, loss_function, dataset, optimizer, loss, epoch_number=0):
     # torch.save(best_model.state_dict(), Path.model)
 
 def contrastive_train():
-    model = bst.BstCnn()
+    # model = bst.BstCnn()
+    model = bSiamese.BasicSiameseNetwork()
     model = model.to(Param.device)
 
     optimizer = optim.Adam(model.parameters(), lr=0.0005)
@@ -236,7 +237,8 @@ def contrastive_train():
     )
 
 def triplet_train():
-    model = bst.BstCnn()
+    # model = bst.BstCnn()
+    model = bSiamese.BasicSiameseNetwork()
     model = model.to(Param.device)
 
     optimizer = optim.Adam(model.parameters(), lr=0.0005)
