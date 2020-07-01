@@ -43,6 +43,7 @@ class TripletDataset(Dataset):
         self.csv_path = csv_path
         self.transform = transform
         self.df = pd.read_csv(self.csv_path)
+        self.resize = resize
     
     def __getitem__(self, index):
         anc = cv2.imread(self.images_path + self.df['anchor'][index])
