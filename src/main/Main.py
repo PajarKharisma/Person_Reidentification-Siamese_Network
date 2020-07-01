@@ -279,6 +279,7 @@ def triplet_train():
 if __name__ == "__main__":
     start_time = time.time()
     sys.stdout.write('Process using '+str(Param.device)+'\n')
+    sys.stdout.write(Param.desc+'\n\n')
     sys.stdout.flush()
 
     contrastive_train()
