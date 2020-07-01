@@ -278,7 +278,7 @@ if __name__ == "__main__":
     sys.stdout.write('Process using '+str(Param.device)+'\n')
     sys.stdout.flush()
 
-    triplet_train()
+    contrastive_train()
 
     elapsed_time = time.time() - start_time
     print(time.strftime("Finish in %H:%M:%S", time.gmtime(elapsed_time)))
