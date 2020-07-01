@@ -179,15 +179,15 @@ def training(model, loss_function, dataset, optimizer, loss, epoch_number=0):
         should_save=True
     )
 
-    # ckp.save_checkpoint(
-    #     desc=Param.desc,
-    #     save_dir=Path.save_model,
-    #     model=best_model,
-    #     optimizer=optimizer,
-    #     epoch=Param.train_number_epochs + epoch_number,
-    #     loss=best_loss,
-    #     dist = (Param.min_dist, Param.max_dist)
-    # )
+    ckp.save_checkpoint(
+        desc=Param.desc,
+        save_dir=Path.save_model,
+        model=best_model,
+        optimizer=optimizer,
+        epoch=Param.train_number_epochs + epoch_number,
+        loss=best_loss,
+        dist = (Param.min_dist, Param.max_dist)
+    )
 
     # torch.save(best_model.state_dict(), Path.model)
 
