@@ -193,7 +193,8 @@ def training(model, loss_function, dataset, optimizer, loss, epoch_number=0):
 
 def contrastive_train():
     # model = bst.BstCnn()
-    model = asf.AdaptiveSpatialFeature()
+    # model = asf.AdaptiveSpatialFeature()
+    model = mcb.McbCnn()
     model = model.to(Param.device)
 
     optimizer = optim.Adam(model.parameters(), lr=0.0005)
