@@ -13,7 +13,7 @@ class Param():
     threshold = np.arange(0.1, 1, 0.05)
     pretrained = False
     data_type = 'PAIR'
-    desc = '#1 Adaptive Spatial Feature ' + str(datetime.datetime.now())
+    desc = '#1 Multi Compact Bilinear Pooling ' + str(datetime.datetime.now())
 
     max_dist = 0
     min_dist = sys.float_info.max
