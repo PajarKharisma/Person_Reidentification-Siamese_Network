@@ -38,7 +38,7 @@ class ContrastiveDataset(Dataset):
         # return 1000
 
 class TripletDataset(Dataset):
-    def __init__(self, csv_path, images_path, transform=None, should_invert=True):
+    def __init__(self, csv_path, images_path, transform=None, resize=None):
         self.images_path = images_path
         self.csv_path = csv_path
         self.transform = transform
@@ -54,6 +54,11 @@ class TripletDataset(Dataset):
         pos = cv2.cvtColor(pos, cv2.COLOR_BGR2RGB)
         neg = cv2.cvtColor(neg, cv2.COLOR_BGR2RGB)
 
+        if self.resize != None:
+            anc = cv2.resize(anc, (self.resize[0], self.resize[1]))
+            pos = cv2.resize(pos, (self.resize[0], self.resize[1]))
+            neg = cv2.resize(neg, (self.resize[0], self.resize[1]))
+
         anc = self.transform(anc)
         pos = self.transform(pos)
         neg = self.transform(neg)
@@ -61,7 +66,7 @@ class TripletDataset(Dataset):
         return anc, pos, neg
     
     def __len__(self):
-        return len(self.df)
+        return len(self.df) // 10
 
 class SinglePairDataset(Dataset):
     def __init__(self, img1, img2, width, height, transform=None):

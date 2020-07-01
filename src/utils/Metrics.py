@@ -15,7 +15,7 @@ def normalize_data(val, max_val, min_val):
 def get_distances(x1, x2):
     return F.pairwise_distance(x1, x2, keepdim = True)
 
-def distance_to_class(distances, threshold=0.5, margin=1.0):
+def distance_to_class(distances, threshold=0.5, margin=2.0):
     if Param.data_type == 'PAIR':
         distances = distances[0].flatten().detach().cpu().numpy()
         distances_norm = [normalize_data(d, Param.max_dist, Param.min_dist) for d in distances]
