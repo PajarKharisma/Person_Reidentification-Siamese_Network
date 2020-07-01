@@ -42,7 +42,6 @@ class TripletDataset(Dataset):
         self.images_path = images_path
         self.csv_path = csv_path
         self.transform = transform
-        self.should_invert = should_invert
         self.df = pd.read_csv(self.csv_path)
     
     def __getitem__(self, index):

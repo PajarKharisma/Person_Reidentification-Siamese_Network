@@ -61,7 +61,7 @@ def contrastive_load_process():
 
 def triplet_load_process():
     trans = transforms.Compose([transforms.ToTensor()])
-    triplet_dataset = dsetLoader.TripletDataset(csv_path=Path.triplet_train_csv, images_path=Path.images, transform=trans)
+    triplet_dataset = dsetLoader.TripletDataset(csv_path=Path.triplet_train_csv, images_path=Path.images, transform=trans, resize=Param.input_size)
     
     train_length = int(len(triplet_dataset) * Param.data_split)
     val_length = len(triplet_dataset) - train_length
