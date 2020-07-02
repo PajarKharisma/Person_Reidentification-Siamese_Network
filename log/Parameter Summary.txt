@@ -13,37 +13,37 @@ Estimated Total Size (MB): 3477.16
 
 # Adaptive Spatial Feature
 ----------------------------------------
-Total params: 336,657,792
-Trainable params: 336,657,792
+Total params: 289,470,848
+Trainable params: 289,470,848
 Non-trainable params: 0
 ----------------------------------------
-Input size (MB): 3164.06
-Forward/backward pass size (MB): 20.33
-Params size (MB): 1284.25
-Estimated Total Size (MB): 4468.64
+Input size (MB): 2304.00
+Forward/backward pass size (MB): 17.37
+Params size (MB): 1104.24
+Estimated Total Size (MB): 3425.62
 
 ================================================================
 
 # Body Structure Based
 ----------------------------------------
-Total params: 100,694,624
-Trainable params: 100,694,624
+Total params: 89,160,288
+Trainable params: 89,160,288
 Non-trainable params: 0
 ----------------------------------------
-Input size (MB): 3164.06
-Forward/backward pass size (MB): 22.42
-Params size (MB): 384.12
-Estimated Total Size (MB): 3570.61
+Input size (MB): 2304.00
+Forward/backward pass size (MB): 19.18
+Params size (MB): 340.12
+Estimated Total Size (MB): 2663.30
 
 ================================================================
 
 # Multipart Compact Bilinear
 ----------------------------------------
-Total params: 35,550,528
-Trainable params: 35,550,528
+Total params: 31,931,664
+Trainable params: 31,931,664
 Non-trainable params: 0
 ----------------------------------------
-Input size (MB): 3164.06
-Forward/backward pass size (MB): 18.27
-Params size (MB): 135.61
-Estimated Total Size (MB): 3317.95
+Input size (MB): 2304.00
+Forward/backward pass size (MB): 15.26
+Params size (MB): 121.81
+Estimated Total Size (MB): 2441.07

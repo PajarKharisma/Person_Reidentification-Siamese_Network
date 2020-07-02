@@ -17,7 +17,7 @@ import src.neuralNetworksArch.AdaptiveSpatialFeature as asf
 import src.neuralNetworksArch.BstCnn as btsCnn
 import src.neuralNetworksArch.McbCnn as mcbCnn
 
-model = mcbCnn.McbCnn()
+model = asf.AdaptiveSpatialFeature()
 model = model.to(Param.device)
 # print(model)
-summary(model, [(3, 60, 160), (3, 60, 160)])
+summary(model, [(3, 128, 64), (3, 128, 64)])
