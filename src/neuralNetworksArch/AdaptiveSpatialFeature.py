@@ -46,7 +46,7 @@ class AdaptiveSpatialFeature(nn.Module):
             nn.Linear(2048, 1024),
             # nn.Softmax(dim=1)
             # nn.ReLU(inplace=True)
-            # nn.Sigmoid()
+            nn.Sigmoid()
         )
 
         self._initialize_weights()
