@@ -12,9 +12,11 @@ class Path():
     save_plot = root_dir+'/log/plot/'
 
     images = path + '/images/full/'
-    head_images = path + '/images/head/'
-    body_images = path + '/images/body/'
-    leg_images =path + '/images/leg/'
+    partial_path = path + '/images/partial_3/'
+    part_1_images = partial_path + '/part_1/'
+    part_2_images = partial_path + '/part_2/'
+    part_3_images =partial_path + '/part_3/'
+    part_4_images =partial_path + '/part_4/'
 
     contrastive_train_csv = path +'/contrastive_train.csv'
     triplet_train_csv = path + '/triplet_train.csv'
