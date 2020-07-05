@@ -5,7 +5,7 @@ BOTTOM = 1
 
 def create_aug_data(img, pos, color, occlusion):
     if pos == BOTTOM:
-        img = cv2.rotate(img, cv2.ROTATE_180)
+        img = cv2.flip(img, 0)
     
     height, width = img.shape[:2]
 
@@ -14,6 +14,6 @@ def create_aug_data(img, pos, color, occlusion):
             img[i,j] = color
 
     if pos == BOTTOM:
-        img = cv2.rotate(img, cv2.ROTATE_180)
+        img = cv2.flip(img, 0)
 
     return img
