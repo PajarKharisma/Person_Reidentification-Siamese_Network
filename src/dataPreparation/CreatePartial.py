@@ -145,7 +145,7 @@ def create_data(images_path, save_path):
             file_name = os.path.join(r, file)
             img = cv2.imread(file_name)
             
-            imgs = partial_image_2(img)
+            imgs = partial_image_3(img)
 
             for i, path in enumerate(save_path):
                 # print('file saved in ' + path + file)

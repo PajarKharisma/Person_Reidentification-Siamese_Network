@@ -12,7 +12,7 @@ class Path():
     save_plot = root_dir+'/log/plot/'
 
     images = path + '/images/full/'
-    partial_path = path + '/images/partial_2/'
+    partial_path = path + '/images/partial_3/'
     part_1_images = partial_path + '/part_1/'
     part_2_images = partial_path + '/part_2/'
     part_3_images =partial_path + '/part_3/'
