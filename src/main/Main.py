@@ -45,7 +45,7 @@ from src.config.Param import *
 def partial_process():
     # create_csv.contrastive_data(images_path=Path.images, save_path=Path.contrastive_train_csv)
     # create_csv.triplet_data(images_path=Path.images, save_path=Path.triplet_train_csv)
-    create_partial.create_data(images_path=Path.images, save_path=(Path.part_1_images, Path.part_2_images, Path.part_3_images, Path.part_4_images))
+    create_partial.create_data(images_path=Path.images, save_path=(Path.part_1_images, Path.part_2_images, Path.part_3_images))
 
 def contrastive_load_process():
     trans = transforms.Compose([transforms.ToTensor()])
