@@ -203,7 +203,8 @@ def contrastive_train():
     model = bst.BstCnn()
     model = model.to(Param.device)
 
-    optimizer = optim.Adam(model.parameters(), lr=0.0005)
+    # optimizer = optim.Adam(model.parameters(), lr=0.0005)
+    optimizer = optim.Adam(model.parameters())
     epoch = 0
     loss = sys.float_info.max
 
