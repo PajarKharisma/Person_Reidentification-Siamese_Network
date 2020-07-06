@@ -49,7 +49,11 @@ def partial_process():
 
 def contrastive_load_process():
     trans = transforms.Compose([transforms.ToTensor()])
-    contrastive_dataset = dsetLoader.ContrastiveDataset(csv_path=Path.contrastive_train_csv, images_path=Path.images, transform=trans, resize=Param.input_size)
+    contrastive_dataset = dsetLoader.ContrastiveDataset(
+        csv_path=Path.contrastive_train_csv,
+        images_path=Path.part_1_images,
+        transform=trans,
+        resize=Param.input_size)
 
     train_length = int(len(contrastive_dataset) * Param.data_split)
     val_length = len(contrastive_dataset) - train_length
@@ -194,9 +198,9 @@ def training(model, loss_function, dataset, optimizer, loss, epoch_number=0):
     # torch.save(best_model.state_dict(), Path.model)
 
 def contrastive_train():
-    # model = bst.BstCnn()
     # model = asf.AdaptiveSpatialFeature()
-    model = mcb.McbCnn()
+    # model = mcb.McbCnn()
+    model = bst.BstCnn()
     model = model.to(Param.device)
 
     optimizer = optim.Adam(model.parameters(), lr=0.0005)
@@ -239,7 +243,7 @@ def contrastive_train():
         epoch_number=epoch
     )
 
-def triplet_train():
+def contrastive_train():
     # model = bst.BstCnn()
     model = bSiamese.BasicSiameseNetwork()
     model = model.to(Param.device)
