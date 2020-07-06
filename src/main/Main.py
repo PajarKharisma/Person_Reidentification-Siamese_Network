@@ -102,9 +102,6 @@ def training(model, loss_function, dataset, optimizer, loss, epoch_number=0):
 
     if Param.pretrained == True:
         best_model = copy.deepcopy(model)
-    
-    sys.stdout.write('# START TRAINING\n')
-    sys.stdout.flush()
 
     for epoch in range(0, Param.train_number_epochs):
         train_loss = 0
@@ -235,7 +232,13 @@ def contrastive_train():
     # print('threshold list : ',Param.threshold_list)
 
     criterion = lossFunc.ContrastiveLoss()
+    sys.stdout.write('# READING DATASET\n')
+    sys.stdout.flush()
+
     dataset = contrastive_load_process()
+
+    sys.stdout.write('# FINISH READING DATASET AND START TRAINING\n\n')
+    sys.stdout.flush()
 
     training(
         model=model,
