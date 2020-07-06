@@ -249,7 +249,7 @@ def contrastive_train():
         epoch_number=epoch
     )
 
-def contrastive_train():
+def triplet_train():
     # model = bst.BstCnn()
     model = bSiamese.BasicSiameseNetwork()
     model = model.to(Param.device)
