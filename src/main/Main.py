@@ -103,6 +103,9 @@ def training(model, loss_function, dataset, optimizer, loss, epoch_number=0):
     if Param.pretrained == True:
         best_model = copy.deepcopy(model)
     
+    sys.stdout.write('# START TRAINING\n')
+    sys.stdout.flush()
+
     for epoch in range(0, Param.train_number_epochs):
         train_loss = 0
         train_acc = 0
