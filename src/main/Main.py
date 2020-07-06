@@ -51,7 +51,7 @@ def contrastive_load_process():
     trans = transforms.Compose([transforms.ToTensor()])
     contrastive_dataset = dsetLoader.ContrastiveDataset(
         csv_path=Path.contrastive_train_csv,
-        images_path=Path.part_3_images,
+        images_path=Path.part_2_images,
         transform=trans,
         resize=Param.input_size)
 
@@ -295,7 +295,7 @@ if __name__ == "__main__":
     sys.stdout.write(Param.desc+'\n\n')
     sys.stdout.flush()
 
-    partial_process()
+    contrastive_train()
 
     elapsed_time = time.time() - start_time
     print(time.strftime("Finish in %H:%M:%S", time.gmtime(elapsed_time)))
