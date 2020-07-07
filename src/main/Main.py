@@ -58,9 +58,10 @@ def contrastive_load_process():
     trans = transforms.Compose([transforms.ToTensor()])
     contrastive_dataset = dsetLoader.ContrastiveDataset(
         csv_path=Path.contrastive_train_csv,
-        images_path=Path.part_2_images,
+        images_path=Path.part_3_images,
         transform=trans,
-        resize=Param.input_size)
+        resize=Param.input_size
+    )
 
     train_length = int(len(contrastive_dataset) * Param.data_split)
     val_length = len(contrastive_dataset) - train_length
