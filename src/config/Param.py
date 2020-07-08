@@ -13,7 +13,7 @@ class Param():
     threshold = np.arange(0.1, 1, 0.05)
     pretrained = False
     data_type = 'PAIR'
-    desc = 'PARTIAL_1 #3 ' + str(datetime.datetime.now())
+    desc = 'FULL BODY BST CUHK03 - 100 epoch' + str(datetime.datetime.now())
 
     max_dist = 0
     min_dist = sys.float_info.max

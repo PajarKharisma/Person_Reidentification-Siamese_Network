@@ -5,7 +5,7 @@ import platform
 class Path():
     # root_dir = os.getcwd() if platform.system() == 'Windows' else '/work/dike003'
     root_dir = os.getcwd()
-    path = root_dir + '/dataset/cuhk02'
+    path = root_dir + '/dataset/cuhk03'
     log_dir = root_dir + '/log/'
     save_model = root_dir + '/models/model-' + str(uuid.uuid4().hex) + '.pth'
     load_model = root_dir + '/models/pretrained-model.pth'
