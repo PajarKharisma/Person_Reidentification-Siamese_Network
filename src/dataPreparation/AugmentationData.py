@@ -3,7 +3,7 @@ import cv2
 TOP = 0
 BOTTOM = 1
 
-def create_aug_data(img, pos, color, occlusion):
+def create_aug_data(img, occlusion, pos, color):
     if pos == BOTTOM:
         img = cv2.flip(img, 0)
     

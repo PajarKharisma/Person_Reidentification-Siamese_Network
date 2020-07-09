@@ -56,7 +56,34 @@ def partial_process():
     )
 
 def create_datatest_process():
-    create_datatest.create_csv(path_src=Path.contrastive_train_csv, path_dst=Path.test_csv)
+    # create_datatest.create_csv(src_path=Path.contrastive_train_csv, dst_path=Path.test_csv)
+    # create_datatest.get_images(csv_path=Path.test_csv, img_src_path=Path.train_images, img_dst_path=Path.test_images)
+
+    occl_data = [
+        {
+            'save_path' : Path.test_images_20,
+            'occlusion' : 0.2
+        },
+        {
+            'save_path' : Path.test_images_40,
+            'occlusion' : 0.4
+        },
+        {
+            'save_path' : Path.test_images_60,
+            'occlusion' : 0.6
+        },
+        {
+            'save_path' : Path.test_images_80,
+            'occlusion' : 0.8
+        },
+    ]
+
+    for data in occl_data:
+        create_datatest.create_ocl_data(
+            img_src_path=Path.test_images,
+            img_dst_path=data['save_path'],
+            occlusion=data['occlusion']
+        )
 
 def contrastive_load_process():
     trans = transforms.Compose([transforms.ToTensor()])

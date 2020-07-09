@@ -3,6 +3,7 @@
 test/
 dataset/cuhk02/images/
 dataset/cuhk03/images/
+dataset/testing/images/
 models/*.pth
 log/result/*.out
 log/plot/*.png
