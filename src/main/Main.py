@@ -24,6 +24,7 @@ from sklearn.metrics import accuracy_score
 import src.dataPreparation.CreateCsv as create_csv
 import src.dataPreparation.CreatePartial as create_partial
 import src.dataPreparation.AugmentationData as aug_data
+import src.dataPreparation.CreateDataTest as create_datatest
 
 import src.neuralNetworksArch.BasicSiamese as bSiamese
 import src.neuralNetworksArch.OneShotArch as osArch
@@ -53,6 +54,9 @@ def partial_process():
             Path.part_3_images
         )
     )
+
+def create_datatest_process():
+    create_datatest.create_csv(path_src=Path.contrastive_train_csv, path_dst=Path.test_csv)
 
 def contrastive_load_process():
     trans = transforms.Compose([transforms.ToTensor()])
@@ -303,7 +307,7 @@ if __name__ == "__main__":
     sys.stdout.write(Param.desc+'\n\n')
     sys.stdout.flush()
 
-    contrastive_train()
+    create_datatest_process()
 
     elapsed_time = time.time() - start_time
     print(time.strftime("Finish in %H:%M:%S", time.gmtime(elapsed_time)))

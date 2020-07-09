@@ -11,7 +11,7 @@ class Path():
     load_model = root_dir + '/models/pretrained-model.pth'
     save_plot = root_dir+'/log/plot/'
 
-    images = path + '/images/full/'
+    train_images = path + '/images/full/'
     partial_path = path + '/images/partial_1/'
     part_1_images = partial_path + '/part_1/'
     part_2_images = partial_path + '/part_2/'
@@ -20,4 +20,11 @@ class Path():
 
     contrastive_train_csv = path +'/contrastive_train.csv'
     triplet_train_csv = path + '/triplet_train.csv'
-    testing_csv = path + '/testing.csv'
+
+    test_path = root_dir + '/dataset/testing'
+    test_csv = test_path + '/testing.csv'
+    test_images = test_path + '/images/full'
+    test_images_20 = test_path + '/images/20'
+    test_images_40 = test_path + '/images/40'
+    test_images_60 = test_path + '/images/60'
+    test_images_80 = test_path + '/images/80'
