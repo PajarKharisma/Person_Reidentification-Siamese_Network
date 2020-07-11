@@ -15,7 +15,6 @@ class ContrastiveDataset(Dataset):
         self.transform = transform
         self.resize = resize
         self.df = pd.read_csv(self.csv_path)
-        self.testing = testing
         self.count = count
     
     def __getitem__(self, index):
