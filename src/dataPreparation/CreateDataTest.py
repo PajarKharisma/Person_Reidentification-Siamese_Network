@@ -5,6 +5,8 @@ import os
 
 import src.dataPreparation.AugmentationData as aug_data
 
+NUM_DATA = 5
+
 def create_csv(src_path, dst_path):
     df_src = pd.read_csv(src_path)
 
@@ -17,8 +19,8 @@ def create_csv(src_path, dst_path):
             data_dis.append(index)
 
 
-    data_sim = random.sample(data_sim, 100)
-    data_dis = random.sample(data_dis, 100)
+    data_sim = random.sample(data_sim, NUM_DATA)
+    data_dis = random.sample(data_dis, NUM_DATA)
 
     data_dst = [*data_sim, *data_dis]
     data_test = []

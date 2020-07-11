@@ -10,7 +10,8 @@ from scipy import stats
 from src.config.Param import *
 
 def normalize_data(val, max_val, min_val):
-    return (val - min_val) / (max_val - min_val)
+    norm_dist = (val - min_val) / (max_val - min_val)
+    return max(0, norm_dist)
 
 def get_distances(x1, x2):
     return F.pairwise_distance(x1, x2, keepdim = True)

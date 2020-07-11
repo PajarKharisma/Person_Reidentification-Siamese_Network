@@ -56,8 +56,8 @@ def partial_process():
     )
 
 def create_datatest_process():
-    # create_datatest.create_csv(src_path=Path.contrastive_train_csv, dst_path=Path.test_csv)
-    # create_datatest.get_images(csv_path=Path.test_csv, img_src_path=Path.train_images, img_dst_path=Path.test_images)
+    create_datatest.create_csv(src_path=Path.contrastive_train_csv, dst_path=Path.test_csv)
+    create_datatest.get_images(csv_path=Path.test_csv, img_src_path=Path.train_images, img_dst_path=Path.test_images)
 
     occl_data = [
         {
@@ -248,11 +248,7 @@ def contrastive_train():
     loss = sys.float_info.max
 
     if(Param.pretrained == True):
-        checkpoint  = ckp.load_checkpoint(
-            load_dir=Path.load_model,
-            model=model,
-            optimizer=optimizer
-        )
+        checkpoint  = ckp.load_checkpoint(load_dir=Path.load_model)
         
         model.load_state_dict(checkpoint['state_dict'])
         optimizer.load_state_dict(checkpoint['optimizer'])

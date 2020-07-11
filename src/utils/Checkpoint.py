@@ -17,7 +17,7 @@ def save_checkpoint(desc, save_dir, model, optimizer, loss, epoch, dist):
     }
     torch.save(checkpoint, save_dir)
 
-def load_checkpoint(load_dir, model, optimizer):
+def load_checkpoint(load_dir):
     checkpoint = torch.load(load_dir, map_location=Param.device)
 
     return checkpoint

@@ -9,12 +9,14 @@ from torch.utils.data import Dataset
 from . import MatrixOps as matOps
 
 class ContrastiveDataset(Dataset):
-    def __init__(self, csv_path, images_path, transform=None, resize=None):
+    def __init__(self, csv_path, images_path, transform=None, resize=None, testing=False, count=-1):
         self.images_path = images_path
         self.csv_path = csv_path
         self.transform = transform
         self.resize = resize
         self.df = pd.read_csv(self.csv_path)
+        self.testing = testing
+        self.count = count
     
     def __getitem__(self, index):
         img1 = cv2.imread(self.images_path + self.df['image_1'][index])
@@ -30,11 +32,18 @@ class ContrastiveDataset(Dataset):
 
         img1 = self.transform(img1)
         img2 = self.transform(img2)
+
+        if self.testing == False:
+            label = torch.from_numpy(np.array([label], dtype=np.float32))
+            print('masuk ke sini')
         
-        return img1, img2, torch.from_numpy(np.array([label], dtype=np.float32))
+        return img1, img2, label
     
     def __len__(self):
-        return len(self.df)
+        if self.count == -1:
+            return len(self.df)
+        else:
+            return self.count
         # return 1000
 
 class TripletDataset(Dataset):
