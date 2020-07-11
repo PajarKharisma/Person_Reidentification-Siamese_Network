@@ -9,9 +9,19 @@ from scipy import stats
 
 from src.config.Param import *
 
-def normalize_data(val, max_val, min_val):
+def normalize_data(val, max_val, min_val=0):
     norm_dist = (val - min_val) / (max_val - min_val)
     return max(0, norm_dist)
+
+def concatenate(dists, thresh, probs):
+    result_dist = 0
+    result_thresh = 0
+    for d, t, p in zip(dists, thresh, probs):
+        if d < t and abs(d - t) >= 0.05:
+            d = 0
+        result_dist += (d * p)
+        result_thresh += (t * p)
+    return result_dist, result_thresh
 
 def get_distances(x1, x2):
     return F.pairwise_distance(x1, x2, keepdim = True)
@@ -19,7 +29,7 @@ def get_distances(x1, x2):
 def distance_to_class(distances, threshold=0.5, margin=2.0):
     if Param.data_type == 'PAIR':
         distances = distances[0].flatten().detach().cpu().numpy()
-        distances_norm = [normalize_data(d, Param.max_dist, Param.min_dist) for d in distances]
+        distances_norm = [normalize_data(d, Param.max_dist) for d in distances]
         y = [0.0 if d <= threshold else 1.0 for d in distances_norm]
     else:
         dist_p = distances[0].flatten().detach().cpu().numpy()

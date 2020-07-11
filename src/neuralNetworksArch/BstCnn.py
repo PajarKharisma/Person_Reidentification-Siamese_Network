@@ -45,22 +45,9 @@ class BstCnn(nn.Module):
 
         self.fc = nn.Sequential(
             # nn.Linear(16*32*16, 4096), # full images
-            nn.Linear(16*8*8, 4096), # partial images
+            nn.Linear(16*8*8, 512), # partial images
             nn.ReLU(inplace=True),
-            nn.Dropout(p=0.2),
-            
-            nn.Linear(4096, 2048),
-            nn.ReLU(inplace=True),
-            nn.Dropout(p=0.2),
-
-            nn.Linear(2048, 1024),
-            nn.ReLU(inplace=True),
-            nn.Dropout(p=0.2),
-            
-            nn.Linear(1024, 512),
-            # nn.ReLU(inplace=True)
-            # nn.Softmax(dim=1)
-            # nn.Sigmoid()
+            nn.Linear(512, 256)
         )
 
         self._initialize_weights()

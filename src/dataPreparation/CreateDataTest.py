@@ -5,7 +5,7 @@ import os
 
 import src.dataPreparation.AugmentationData as aug_data
 
-NUM_DATA = 5
+NUM_DATA = 50
 
 def create_csv(src_path, dst_path):
     df_src = pd.read_csv(src_path)
