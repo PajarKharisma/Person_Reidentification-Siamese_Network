@@ -43,15 +43,14 @@ def get_images(csv_path, img_src_path, img_dst_path):
         img = cv2.imread(img_src_path + img_name)
         cv2.imwrite(img_dst_path + img_name, img)
 
-def create_ocl_data(img_src_path, img_dst_path, occlusion, occl_pos=aug_data.BOTTOM, color=(255,255,255)):
+def create_ocl_data(img_src_path, img_dst_path, occlusion, occl_pos=aug_data.BOTTOM):
     imgs = os.listdir(img_src_path)
     for img_name in imgs:
         img = cv2.imread(img_src_path + img_name)
         img = aug_data.create_aug_data(
             img=img,
             occlusion=occlusion,
-            pos=occl_pos,
-            color=color
+            pos=occl_pos
         )
 
         cv2.imwrite(img_dst_path + img_name, img)

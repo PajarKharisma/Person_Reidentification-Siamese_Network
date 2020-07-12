@@ -1,9 +1,10 @@
 import cv2
+import random
 
 TOP = 0
 BOTTOM = 1
 
-def create_aug_data(img, occlusion, pos, color):
+def create_aug_data(img, occlusion, pos):
     if pos == BOTTOM:
         img = cv2.flip(img, 0)
     
@@ -11,7 +12,10 @@ def create_aug_data(img, occlusion, pos, color):
 
     for i in range(int(height * occlusion)):
         for j in range(width):
-            img[i,j] = color
+            b = random.randint(0, 255)
+            g = random.randint(0, 255)
+            r = random.randint(0, 255)
+            img[i,j] = (b, g, r)
 
     if pos == BOTTOM:
         img = cv2.flip(img, 0)

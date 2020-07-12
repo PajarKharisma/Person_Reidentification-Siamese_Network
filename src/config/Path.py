@@ -21,7 +21,7 @@ class Path():
     contrastive_train_csv = path +'/contrastive_train.csv'
     triplet_train_csv = path + '/triplet_train.csv'
 
-    test_path = root_dir + '/dataset/testing/'
+    test_path = root_dir + '/dataset/testing/same_cam'
     test_csv = test_path + '/testing.csv'
     test_images = test_path + '/images/full/'
     test_images_20 = test_path + '/images/occl_20/'

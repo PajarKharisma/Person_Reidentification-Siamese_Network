@@ -44,20 +44,20 @@ from src.config.Path import *
 from src.config.Param import *
 
 def partial_process():
-    # create_csv.contrastive_data(images_path=Path.images, save_path=Path.contrastive_train_csv)
+    create_csv.contrastive_data(images_path=Path.test_images, save_path=Path.test_csv)
     # create_csv.triplet_data(images_path=Path.images, save_path=Path.triplet_train_csv)
-    create_partial.create_data(
-        images_path=Path.images,
-        save_path=(
-            Path.part_1_images,
-            Path.part_2_images,
-            Path.part_3_images
-        )
-    )
+    # create_partial.create_data(
+    #     images_path=Path.images,
+    #     save_path=(
+    #         Path.part_1_images,
+    #         Path.part_2_images,
+    #         Path.part_3_images
+    #     )
+    # )
 
 def create_datatest_process():
-    create_datatest.create_csv(src_path=Path.contrastive_train_csv, dst_path=Path.test_csv)
-    create_datatest.get_images(csv_path=Path.test_csv, img_src_path=Path.train_images, img_dst_path=Path.test_images)
+    # create_datatest.create_csv(src_path=Path.contrastive_train_csv, dst_path=Path.test_csv)
+    # create_datatest.get_images(csv_path=Path.test_csv, img_src_path=Path.train_images, img_dst_path=Path.test_images)
 
     occl_data = [
         {
@@ -89,7 +89,7 @@ def contrastive_load_process():
     trans = transforms.Compose([transforms.ToTensor()])
     contrastive_dataset = dsetLoader.ContrastiveDataset(
         csv_path=Path.contrastive_train_csv,
-        images_path=Path.part_1_images,
+        images_path=Path.part_2_images,
         transform=trans,
         resize=Param.input_size
     )
@@ -237,12 +237,9 @@ def training(model, loss_function, dataset, optimizer, loss, epoch_number=0):
     # torch.save(best_model.state_dict(), Path.model)
 
 def contrastive_train():
-    # model = asf.AdaptiveSpatialFeature()
-    # model = mcb.McbCnn()
     model = bst.BstCnn()
     model = model.to(Param.device)
 
-    # optimizer = optim.Adam(model.parameters(), lr=0.0005)
     optimizer = optim.Adam(model.parameters())
     epoch = 0
     loss = sys.float_info.max
