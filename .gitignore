@@ -3,7 +3,8 @@
 test/
 dataset/cuhk02/images/
 dataset/cuhk03/images/
-dataset/testing/images/
+dataset/testing/same_cam/images/
+dataset/testing/diff_cam/images/
 models/*.pth
 log/result/*.out
 log/plot/*.png
