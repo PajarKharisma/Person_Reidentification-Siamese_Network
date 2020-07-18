@@ -32,7 +32,7 @@ import src.neuralNetworksArch.AdaptiveSpatialFeature as asf
 import src.neuralNetworksArch.BstCnn as bst
 import src.neuralNetworksArch.McbCnn as mcb
 import src.neuralNetworksArch.VggArch as vgg
-import src.neuralNetworksArch.TestNn as testNN
+import src.neuralNetworksArch.Mpkp as mpkp
 
 import src.utils.Visual as vis
 import src.utils.DatasetLoader as dsetLoader
@@ -82,7 +82,8 @@ def create_datatest_process():
         create_datatest.create_ocl_data(
             img_src_path=Path.test_images,
             img_dst_path=data['save_path'],
-            occlusion=data['occlusion']
+            occlusion=data['occlusion'],
+            occl_pos=-1
         )
 
 def contrastive_load_process():
@@ -237,7 +238,8 @@ def training(model, loss_function, dataset, optimizer, loss, epoch_number=0):
     # torch.save(best_model.state_dict(), Path.model)
 
 def contrastive_train():
-    model = bst.BstCnn()
+    # model = bst.BstCnn()
+    model = mpkp.Mpkp()
     model = model.to(Param.device)
 
     optimizer = optim.Adam(model.parameters())

@@ -5,6 +5,7 @@ TOP = 0
 BOTTOM = 1
 
 def create_aug_data(img, occlusion, pos):
+    pos = random.randint(0, 1) if pos < 0 else pos
     if pos == BOTTOM:
         img = cv2.flip(img, 0)
     
