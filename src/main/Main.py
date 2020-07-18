@@ -239,7 +239,7 @@ def training(model, loss_function, dataset, optimizer, loss, epoch_number=0):
 
 def contrastive_train():
     # model = bst.BstCnn()
-    model = mpkp.Mpkp()
+    model = mpkp.MpkpCnn()
     model = model.to(Param.device)
 
     optimizer = optim.Adam(model.parameters())

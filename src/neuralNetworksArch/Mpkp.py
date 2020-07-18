@@ -1,9 +1,9 @@
 import torch
 import torch.nn as nn
 
-class BstCnn(nn.Module):
+class MpkpCnn(nn.Module):
     def __init__(self):
-        super(BstCnn, self).__init__()
+        super(MpkpCnn, self).__init__()
 
         self.conv5x5_1 = nn.Sequential(
             nn.ReflectionPad2d(2),
