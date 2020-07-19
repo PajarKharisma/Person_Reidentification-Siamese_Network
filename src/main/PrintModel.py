@@ -16,8 +16,9 @@ import src.neuralNetworksArch.NasnetMobile as nasnet
 import src.neuralNetworksArch.AdaptiveSpatialFeature as asf
 import src.neuralNetworksArch.BstCnn as btsCnn
 import src.neuralNetworksArch.McbCnn as mcbCnn
+import src.neuralNetworksArch.Mpkp as mpkp
 
-model = asf.AdaptiveSpatialFeature()
+model = mpkp.MpkpCnn()
 model = model.to(Param.device)
 # print(model)
 summary(model, [(3, 128, 64), (3, 128, 64)])

@@ -86,7 +86,7 @@ def create_datatest_process():
             occl_pos=-1
         )
 
-def contrastive_load_process():
+def contrastive_load_process(split_data = True):
     trans = transforms.Compose([transforms.ToTensor()])
     contrastive_dataset = dsetLoader.ContrastiveDataset(
         csv_path=Path.contrastive_train_csv,
@@ -95,15 +95,19 @@ def contrastive_load_process():
         resize=Param.input_size
     )
 
-    train_length = int(len(contrastive_dataset) * Param.data_split)
-    val_length = len(contrastive_dataset) - train_length
+    if split_data == True:
+        train_length = int(len(contrastive_dataset) * Param.data_split)
+        val_length = len(contrastive_dataset) - train_length
 
-    train_set, val_set = torch.utils.data.random_split(contrastive_dataset, [train_length, val_length])
+        train_set, val_set = torch.utils.data.random_split(contrastive_dataset, [train_length, val_length])
 
-    train_dataloader = DataLoader(train_set, batch_size=Param.train_batch_size, shuffle=True)
-    val_dataloader = DataLoader(val_set, batch_size=Param.train_batch_size * 2, shuffle=True)
+        train_dataloader = DataLoader(train_set, batch_size=Param.train_batch_size, shuffle=True)
+        val_dataloader = DataLoader(val_set, batch_size=Param.train_batch_size * 2, shuffle=True)
 
-    return train_dataloader, val_dataloader
+        return train_dataloader, val_dataloader
+    
+    else:
+        return DataLoader(contrastive_dataset, batch_size=Param.train_batch_size, shuffle=True)
 
 def triplet_load_process():
     trans = transforms.Compose([transforms.ToTensor()])
@@ -238,8 +242,8 @@ def training(model, loss_function, dataset, optimizer, loss, epoch_number=0):
     # torch.save(best_model.state_dict(), Path.model)
 
 def contrastive_train():
-    # model = bst.BstCnn()
-    model = mpkp.MpkpCnn()
+    model = bst.BstCnn()
+    # model = mpkp.MpkpCnn()
     model = model.to(Param.device)
 
     optimizer = optim.Adam(model.parameters())
@@ -330,6 +334,8 @@ if __name__ == "__main__":
     sys.stdout.flush()
 
     contrastive_train()
+    # partial_process()
+    # create_datatest_process()
 
     elapsed_time = time.time() - start_time
     print(time.strftime("Finish in %H:%M:%S", time.gmtime(elapsed_time)))
