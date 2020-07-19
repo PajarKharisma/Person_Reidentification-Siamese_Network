@@ -95,7 +95,7 @@ def contrastive_load_process(split_data = True):
         resize=Param.input_size
     )
 
-    if split_data == True:
+    if split_data:
         train_length = int(len(contrastive_dataset) * Param.data_split)
         val_length = len(contrastive_dataset) - train_length
 
@@ -105,7 +105,6 @@ def contrastive_load_process(split_data = True):
         val_dataloader = DataLoader(val_set, batch_size=Param.train_batch_size * 2, shuffle=True)
 
         return train_dataloader, val_dataloader
-    
     else:
         return DataLoader(contrastive_dataset, batch_size=Param.train_batch_size, shuffle=True)
 
