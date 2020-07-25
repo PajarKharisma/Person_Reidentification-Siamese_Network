@@ -111,6 +111,7 @@ def get_roc_auc(model, dataset):
     y_true = y_true.flatten().detach().cpu().numpy()
     y_scores = y_scores.flatten().detach().cpu().numpy()
     y_scores = normalize_dist(y_scores)
+    print(y_scores)
 
     fpr, tpr, _ = roc_curve(y_true, y_scores)
     threshold = roc_auc_score(y_true, y_scores)
