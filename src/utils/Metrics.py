@@ -102,10 +102,10 @@ def get_roc_auc(model, dataset):
             else:
                 output1, output2, output3 = model(x1, x2, x3)
     
-    threshold = roc_auc_score(y_true, y_scores)
-
     y_true = y_true.flatten().detach().cpu().numpy()
     y_scores = y_scores.flatten().detach().cpu().numpy()
+
+    threshold = roc_auc_score(y_true, y_scores)
     y_pred = distance_to_class([y_scores], threshold)
 
     # print('Threshold : {}'.format(thresh))
