@@ -25,7 +25,7 @@ def get_distances(x1, x2):
 
 def distance_to_class(distances, threshold=0.5, margin=2.0):
     if Param.data_type == 'PAIR':
-        y = [0.0 if d <= threshold else 1.0 for d in distances]
+        y = [0.0 if d <= threshold else 1.0 for d in distances[0]]
     else:
         dist_p = distances[0]
         dist_n = distances[1]
