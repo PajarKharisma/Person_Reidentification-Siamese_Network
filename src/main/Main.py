@@ -224,7 +224,7 @@ def test_auc():
     dataset = contrastive_load_process(split_data = False)
     thresh, acc, pr = metrics.get_roc_auc(model, dataset)
     vis.show_plot(
-        type='roc'
+        type='roc',
         fpr=pr[0],
         tpr=pr[1],
         title='ROC Curve',
