@@ -10,9 +10,9 @@ from scipy import stats
 
 from src.config.Param import *
 
-def normalize_dist(dist, max_value=-1):
-    if max_value == -1:
-        max_value = np.max(dist)
+def normalize_dist(dist, max_val=-1):
+    if max_val == -1:
+        max_val = np.max(dist)
     
     norm_dist = (dist - 0) / (max_val - 0)
     norm_dist
