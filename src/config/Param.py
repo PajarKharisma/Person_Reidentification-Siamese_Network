@@ -13,3 +13,5 @@ class Param():
     pretrained = False
     data_type = 'PAIR'
     desc = 'BST ARCHITECTURE FULL - CUHK02 ' + str(datetime.datetime.now())
+
+    Param.threshold = -1

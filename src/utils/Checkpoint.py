@@ -10,7 +10,6 @@ def save_checkpoint(desc, save_dir, model, optimizer, loss, epoch, dist):
         'threshold' : Param.threshold,
         'epoch': epoch,
         'loss' : loss,
-        'dist' : dist,
         'state_dict': model.state_dict(),
         'optimizer': optimizer.state_dict()
     }

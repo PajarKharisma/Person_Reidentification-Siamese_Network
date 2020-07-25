@@ -210,8 +210,7 @@ def training(model, loss_function, dataset, optimizer, loss, epoch_number=0):
         model=best_model,
         optimizer=optimizer,
         epoch=Param.train_number_epochs + epoch_number,
-        loss=best_loss,
-        dist = (Param.min_dist, Param.max_dist)
+        loss=best_loss
     )
 
     # torch.save(best_model.state_dict(), Path.model)
@@ -232,12 +231,8 @@ def contrastive_train():
         optimizer.load_state_dict(checkpoint['optimizer'])
         epoch = checkpoint['epoch']
         loss = checkpoint['loss']
-    
-        Param.min_dist = checkpoint['dist'][0]
-        Param.max_dist = checkpoint['dist'][1]
 
-        best_threshold = checkpoint['threshold']
-        Param.threshold_list = checkpoint['threshold_list']
+        Param.threshold = checkpoint['threshold']
 
     # print('epoch : ',epoch)
     # print('loss : ',loss)
