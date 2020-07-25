@@ -10,12 +10,6 @@ class Param():
     train_number_epochs = 100
     data_split = 0.9
     input_size = (64,128)
-    threshold = np.arange(0.1, 1, 0.05)
     pretrained = False
     data_type = 'PAIR'
     desc = 'BST ARCHITECTURE FULL - CUHK02 ' + str(datetime.datetime.now())
-
-    max_dist = 0
-    min_dist = sys.float_info.max
-    
-    threshold_list = []

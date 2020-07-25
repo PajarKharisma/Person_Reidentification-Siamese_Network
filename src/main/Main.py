@@ -133,12 +133,6 @@ def training(model, loss_function, dataset, optimizer, loss, epoch_number=0):
         'val' : []
     }
 
-    history_acc = {
-        'epoch' : [],
-        'train' : [],
-        'val' : []
-    }
-
     best_loss = loss
     val_model = None
     best_model = None
@@ -176,46 +170,28 @@ def training(model, loss_function, dataset, optimizer, loss, epoch_number=0):
             Param.min_dist = float(torch.min(dist))
 
             train_loss = train_loss + ((loss_value.item() - train_loss) / (i + 1))
-            train_acc = train_acc + ((metrics.get_acc(output1, output2, output3) - train_acc) / (i + 1))
 
         if train_loss < best_loss:
             best_loss = train_loss
             best_model = copy.deepcopy(model)
         
         val_model = copy.deepcopy(model)
-        val_loss, val_acc = metrics.get_val_metrics(val_model, val_dataloader, criterion)
+        val_loss, _ = metrics.get_loss(val_model, val_dataloader, criterion)
 
         output_str = ''
         output_str += 'Epoch Number : {}'.format(epoch + 1) + '\n'
         output_str += '-'*40 + '\n'
         output_str += 'Train loss : {}'.format(train_loss) + '\n'
         output_str += 'Validation loss : {}'.format(val_loss) + '\n'
-        output_str += 'Train acc : {}'.format(train_acc) + '\n'
-        output_str += 'Validation acc : {}'.format(val_acc) + '\n'
 
         sys.stdout.write(output_str)
         sys.stdout.flush()
-
-        history_acc['epoch'].append(epoch+1)
-        history_acc['train'].append(train_acc)
-        history_acc['val'].append(val_acc)
 
         history_loss['epoch'].append(epoch+1)
         history_loss['train'].append(train_loss)
         history_loss['val'].append(val_loss)
 
         print('='*40, end='\n\n')
-
-    vis.show_plot(
-        history=history_acc,
-        title='Akurasi Train dan Validasi',
-        xlabel='Epoch',
-        ylabel='Akurasi',
-        legend_loc='upper left',
-        path=Path.save_plot+'Model Akurasi.png',
-        should_show=False,
-        should_save=True
-    )
     
     vis.show_plot(
         history=history_loss,

@@ -58,6 +58,29 @@ def get_acc(x1, x2, x3):
     
     return acc
 
+def get_loss(model, dataset, loss_func):
+    model.eval()
+    model.zero_grad()
+    val_loss = 0
+    with torch.no_grad():
+        for i, data in enumerate(dataset):
+            x1, x2, x3 = data
+            x1 = Variable(x1.to(Param.device))
+            x2 = Variable(x2.to(Param.device))
+            x3 = Variable(x3.to(Param.device))
+
+            if Param.data_type == 'PAIR':
+                output1, output2 = model(x1, x2)
+                output3 = x3
+            else:
+                output1, output2, output3 = model(x1, x2, x3)
+
+            loss_value = loss_func.forward(output1, output2, output3).item()
+
+            val_loss = val_loss + ((loss_value - val_loss) / (i + 1))
+
+    return val_loss
+
 def get_val_metrics(model, dataset, loss_func):
     model.eval()
     model.zero_grad()
