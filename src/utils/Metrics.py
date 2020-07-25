@@ -111,7 +111,7 @@ def get_roc_auc(model, dataset):
     y_scores = y_scores.flatten().detach().cpu().numpy()
     auc = roc_auc_score(y_true, y_scores)
 
-    print('AUC : {}'.format())
+    print('AUC : {}'.format(auc))
     for actual, predict in zip(y_true, y_scores):
         print('actual : {} || predict : {}'.format(actual, predict))
 
