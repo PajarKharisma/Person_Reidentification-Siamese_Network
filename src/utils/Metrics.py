@@ -85,8 +85,8 @@ def get_roc_auc(model, dataset):
     model.eval()
     model.zero_grad()
 
-    y_true = torch.tensor([], dtype=torch.float)
-    y_scores = torch.tensor([], dtype=torch.float)
+    y_true = torch.tensor([], dtype=torch.float).to(Param.device)
+    y_scores = torch.tensor([], dtype=torch.float).to(Param.device)
 
     with torch.no_grad():
         for i, data in enumerate(dataset):
