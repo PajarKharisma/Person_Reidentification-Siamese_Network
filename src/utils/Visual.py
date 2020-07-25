@@ -10,19 +10,25 @@ def imshow(img, text=None, should_save=False):
     plt.imshow(np.transpose(npimg, (1, 2, 0)))
     plt.show()
 
-def show_plot(x_data, y_data, multi_graph=False, title='', xlabel='', ylabel='', legend='', legend_loc='', path='', should_show='True', should_save='False'):
-    if multi_graph:
-        for y in y_data:
-            plt.plot(x_data, y)
-    else:
-        plt.plot(x_data, y_data)
+def show_plot(**kwargs):
+    data = kwargs
+    if data['type'] == 'val':
+        plt.plot(data['epoch'], data['train'])
+        plt.plot(data['epoch'], data['val'])
+        plt.title(data['title'])
+        plt.xlabel('Epoch')
+        plt.ylabel('Loss')
+        plt.legend(['train', 'val'], loc='upper right')
 
-    plt.title(title)
-    plt.ylabel(ylabel)
-    plt.xlabel(xlabel)
-    plt.legend(legend, loc=legend_loc)
-    if should_show:
+    elif data['type'] == 'roc':
+        plt.plot(data['fpr'], data['tpr'], linestyle='--', label='Auc score : {}'.format(data['auc']))
+        plt.title(data['title'])
+        plt.xlabel('False Positive Rate')
+        plt.ylabel('True Positive Rate')
+        plt.legend()
+        
+    if data['should_show']:
         plt.show()
-    if should_save:
-        plt.savefig(path)
+    if data['should_save']:
+        plt.savefig(data['path'])
     plt.close()

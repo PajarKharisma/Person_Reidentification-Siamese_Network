@@ -224,14 +224,11 @@ def test_auc():
     dataset = contrastive_load_process(split_data = False)
     thresh, acc, pr = metrics.get_roc_auc(model, dataset)
     vis.show_plot(
-        x_data=pr[0],
-        y_data=pr[1],
-        multi_graph=False,
+        type='roc'
+        fpr=pr[0],
+        tpr=pr[1],
         title='ROC Curve',
-        xlabel='False Positive Rate',
-        ylabel='True Positive Rate',
-        legend='AUC : {}'.format(thresh),
-        legend_loc='bottom right',
+        auc=thresh,
         path=Path.save_plot+'ROC.png',
         should_show=False,
         should_save=True
