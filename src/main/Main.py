@@ -212,7 +212,7 @@ def training(model, loss_function, dataset, optimizer, loss, epoch_number=0):
 
 def test_auc():
     model  = bst.BstCnn()
-    checkpoint = ckp.load_checkpoint(load_dir=path)
+    checkpoint = ckp.load_checkpoint(load_dir=Path.load_model)
     model.load_state_dict(checkpoint['state_dict'])
     model = model.to(Param.device)
     model.eval()
