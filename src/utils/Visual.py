@@ -10,7 +10,7 @@ def imshow(img, text=None, should_save=False):
     plt.imshow(np.transpose(npimg, (1, 2, 0)))
     plt.show()
 
-def show_plot(x_data, y_data, multi_graph=False title='', xlabel='', ylabel='', legend='', legend_loc='', path='', should_show='True', should_save='False'):
+def show_plot(x_data, y_data, multi_graph=False, title='', xlabel='', ylabel='', legend='', legend_loc='', path='', should_show='True', should_save='False'):
     if multi_graph:
         for y in y_data:
             plt.plot(x_data, y)
