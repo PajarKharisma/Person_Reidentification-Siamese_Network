@@ -192,6 +192,7 @@ def training(model, loss_function, dataset, optimizer, loss, epoch_number=0):
     vis.show_plot(
         x_data=history_loss['epoch'],
         y_data=(history_loss['train'], history_loss['val']),
+        multi_graph=True,
         title='Loss Train dan Validasi',
         xlabel='Epoch',
         ylabel='Loss',
@@ -225,6 +226,7 @@ def test_auc():
     vis.show_plot(
         x_data=pr[0],
         y_data=pr[1],
+        multi_graph=True,
         title='ROC Curve',
         xlabel='False Positive Rate',
         ylabel='True Positive Rate',
