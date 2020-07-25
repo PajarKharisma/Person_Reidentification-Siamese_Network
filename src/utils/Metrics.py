@@ -14,8 +14,7 @@ def normalize_dist(dist, max_val=-1):
     if max_val == -1:
         max_val = np.max(dist)
     
-    norm_dist = (dist - 0) / (max_val - 0)
-    norm_dist
+    return (dist - 0) / (max_val - 0)
 
 def concatenate(dists, thresh, probs):
     result_dist = 0
