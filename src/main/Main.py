@@ -226,7 +226,7 @@ def test_auc():
     vis.show_plot(
         x_data=pr[0],
         y_data=pr[1],
-        multi_graph=True,
+        multi_graph=False,
         title='ROC Curve',
         xlabel='False Positive Rate',
         ylabel='True Positive Rate',
