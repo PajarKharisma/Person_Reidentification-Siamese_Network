@@ -218,7 +218,18 @@ def test_auc():
     model.eval()
 
     dataset = contrastive_load_process(split_data = False)
-    metrics.get_roc_auc(model, dataset)
+    thresh, acc, pr = metrics.get_roc_auc(model, dataset)
+    vis.show_plot(
+        x_data=pr[0],
+        y_data=pr[1],
+        title='ROC Curve',
+        xlabel='False Positive Rate',
+        ylabel='True Positive Rate',
+        legend_loc='bottom right',
+        path=Path.save_plot+'ROC.png',
+        should_show=False,
+        should_save=True
+    )
 
 def contrastive_train():
     model = bst.BstCnn()

@@ -10,15 +10,23 @@ def imshow(img, text=None, should_save=False):
     plt.imshow(np.transpose(npimg, (1, 2, 0)))
     plt.show()
 
-def show_plot(history, title='', xlabel='', ylabel='', legend_loc='', path='', should_show='True', should_save='False'):
-    plt.plot(history['epoch'], history['train'])
-    plt.plot(history['epoch'], history['val'])
+def show_plot(xdata, y_data, title='', xlabel='', ylabel='', legend='', legend_loc='', path='', should_show='True', should_save='False'):
+    for y in y_data:
+        plt.plot(x_data, y)
+        
     plt.title(title)
     plt.ylabel(ylabel)
     plt.xlabel(xlabel)
-    plt.legend(['train', 'val'], loc=legend_loc)
+    plt.legend(legend, loc=legend_loc)
     if should_show:
         plt.show()
     if should_save:
         plt.savefig(path)
     plt.close()
+
+def show_plot_roc(y_data, x_data, title='', xlabel='', ylabel=''):
+    plt.plot(fpr, tpr, linestyle='--', label='Auc score : {}'.format(auc))
+    plt.xlabel('False Positive Rate')
+    plt.ylabel('True Positive Rate')
+    plt.legend()
+    plt.show()
