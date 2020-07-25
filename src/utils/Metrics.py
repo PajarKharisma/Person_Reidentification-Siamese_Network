@@ -10,6 +10,13 @@ from scipy import stats
 
 from src.config.Param import *
 
+def normalize_dist(dist, max_value=-1):
+    if max_value == -1:
+        max_value = np.max(dist)
+    
+    norm_dist = (dist - 0) / (max_val - 0)
+    norm_dist
+
 def concatenate(dists, thresh, probs):
     result_dist = 0
     result_thresh = 0
@@ -103,6 +110,7 @@ def get_roc_auc(model, dataset):
     
     y_true = y_true.flatten().detach().cpu().numpy()
     y_scores = y_scores.flatten().detach().cpu().numpy()
+    y_scores = normalize_dist(y_scores)
 
     fpr, tpr, _ = roc_curve(y_true, y_scores)
     threshold = roc_auc_score(y_true, y_scores)
@@ -110,7 +118,7 @@ def get_roc_auc(model, dataset):
     
     acc = accuracy_score(y_true, y_pred)
 
-    print('y_true : {}'.format(len(y_true)))
-    print('y_score : {}'.format(len(y_scores)))
+    print('y_true : {}'.format(y_true))
+    print('y_score : {}'.format(y_scores))
     print('acc : {}'.format(acc))
     return threshold, acc, (fpr, tpr)

@@ -92,7 +92,8 @@ def contrastive_load_process(split_data = True):
         csv_path=Path.contrastive_train_csv,
         images_path=Path.train_images,
         transform=trans,
-        resize=Param.input_size
+        resize=Param.input_size,
+        count=1000
     )
 
     if split_data:
