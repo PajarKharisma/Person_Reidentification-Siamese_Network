@@ -10,10 +10,6 @@ from scipy import stats
 
 from src.config.Param import *
 
-def normalize_data(val, max_val, min_val=0):
-    norm_dist = (val - min_val) / (max_val - min_val)
-    return max(0, norm_dist)
-
 def concatenate(dists, thresh, probs):
     result_dist = 0
     result_thresh = 0
@@ -30,7 +26,6 @@ def get_distances(x1, x2):
 def distance_to_class(distances, threshold=0.5, margin=2.0):
     if Param.data_type == 'PAIR':
         distances = distances[0].flatten().detach().cpu().numpy()
-        distances_norm = [normalize_data(d, Param.max_dist) for d in distances]
         y = [0.0 if d <= threshold else 1.0 for d in distances_norm]
     else:
         dist_p = distances[0].flatten().detach().cpu().numpy()
@@ -107,12 +102,16 @@ def get_roc_auc(model, dataset):
             else:
                 output1, output2, output3 = model(x1, x2, x3)
     
+    threshold = roc_auc_score(y_true, y_scores)
+
     y_true = y_true.flatten().detach().cpu().numpy()
     y_scores = y_scores.flatten().detach().cpu().numpy()
-    auc = roc_auc_score(y_true, y_scores)
+    y_pred = distance_to_class([y_scores], threshold)
 
-    print('AUC : {}'.format(auc))
-    for actual, predict in zip(y_true, y_scores):
-        print('actual : {} || predict : {}'.format(actual, predict))
-
+    # print('Threshold : {}'.format(thresh))
+    # for actual, predict in zip(y_true, y_scores):
+    #     print('actual : {} || predict : {}'.format(actual, predict))
+    
+    acc = accuracy_score(y_true, y_pred)
+    print('Accuracy : {}'.format(acc))
     return auc
