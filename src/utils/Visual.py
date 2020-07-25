@@ -12,8 +12,6 @@ def imshow(img, text=None, should_save=False):
 
 def show_plot(x_data, y_data, title='', xlabel='', ylabel='', legend='', legend_loc='', path='', should_show='True', should_save='False'):
     for y in y_data:
-        print(len(x_data))
-        print(len(y_data))
         plt.plot(x_data, y)
 
     plt.title(title)

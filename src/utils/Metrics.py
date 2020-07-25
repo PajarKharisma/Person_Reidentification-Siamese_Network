@@ -109,4 +109,7 @@ def get_roc_auc(model, dataset):
     y_pred = distance_to_class([y_scores], threshold)
     
     acc = accuracy_score(y_true, y_pred)
+
+    print('FPR : {}'.format(fpr))
+    print('TPR : {}'.format(tpr))
     return threshold, acc, (fpr, tpr)
