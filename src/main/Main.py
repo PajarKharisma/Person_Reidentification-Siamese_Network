@@ -189,10 +189,12 @@ def training(model, loss_function, dataset, optimizer, loss, epoch_number=0):
         print('='*40, end='\n\n')
     
     vis.show_plot(
-        history=history_loss,
+        x_data=history_loss['epoch'],
+        y_data=(history_loss['train'], history_loss['val']),
         title='Loss Train dan Validasi',
         xlabel='Epoch',
         ylabel='Loss',
+        legend=['Train', 'Val'],
         legend_loc='upper right',
         path=Path.save_plot+'Model loss.png',
         should_show=False,
@@ -225,6 +227,7 @@ def test_auc():
         title='ROC Curve',
         xlabel='False Positive Rate',
         ylabel='True Positive Rate',
+        legend='AUC : {}'.format(thresh),
         legend_loc='bottom right',
         path=Path.save_plot+'ROC.png',
         should_show=False,
