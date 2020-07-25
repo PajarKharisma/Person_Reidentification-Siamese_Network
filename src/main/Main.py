@@ -302,7 +302,8 @@ if __name__ == "__main__":
     sys.stdout.write(Param.desc+'\n\n')
     sys.stdout.flush()
 
-    contrastive_train()
+    test_auc()
+    # contrastive_train()
     # partial_process()
     # create_datatest_process()
 
