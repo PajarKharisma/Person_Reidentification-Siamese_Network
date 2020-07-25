@@ -5,6 +5,7 @@ from torch.autograd import Variable
 import copy
 import numpy as np
 from sklearn.metrics import accuracy_score
+from sklearn.metrics import roc_auc_score, roc_curve
 from scipy import stats
 
 from src.config.Param import *
