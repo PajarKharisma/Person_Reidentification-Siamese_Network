@@ -332,9 +332,9 @@ if __name__ == "__main__":
     sys.stdout.write(Param.desc+'\n\n')
     sys.stdout.flush()
 
-    contrastive_train()
-    # partial_process()
-    # create_datatest_process()
+    # contrastive_train()
+    partial_process()
+    create_datatest_process()
 
     elapsed_time = time.time() - start_time
     print(time.strftime("Finish in %H:%M:%S", time.gmtime(elapsed_time)))
