@@ -12,6 +12,6 @@ class Param():
     input_size = (64,128)
     pretrained = False
     data_type = 'PAIR'
-    desc = 'BST ARCHITECTURE FULL - CUHK02 ' + str(datetime.datetime.now())
+    desc = 'TEST ROC ' + str(datetime.datetime.now())
 
     Param.threshold = -1

@@ -164,11 +164,6 @@ def training(model, loss_function, dataset, optimizer, loss, epoch_number=0):
 
             optimizer.step()
 
-            # get loss and acc train
-            dist = metrics.get_distances(output1, output2)
-            Param.max_dist = float(torch.max(dist))
-            Param.min_dist = float(torch.min(dist))
-
             train_loss = train_loss + ((loss_value.item() - train_loss) / (i + 1))
 
         if train_loss < best_loss:
@@ -176,7 +171,7 @@ def training(model, loss_function, dataset, optimizer, loss, epoch_number=0):
             best_model = copy.deepcopy(model)
         
         val_model = copy.deepcopy(model)
-        val_loss, _ = metrics.get_loss(val_model, val_dataloader, criterion)
+        val_loss = metrics.get_loss(val_model, val_dataloader, criterion)
 
         output_str = ''
         output_str += 'Epoch Number : {}'.format(epoch + 1) + '\n'
@@ -215,6 +210,16 @@ def training(model, loss_function, dataset, optimizer, loss, epoch_number=0):
 
     # torch.save(best_model.state_dict(), Path.model)
 
+def test_auc():
+    model  = bst.BstCnn()
+    checkpoint = ckp.load_checkpoint(load_dir=path)
+    model.load_state_dict(checkpoint['state_dict'])
+    model = model.to(Param.device)
+    model.eval()
+
+    dataset = contrastive_load_process(split_data = False)
+    metrics.get_roc_auc(model, dataset)
+
 def contrastive_train():
     model = bst.BstCnn()
     # model = mpkp.MpkpCnn()
@@ -233,12 +238,6 @@ def contrastive_train():
         loss = checkpoint['loss']
 
         Param.threshold = checkpoint['threshold']
-
-    # print('epoch : ',epoch)
-    # print('loss : ',loss)
-    # print('dist : ',checkpoint['dist'])
-    # print('threshold : ',best_threshold)
-    # print('threshold list : ',Param.threshold_list)
 
     criterion = lossFunc.ContrastiveLoss()
     sys.stdout.write('# READING DATASET\n')
@@ -303,9 +302,9 @@ if __name__ == "__main__":
     sys.stdout.write(Param.desc+'\n\n')
     sys.stdout.flush()
 
-    # contrastive_train()
-    partial_process()
-    create_datatest_process()
+    contrastive_train()
+    # partial_process()
+    # create_datatest_process()
 
     elapsed_time = time.time() - start_time
     print(time.strftime("Finish in %H:%M:%S", time.gmtime(elapsed_time)))

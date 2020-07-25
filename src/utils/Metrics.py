@@ -81,11 +81,13 @@ def get_loss(model, dataset, loss_func):
 
     return val_loss
 
-def get_val_metrics(model, dataset, loss_func):
+def get_roc_auc(model, dataset):
     model.eval()
     model.zero_grad()
-    val_loss = 0
-    val_acc = 0
+
+    y_true = torch.tensor([], dtype=torch.float)
+    y_scores = torch.tensor([], dtype=torch.float)
+
     with torch.no_grad():
         for i, data in enumerate(dataset):
             x1, x2, x3 = data
@@ -96,12 +98,20 @@ def get_val_metrics(model, dataset, loss_func):
             if Param.data_type == 'PAIR':
                 output1, output2 = model(x1, x2)
                 output3 = x3
+
+                dist = get_distances(output1, output2)
+                y_true = torch.cat((y_true, output3))
+                y_scores = torch.cat((y_scores, dist))
+
             else:
                 output1, output2, output3 = model(x1, x2, x3)
+    
+    y_true = y_true.flatten().detach().cpu().numpy()
+    y_scores = y_scores.flatten().detach().cpu().numpy()
+    auc = roc_auc_score(y_true, y_scores)
 
-            loss_value = loss_func.forward(output1, output2, output3).item()
+    print('AUC : {}'.format())
+    for actual, predict in zip(y_true, y_scores):
+        print('actual : {} || predict : {}'.format(actual, predict))
 
-            val_loss = val_loss + ((loss_value - val_loss) / (i + 1))
-            val_acc = val_acc + ((get_acc(output1, output2, output3) - val_acc) / (i + 1))
-
-    return val_loss, val_acc
+    return auc
