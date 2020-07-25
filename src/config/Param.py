@@ -14,4 +14,4 @@ class Param():
     data_type = 'PAIR'
     desc = 'TEST ROC ' + str(datetime.datetime.now())
 
-    Param.threshold = -1
+    threshold = -1
