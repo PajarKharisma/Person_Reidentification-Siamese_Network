@@ -110,6 +110,6 @@ def get_roc_auc(model, dataset):
     
     acc = accuracy_score(y_true, y_pred)
 
-    print('FPR : {}'.format(fpr))
-    print('TPR : {}'.format(tpr))
+    print('FPR : {}'.format(fpr.shape))
+    print('TPR : {}'.format(tpr.shape))
     return threshold, acc, (fpr, tpr)
