@@ -25,11 +25,10 @@ def get_distances(x1, x2):
 
 def distance_to_class(distances, threshold=0.5, margin=2.0):
     if Param.data_type == 'PAIR':
-        distances = distances[0].flatten().detach().cpu().numpy()
-        y = [0.0 if d <= threshold else 1.0 for d in distances_norm]
+        y = [0.0 if d <= threshold else 1.0 for d in distances]
     else:
-        dist_p = distances[0].flatten().detach().cpu().numpy()
-        dist_n = distances[1].flatten().detach().cpu().numpy()
+        dist_p = distances[0]
+        dist_n = distances[1]
         y = []
         for i in range(len(dist_p)):
             dist = 0.0 if dist_p[i] + margin <= dist_n[i] else 1.0
