@@ -22,7 +22,7 @@ def show_plot(**kwargs):
 
     elif data['type'] == 'roc':
         plt.plot(data['fpr'], data['tpr'],  marker='.', label='Best Thresold : {}'.format(data['best_thresh']))
-        pyplot.scatter(data['fpr'][data['ix']], data['tpr'][data['ix']], marker='o', color='black', label='Best')
+        plt.scatter(data['fpr'][data['ix']], data['tpr'][data['ix']], marker='o', color='black', label='Best')
         plt.title(data['title'])
         plt.xlabel('False Positive Rate')
         plt.ylabel('True Positive Rate')
