@@ -13,3 +13,6 @@
 - https://github.com/gdlg/pytorch_compact_bilinear_pooling
 - https://github.com/DeepInsight-PCALab/CompactBilinearPooling-Pytorch
 - https://gist.github.com/vadimkantorov/d9b56f9b85f1f4ce59ffecf893a1581a
+
+### Determine Threshold
+- https://machinelearningmastery.com/threshold-moving-for-imbalanced-classification/
