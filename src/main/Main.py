@@ -222,6 +222,12 @@ def test_auc():
 
     dataset = contrastive_load_process(split_data = False)
     roc_data = metrics.get_roc_auc(model, dataset)
+
+    print('Threshold : {}'.format(roc_data['best_thresh']))
+    print('FPR : {}'.format(roc_data['fpr']))
+    print('TPR : {}'.format(roc_data['tpr']))
+    print('acc : {}'.format(roc_data['acc']))
+
     vis.show_plot(
         type='roc',
         fpr=roc_data['fpr'],
