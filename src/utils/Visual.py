@@ -21,7 +21,8 @@ def show_plot(**kwargs):
         plt.legend(['train', 'val'], loc='upper right')
 
     elif data['type'] == 'roc':
-        plt.plot(data['fpr'], data['tpr'], linestyle='--', label='Best Thresold : {}'.format(data['auc']))
+        plt.plot(data['fpr'], data['tpr'],  marker='.', label='Best Thresold : {}'.format(data['best_thresh']))
+        pyplot.scatter(data['fpr'][data['ix']], data['tpr'][data['ix']], marker='o', color='black', label='Best')
         plt.title(data['title'])
         plt.xlabel('False Positive Rate')
         plt.ylabel('True Positive Rate')

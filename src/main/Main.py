@@ -221,13 +221,14 @@ def test_auc():
     model.eval()
 
     dataset = contrastive_load_process(split_data = False)
-    thresh, acc, pr = metrics.get_roc_auc(model, dataset)
+    roc_data = metrics.get_roc_auc(model, dataset)
     vis.show_plot(
         type='roc',
-        fpr=pr[0],
-        tpr=pr[1],
+        fpr=roc_data['fpr'],
+        tpr=roc_data['tpr'],
         title='ROC Curve',
-        auc=thresh,
+        best_thresh=roc_data['best_thresh'],
+        ix=roc_data['ix'],
         path=Path.save_plot+'ROC.png',
         should_show=False,
         should_save=True

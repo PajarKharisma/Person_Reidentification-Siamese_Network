@@ -123,4 +123,11 @@ def get_roc_auc(model, dataset):
     print('FPR : {}'.format(fpr))
     print('TPR : {}'.format(tpr))
     print('acc : {}'.format(acc))
-    return best_thresh, acc, (fpr, tpr)
+
+    return {
+        'best_thresh' : best_thresh,
+        'acc' : acc,
+        'fpr' : fpr,
+        'tpr' : tpr,
+        'ix' : ix
+    }
