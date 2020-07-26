@@ -111,9 +111,11 @@ def get_roc_auc(model, dataset):
     y_scores = y_scores.flatten().detach().cpu().numpy()
     y_scores = normalize_dist(y_scores)
 
-    fpr, tpr, _ = roc_curve(y_true, y_scores)
-    threshold = roc_auc_score(y_true, y_scores)
-    y_pred = distance_to_class([y_scores], 0.5)
+    fpr, tpr, thresholds = roc_curve(y_true, y_scores)
+    J = tpr - fpr
+    ix = np.argmax(J)
+    best_thresh = thresholds[ix]
+    y_pred = distance_to_class([y_scores], best_thresh)
     
     acc = accuracy_score(y_true, y_pred)
 
@@ -123,4 +125,4 @@ def get_roc_auc(model, dataset):
     print('y_true : {}'.format(y_true))
     print('y_score : {}'.format(y_scores))
     print('acc : {}'.format(acc))
-    return threshold, acc, (fpr, tpr)
+    return best_thresh, acc, (fpr, tpr)
