@@ -110,7 +110,7 @@ def get_roc_auc(model, dataset):
     y_true = y_true.flatten().detach().cpu().numpy()
     y_scores = y_scores.flatten().detach().cpu().numpy()
     max_dist = np.max(y_scores)
-    y_scores = normalize_dist(y_scores, max_scores)
+    y_scores = normalize_dist(y_scores, max_dist)
 
     fpr, tpr, thresholds = roc_curve(y_true, y_scores)
     J = tpr - fpr
