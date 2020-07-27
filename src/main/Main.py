@@ -252,14 +252,15 @@ def renew_model():
         should_save=True
     )
 
-    ckp.save_checkpoint(
-        best_threshold=roc_data['best_thresh'],
-        save_dir=Path.save_model,
-        model=model,
-        optimizer=checkpoint['optimizer'],
-        epoch=checkpoint['epoch'],
-        loss=checkpoint['loss']
-    )
+    checkpoint = {
+        'desc' : Param.desc,
+        'threshold' : roc_data['best_thresh'],
+        'epoch': checkpoint['epoch'],
+        'loss' : checkpoint['loss'],
+        'state_dict': checkpoint['state_dict'],
+        'optimizer': checkpoint['optimizer']
+    }
+    torch.save(checkpoint, Path.save_model)
 
 def contrastive_train():
     model = bst.BstCnn()
