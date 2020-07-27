@@ -12,6 +12,6 @@ class Param():
     input_size = (64,128)
     pretrained = False
     data_type = 'PAIR'
-    desc = 'BST - PARTIAL_1 #1 ' + str(datetime.datetime.now())
+    desc = 'RENEW ALL MODEL ' + str(datetime.datetime.now())
 
     threshold = -1
