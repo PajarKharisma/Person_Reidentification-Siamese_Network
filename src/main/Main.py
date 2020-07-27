@@ -255,7 +255,7 @@ def renew_model():
     ckp.save_checkpoint(
         best_threshold=roc_data['best_thresh'],
         save_dir=Path.save_model,
-        model=checkpoint['model'],
+        model=checkpoint['state_dict'],
         optimizer=checkpoint['optimizer'],
         epoch=checkpoint['epoch'],
         loss=checkpoint['loss']
