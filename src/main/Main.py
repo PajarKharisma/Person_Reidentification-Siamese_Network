@@ -92,7 +92,8 @@ def contrastive_load_process(split_data = True):
         csv_path=Path.contrastive_train_csv,
         images_path=Path.train_images,
         transform=trans,
-        resize=Param.input_size
+        resize=Param.input_size,
+        count=1000
     )
 
     if split_data:
@@ -191,6 +192,9 @@ def training(model, loss_function, dataset, optimizer, loss, epoch_number=0):
     test_dataset = contrastive_load_process(split_data = False)
     roc_data = metrics.get_roc_auc(best_model, test_dataset)
 
+    sys.stdout.write('Akurasi data train : {}\n'.format(roc_data['acc']))
+    sys.stdout.flush()
+
     vis.show_plot(
         type='val',
         epoch=history_loss['epoch'],
@@ -226,7 +230,6 @@ def training(model, loss_function, dataset, optimizer, loss, epoch_number=0):
         loss=best_loss,
         max_dist=roc_data['max_dist']
     )
-
     # torch.save(best_model.state_dict(), Path.model)
 
 def renew_model():
