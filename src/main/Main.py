@@ -90,7 +90,7 @@ def contrastive_load_process(split_data = True):
     trans = transforms.Compose([transforms.ToTensor()])
     contrastive_dataset = dsetLoader.ContrastiveDataset(
         csv_path=Path.contrastive_train_csv,
-        images_path=Path.part_1_images,
+        images_path=Path.train_images,
         transform=trans,
         resize=Param.input_size
     )
@@ -436,8 +436,8 @@ if __name__ == "__main__":
     sys.stdout.write(Param.desc+'\n\n')
     sys.stdout.flush()
 
-    renew_model()
-    # contrastive_train()
+    # renew_model()
+    contrastive_train()
     # partial_process()
     # create_datatest_process()
 
