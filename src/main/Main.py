@@ -328,7 +328,7 @@ def renew_model():
         output += 'Max distance : {}\n'.format(roc_data['max_dist'])
         output += 'Akurasi : {}\n'.format(roc_data['acc'])
 
-        with open(detail['out_log'], "w") as text_file:
+        with open(detail['out_log'], "w+") as text_file:
             text_file.write(output)
 
         vis.show_plot(
