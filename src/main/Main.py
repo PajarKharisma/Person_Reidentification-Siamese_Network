@@ -236,21 +236,21 @@ def renew_model():
             'save_model' : Path.root_dir + '/models/PARTIAL_1 #1.pth',
             'image_path' : Path.path + '/images/partial_1/part_1/',
             'plot_name' : 'ROC PARTIAL_1 #1.png',
-            'out_log' : Path.root_dir + 'log/result/data roc - PARTIAL_1 #1.out'
+            'out_log' : Path.root_dir + '/log/result/data roc - PARTIAL_1 #1.out'
         },
         {
             'load_model' : Path.load_model + '/PARTIAL_1 #2.pth',
             'save_model' : Path.root_dir + '/models/PARTIAL_1 #2.pth',
             'image_path' : Path.path + '/images/partial_1/part_2/',
             'plot_name' : 'ROC PARTIAL_1 #2.png',
-            'out_log' : Path.root_dir + 'log/result/data roc - PARTIAL_1 #2.out'
+            'out_log' : Path.root_dir + '/log/result/data roc - PARTIAL_1 #2.out'
         },
         {
             'load_model' : Path.load_model + '/PARTIAL_1 #3.pth',
             'save_model' : Path.root_dir + '/models/PARTIAL_1 #3.pth',
             'image_path' : Path.path + '/images/partial_1/part_3/',
             'plot_name' : 'ROC PARTIAL_1 #3.png',
-            'out_log' : Path.root_dir + 'log/result/data roc - PARTIAL_1 #3.out'
+            'out_log' : Path.root_dir + '/log/result/data roc - PARTIAL_1 #3.out'
         },
         # PARTIAL_2
         {
@@ -258,21 +258,21 @@ def renew_model():
             'save_model' : Path.root_dir + '/models/PARTIAL_2 #1.pth',
             'image_path' : Path.path + '/images/partial_2/part_1/',
             'plot_name' : 'ROC PARTIAL_2 #1.png',
-            'out_log' : Path.root_dir + 'log/result/data roc - PARTIAL_2 #1.out'
+            'out_log' : Path.root_dir + '/log/result/data roc - PARTIAL_2 #1.out'
         },
         {
             'load_model' : Path.load_model + '/PARTIAL_2 #2.pth',
             'save_model' : Path.root_dir + '/models/PARTIAL_2 #2.pth',
             'image_path' : Path.path + '/images/partial_2/part_2/',
             'plot_name' : 'ROC PARTIAL_2 #2.png',
-            'out_log' : Path.root_dir + 'log/result/data roc - PARTIAL_2 #2.out'
+            'out_log' : Path.root_dir + '/log/result/data roc - PARTIAL_2 #2.out'
         },
         {
             'load_model' : Path.load_model + '/PARTIAL_2 #3.pth',
             'save_model' : Path.root_dir + '/models/PARTIAL_2 #3.pth',
             'image_path' : Path.path + '/images/partial_2/part_3/',
             'plot_name' : 'ROC PARTIAL_2 #3.png',
-            'out_log' : Path.root_dir + 'log/result/data roc - PARTIAL_2 #3.out'
+            'out_log' : Path.root_dir + '/log/result/data roc - PARTIAL_2 #3.out'
         },
         # PARTIAL_3
         {
@@ -280,28 +280,28 @@ def renew_model():
             'save_model' : Path.root_dir + '/models/PARTIAL_3 #1.pth',
             'image_path' : Path.path + '/images/partial_3/part_1/',
             'plot_name' : 'ROC PARTIAL_3 #1.png',
-            'out_log' : Path.root_dir + 'log/result/data roc - PARTIAL_3 #1.out'
+            'out_log' : Path.root_dir + '/log/result/data roc - PARTIAL_3 #1.out'
         },
         {
             'load_model' : Path.load_model + '/PARTIAL_3 #2.pth',
             'save_model' : Path.root_dir + '/models/PARTIAL_3 #2.pth',
             'image_path' : Path.path + '/images/partial_3/part_2/',
             'plot_name' : 'ROC PARTIAL_3 #2.png',
-            'out_log' : Path.root_dir + 'log/result/data roc - PARTIAL_3 #2.out'
+            'out_log' : Path.root_dir + '/log/result/data roc - PARTIAL_3 #2.out'
         },
         {
             'load_model' : Path.load_model + '/PARTIAL_3 #3.pth',
             'save_model' : Path.root_dir + '/models/PARTIAL_3 #3.pth',
             'image_path' : Path.path + '/images/partial_3/part_3/',
             'plot_name' : 'ROC PARTIAL_3 #3.png',
-            'out_log' : Path.root_dir + 'log/result/data roc - PARTIAL_3 #3.out'
+            'out_log' : Path.root_dir + '/log/result/data roc - PARTIAL_3 #3.out'
         },
         {
             'load_model' : Path.load_model + '/PARTIAL_3 #4.pth',
             'save_model' : Path.root_dir + '/models/PARTIAL_3 #4.pth',
             'image_path' : Path.path + '/images/partial_3/part_4/',
             'plot_name' : 'ROC PARTIAL_3 #4.png',
-            'out_log' : Path.root_dir + 'log/result/data roc - PARTIAL_3 #4.out'
+            'out_log' : Path.root_dir + '/log/result/data roc - PARTIAL_3 #4.out'
         }
     ]
 
