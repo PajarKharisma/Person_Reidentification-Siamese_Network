@@ -13,8 +13,8 @@ def imshow(img, text=None, should_save=False):
 def show_plot(**kwargs):
     data = kwargs
     if data['type'] == 'val':
-        plt.plot(data['epoch'], data['train'])
-        plt.plot(data['epoch'], data['val'])
+        plt.plot(data['epoch'], data['train_data'])
+        plt.plot(data['epoch'], data['val_data'])
         plt.title(data['title'])
         plt.xlabel('Epoch')
         plt.ylabel('Loss')

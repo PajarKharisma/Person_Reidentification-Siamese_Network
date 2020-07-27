@@ -90,7 +90,7 @@ def contrastive_load_process(split_data = True):
     trans = transforms.Compose([transforms.ToTensor()])
     contrastive_dataset = dsetLoader.ContrastiveDataset(
         csv_path=Path.contrastive_train_csv,
-        images_path=Path.train_images,
+        images_path=Path.part_1_images,
         transform=trans,
         resize=Param.input_size
     )
@@ -187,46 +187,22 @@ def training(model, loss_function, dataset, optimizer, loss, epoch_number=0):
         history_loss['val'].append(val_loss)
 
         print('='*40, end='\n\n')
-    
+
+    test_dataset = contrastive_load_process(split_data = False)
+    roc_data = metrics.get_roc_auc(best_model, test_dataset)
+
     vis.show_plot(
-        x_data=history_loss['epoch'],
-        y_data=(history_loss['train'], history_loss['val']),
-        multi_graph=True,
+        epoch=history_loss['epoch'],
+        train_data=history_loss['train'],
+        val_data=history_loss['val'],
         title='Loss Train dan Validasi',
         xlabel='Epoch',
         ylabel='Loss',
         legend=['Train', 'Val'],
-        legend_loc='upper right',
         path=Path.save_plot+'Model loss.png',
         should_show=False,
         should_save=True
     )
-
-    ckp.save_checkpoint(
-        desc=Param.desc,
-        save_dir=Path.save_model,
-        model=best_model,
-        optimizer=optimizer,
-        epoch=Param.train_number_epochs + epoch_number,
-        loss=best_loss
-    )
-
-    # torch.save(best_model.state_dict(), Path.model)
-
-def test_auc():
-    model  = bst.BstCnn()
-    checkpoint = ckp.load_checkpoint(load_dir=Path.load_model)
-    model.load_state_dict(checkpoint['state_dict'])
-    model = model.to(Param.device)
-    model.eval()
-
-    dataset = contrastive_load_process(split_data = False)
-    roc_data = metrics.get_roc_auc(model, dataset)
-
-    print('Threshold : {}'.format(roc_data['best_thresh']))
-    print('FPR : {}'.format(roc_data['fpr']))
-    print('TPR : {}'.format(roc_data['tpr']))
-    print('acc : {}'.format(roc_data['acc']))
 
     vis.show_plot(
         type='roc',
@@ -238,6 +214,51 @@ def test_auc():
         path=Path.save_plot+'ROC.png',
         should_show=False,
         should_save=True
+    )
+
+    ckp.save_checkpoint(
+        best_threshold=roc_data['best_thresh'],
+        save_dir=Path.save_model,
+        model=best_model,
+        optimizer=optimizer,
+        epoch=Param.train_number_epochs + epoch_number,
+        loss=best_loss
+    )
+
+    # torch.save(best_model.state_dict(), Path.model)
+
+def renew_model():
+    model  = bst.BstCnn()
+    checkpoint = ckp.load_checkpoint(load_dir=Path.load_model)
+    model.load_state_dict(checkpoint['state_dict'])
+    model = model.to(Param.device)
+    model.eval()
+
+    dataset = contrastive_load_process(split_data = False)
+    roc_data = metrics.get_roc_auc(model, dataset)
+
+    print('Threshold : {}'.format(roc_data['best_thresh']))
+    print('Akurasi : {}'.format(roc_data['acc']))
+
+    vis.show_plot(
+        type='roc',
+        fpr=roc_data['fpr'],
+        tpr=roc_data['tpr'],
+        title='ROC Curve',
+        best_thresh=roc_data['best_thresh'],
+        ix=roc_data['ix'],
+        path=Path.save_plot+'ROC.png',
+        should_show=False,
+        should_save=True
+    )
+
+    ckp.save_checkpoint(
+        best_threshold=roc_data['best_thresh'],
+        save_dir=Path.save_model,
+        model=model['model'],
+        optimizer=checkpoint['optimizer'],
+        epoch=checkpoint['epoch'],
+        loss=checkpoint['loss']
     )
 
 def contrastive_train():
@@ -322,7 +343,7 @@ if __name__ == "__main__":
     sys.stdout.write(Param.desc+'\n\n')
     sys.stdout.flush()
 
-    test_auc()
+    renew_model()
     # contrastive_train()
     # partial_process()
     # create_datatest_process()
