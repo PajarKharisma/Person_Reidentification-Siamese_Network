@@ -58,7 +58,7 @@ with torch.no_grad():
             output1, output2 = model(x1, x2)
             output3 = x3
 
-            dist = get_distances(output1, output2)
+            dist = metrics.get_distances(output1, output2)
             y_true = torch.cat((y_true, output3))
             y_scores = torch.cat((y_scores, dist))
 
