@@ -90,7 +90,7 @@ def contrastive_load_process(split_data = True):
     trans = transforms.Compose([transforms.ToTensor()])
     contrastive_dataset = dsetLoader.ContrastiveDataset(
         csv_path=Path.contrastive_train_csv,
-        images_path=Path.part_3_images,
+        images_path=Path.part_1_images,
         transform=trans,
         resize=Param.input_size
     )
@@ -222,45 +222,137 @@ def training(model, loss_function, dataset, optimizer, loss, epoch_number=0):
         model=best_model,
         optimizer=optimizer,
         epoch=Param.train_number_epochs + epoch_number,
-        loss=best_loss
+        loss=best_loss,
+        max_dist=roc_data['max_dist']
     )
 
     # torch.save(best_model.state_dict(), Path.model)
 
 def renew_model():
-    model  = bst.BstCnn()
-    checkpoint = ckp.load_checkpoint(load_dir=Path.load_model)
-    model.load_state_dict(checkpoint['state_dict'])
-    model = model.to(Param.device)
-    model.eval()
+    details = [
+        # PARTIAL_1
+        {
+            'load_model' : Path.load_model + '/PARTIAL_1 #1',
+            'save_model' : Path.root_dir + '/models/PARTIAL_1 #1',
+            'image_path' : Path.path + '/images/partial_1/part_1',
+            'plot_name' : 'ROC PARTIAL_1 #1.png',
+            'out_log' : Path.root_dir + 'log/result/data roc - PARTIAL_1 #1.out'
+        },
+        {
+            'load_model' : Path.load_model + '/PARTIAL_1 #2',
+            'save_model' : Path.root_dir + '/models/PARTIAL_1 #2',
+            'image_path' : Path.path + '/images/partial_1/part_2',
+            'plot_name' : 'ROC PARTIAL_1 #2.png',
+            'out_log' : Path.root_dir + 'log/result/data roc - PARTIAL_1 #2.out'
+        },
+        {
+            'load_model' : Path.load_model + '/PARTIAL_1 #3',
+            'save_model' : Path.root_dir + '/models/PARTIAL_1 #3',
+            'image_path' : Path.path + '/images/partial_1/part_3',
+            'plot_name' : 'ROC PARTIAL_1 #3.png',
+            'out_log' : Path.root_dir + 'log/result/data roc - PARTIAL_1 #3.out'
+        },
+        # PARTIAL_2
+        {
+            'load_model' : Path.load_model + '/PARTIAL_2 #1',
+            'save_model' : Path.root_dir + '/models/PARTIAL_2 #1',
+            'image_path' : Path.path + '/images/partial_2/part_1',
+            'plot_name' : 'ROC PARTIAL_2 #1.png',
+            'out_log' : Path.root_dir + 'log/result/data roc - PARTIAL_2 #1.out'
+        },
+        {
+            'load_model' : Path.load_model + '/PARTIAL_2 #2',
+            'save_model' : Path.root_dir + '/models/PARTIAL_2 #2',
+            'image_path' : Path.path + '/images/partial_2/part_2',
+            'plot_name' : 'ROC PARTIAL_2 #2.png',
+            'out_log' : Path.root_dir + 'log/result/data roc - PARTIAL_2 #2.out'
+        },
+        {
+            'load_model' : Path.load_model + '/PARTIAL_2 #3',
+            'save_model' : Path.root_dir + '/models/PARTIAL_2 #3',
+            'image_path' : Path.path + '/images/partial_2/part_3',
+            'plot_name' : 'ROC PARTIAL_2 #3.png',
+            'out_log' : Path.root_dir + 'log/result/data roc - PARTIAL_2 #3.out'
+        },
+        # PARTIAL_3
+        {
+            'load_model' : Path.load_model + '/PARTIAL_3 #1',
+            'save_model' : Path.root_dir + '/models/PARTIAL_3 #1',
+            'image_path' : Path.path + '/images/partial_3/part_1',
+            'plot_name' : 'ROC PARTIAL_3 #1.png',
+            'out_log' : Path.root_dir + 'log/result/data roc - PARTIAL_3 #1.out'
+        },
+        {
+            'load_model' : Path.load_model + '/PARTIAL_3 #2',
+            'save_model' : Path.root_dir + '/models/PARTIAL_3 #2',
+            'image_path' : Path.path + '/images/partial_3/part_2',
+            'plot_name' : 'ROC PARTIAL_3 #2.png',
+            'out_log' : Path.root_dir + 'log/result/data roc - PARTIAL_3 #2.out'
+        },
+        {
+            'load_model' : Path.load_model + '/PARTIAL_3 #3',
+            'save_model' : Path.root_dir + '/models/PARTIAL_3 #3',
+            'image_path' : Path.path + '/images/partial_3/part_3',
+            'plot_name' : 'ROC PARTIAL_3 #3.png',
+            'out_log' : Path.root_dir + 'log/result/data roc - PARTIAL_3 #3.out'
+        },
+        {
+            'load_model' : Path.load_model + '/PARTIAL_3 #4',
+            'save_model' : Path.root_dir + '/models/PARTIAL_3 #4',
+            'image_path' : Path.path + '/images/partial_3/part_4',
+            'plot_name' : 'ROC PARTIAL_3 #4.png',
+            'out_log' : Path.root_dir + 'log/result/data roc - PARTIAL_3 #4.out'
+        },
+    ]
 
-    dataset = contrastive_load_process(split_data = False)
-    roc_data = metrics.get_roc_auc(model, dataset)
+    for detail in details:
+        model  = bst.BstCnn()
+        checkpoint = ckp.load_checkpoint(load_dir=detail['load_model'])
+        model.load_state_dict(checkpoint['state_dict'])
+        model = model.to(Param.device)
+        model.eval()
 
-    print('Threshold : {}'.format(roc_data['best_thresh']))
-    print('Akurasi : {}'.format(roc_data['acc']))
+        contrastive_dataset = dsetLoader.ContrastiveDataset(
+            csv_path=Path.contrastive_train_csv,
+            images_path=detail['image_path'],
+            transform=transforms.Compose([transforms.ToTensor()]),
+            resize=Param.input_size
+        )
+        dataset = DataLoader(contrastive_dataset, batch_size=Param.train_batch_size, shuffle=True)
 
-    vis.show_plot(
-        type='roc',
-        fpr=roc_data['fpr'],
-        tpr=roc_data['tpr'],
-        title='ROC Curve',
-        best_thresh=roc_data['best_thresh'],
-        ix=roc_data['ix'],
-        path=Path.save_plot+'ROC.png',
-        should_show=False,
-        should_save=True
-    )
+        roc_data = metrics.get_roc_auc(model, dataset)
 
-    checkpoint = {
-        'desc' : Param.desc,
-        'threshold' : roc_data['best_thresh'],
-        'epoch': checkpoint['epoch'],
-        'loss' : checkpoint['loss'],
-        'state_dict': checkpoint['state_dict'],
-        'optimizer': checkpoint['optimizer']
-    }
-    torch.save(checkpoint, Path.save_model)
+        output = ''
+        output += checkpoint['desc'] + '\n\n'
+        output += 'Threshold : {}\n'.format(roc_data['best_thresh'])
+        output += 'Max distance : {}\n'.format(roc_data['max_dist'])
+        output += 'Akurasi : {}\n'.format(roc_data['acc'])
+
+        with open(detail['out_log'], "w") as text_file:
+            text_file.write(output)
+
+        vis.show_plot(
+            type='roc',
+            fpr=roc_data['fpr'],
+            tpr=roc_data['tpr'],
+            title='ROC Curve',
+            best_thresh=roc_data['best_thresh'],
+            ix=roc_data['ix'],
+            path=detail['plot_name'],
+            should_show=False,
+            should_save=True
+        )
+
+        checkpoint = {
+            'desc' : checkpoint['desc'],
+            'threshold' : roc_data['best_thresh'],
+            'epoch': checkpoint['epoch'],
+            'loss' : checkpoint['loss'],
+            'state_dict': checkpoint['state_dict'],
+            'optimizer': checkpoint['optimizer'],
+            'max_dist' : roc_data['max_dist']
+        }
+        torch.save(checkpoint, detail['save_model'])
 
 def contrastive_train():
     model = bst.BstCnn()

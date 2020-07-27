@@ -12,7 +12,8 @@ def save_checkpoint(**kwargs):
         'epoch': data['epoch'],
         'loss' : data['loss'],
         'state_dict': data['model'].state_dict(),
-        'optimizer': data['optimizer'].state_dict()
+        'optimizer': data['optimizer'].state_dict(),
+        'max_dist' : data['max_dist']
     }
     torch.save(checkpoint, data['save_dir'])
 
