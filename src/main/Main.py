@@ -188,8 +188,8 @@ def training(model, loss_function, dataset, optimizer, loss, epoch_number=0):
 
         print('='*40, end='\n\n')
 
-    test_dataset = contrastive_load_process(split_data = False)
-    roc_data = metrics.get_roc_auc(best_model, test_dataset)
+    # test_dataset = contrastive_load_process(split_data = False)
+    roc_data = metrics.get_roc_auc(best_model, val_dataloader)
 
     sys.stdout.write('Akurasi data train : {}\n'.format(roc_data['acc']))
     sys.stdout.flush()
@@ -358,8 +358,7 @@ def renew_model():
         torch.save(checkpoint, detail['save_model'])
 
 def contrastive_train():
-    model = bst.BstCnn()
-    # model = mpkp.MpkpCnn()
+    model = bst.BstCnnFull()
     model = model.to(Param.device)
 
     optimizer = optim.Adam(model.parameters())
