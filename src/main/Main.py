@@ -30,9 +30,9 @@ import src.neuralNetworksArch.BasicSiamese as bSiamese
 import src.neuralNetworksArch.OneShotArch as osArch
 import src.neuralNetworksArch.AdaptiveSpatialFeature as asf
 import src.neuralNetworksArch.BstCnn as bst
+import src.neuralNetworksArch.BstCnnFull as bst_full
 import src.neuralNetworksArch.McbCnn as mcb
 import src.neuralNetworksArch.VggArch as vgg
-import src.neuralNetworksArch.Mpkp as mpkp
 
 import src.utils.Visual as vis
 import src.utils.DatasetLoader as dsetLoader
@@ -358,7 +358,7 @@ def renew_model():
         torch.save(checkpoint, detail['save_model'])
 
 def contrastive_train():
-    model = bst.BstCnnFull()
+    model = bst_full.BstCnnFull()
     model = model.to(Param.device)
 
     optimizer = optim.Adam(model.parameters())
