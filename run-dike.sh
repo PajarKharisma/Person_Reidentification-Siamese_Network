@@ -5,7 +5,7 @@
 #SBATCH --error=log/result/result-%j.err
 #
 #SBATCH --nodes=1
-#SBATCH --nodelist=komputasi07
+#SBATCH --nodelist=komputasi08
 #SBATCH --time=20:00:00
 
 source ../.venv/bin/activate
