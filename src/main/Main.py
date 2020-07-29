@@ -443,7 +443,7 @@ if __name__ == "__main__":
     sys.stdout.flush()
 
     # renew_model()
-    contrastive_train()
+    triplet_train()
     # partial_process()
     # create_datatest_process()
 
