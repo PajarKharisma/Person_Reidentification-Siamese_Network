@@ -108,19 +108,27 @@ def contrastive_load_process(split_data = True):
     else:
         return DataLoader(contrastive_dataset, batch_size=Param.train_batch_size, shuffle=True)
 
-def triplet_load_process():
+def triplet_load_process(split_data = True):
     trans = transforms.Compose([transforms.ToTensor()])
-    triplet_dataset = dsetLoader.TripletDataset(csv_path=Path.triplet_train_csv, images_path=Path.images, transform=trans, resize=Param.input_size)
-    
-    train_length = int(len(triplet_dataset) * Param.data_split)
-    val_length = len(triplet_dataset) - train_length
+    triplet_dataset = dsetLoader.TripletDataset(
+        csv_path=Path.triplet_train_csv,
+        images_path=Path.train_images,
+        transform=trans,
+        resize=Param.input_size
+    )
 
-    train_set, val_set = torch.utils.data.random_split(triplet_dataset, [train_length, val_length])
+    if split_data:
+        train_length = int(len(triplet_dataset) * Param.data_split)
+        val_length = len(triplet_dataset) - train_length
 
-    train_dataloader = DataLoader(train_set, batch_size=Param.train_batch_size, shuffle=True)
-    val_dataloader = DataLoader(val_set, batch_size=Param.train_batch_size * 2, shuffle=True)
+        train_set, val_set = torch.utils.data.random_split(triplet_dataset, [train_length, val_length])
 
-    return train_dataloader, val_dataloader
+        train_dataloader = DataLoader(train_set, batch_size=Param.train_batch_size, shuffle=True)
+        val_dataloader = DataLoader(val_set, batch_size=Param.train_batch_size * 2, shuffle=True)
+
+        return train_dataloader, val_dataloader
+    else:
+        return DataLoader(triplet_dataset, batch_size=Param.train_batch_size, shuffle=True)
 
 def training(model, loss_function, dataset, optimizer, loss, epoch_number=0):
     criterion = loss_function
@@ -394,34 +402,30 @@ def contrastive_train():
     )
 
 def triplet_train():
-    # model = bst.BstCnn()
-    model = bSiamese.BasicSiameseNetwork()
+    model = bst_full.BstCnnFull()
     model = model.to(Param.device)
 
-    optimizer = optim.Adam(model.parameters(), lr=0.0005)
+    optimizer = optim.Adam(model.parameters())
     epoch = 0
     loss = sys.float_info.max
 
     if(Param.pretrained == True):
-        checkpoint  = ckp.load_checkpoint(
-            load_dir=Path.load_model,
-            model=model,
-            optimizer=optimizer
-        )
+        checkpoint  = ckp.load_checkpoint(load_dir=Path.load_model)
         
         model.load_state_dict(checkpoint['state_dict'])
         optimizer.load_state_dict(checkpoint['optimizer'])
         epoch = checkpoint['epoch']
         loss = checkpoint['loss']
-    
-        Param.min_dist = checkpoint['dist'][0]
-        Param.max_dist = checkpoint['dist'][1]
 
-        best_threshold = checkpoint['threshold']
-        Param.threshold_list = checkpoint['threshold_list']
+        Param.threshold = checkpoint['threshold']
 
     criterion = lossFunc.TripletLoss()
+    sys.stdout.write('# READING DATASET\n')
+
     dataset = triplet_load_process()
+
+    sys.stdout.write('# FINISH READING DATASET AND START TRAINING\n\n')
+    sys.stdout.flush()
 
     training(
         model=model,

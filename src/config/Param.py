@@ -11,7 +11,7 @@ class Param():
     data_split = 0.6
     input_size = (64,128)
     pretrained = False
-    data_type = 'PAIR'
-    desc = 'Train contrastive Loss margin 3 ' + str(datetime.datetime.now())
+    data_type = 'TRIPLET'
+    desc = 'Train triplet Loss margin 1 ' + str(datetime.datetime.now())
 
     threshold = -1
