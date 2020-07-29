@@ -191,7 +191,7 @@ def training(model, loss_function, dataset, optimizer, loss, epoch_number=0):
     # test_dataset = contrastive_load_process(split_data = False)
     roc_data = metrics.get_roc_auc(best_model, val_dataloader)
 
-    sys.stdout.write('Akurasi data train : {}\n'.format(roc_data['acc']))
+    sys.stdout.write('Akurasi data validasi : {}\n'.format(roc_data['acc']))
     sys.stdout.flush()
 
     vis.show_plot(
