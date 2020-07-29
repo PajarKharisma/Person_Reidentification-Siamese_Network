@@ -12,6 +12,6 @@ class Param():
     input_size = (64,128)
     pretrained = False
     data_type = 'TRIPLET'
-    desc = 'Train triplet Loss margin 2 ' + str(datetime.datetime.now())
+    desc = 'Train triplet Loss margin 3 ' + str(datetime.datetime.now())
 
     threshold = -1
