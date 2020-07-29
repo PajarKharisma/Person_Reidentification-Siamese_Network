@@ -102,7 +102,7 @@ def get_roc_auc(model, dataset):
                 d2 = get_distances(output1, output3)
 
                 y_true = torch.cat((y_true, torch.zeros_like(d1)))
-                y_true = torch.cat((y_true, torch.zeros_like(d2)))
+                y_true = torch.cat((y_true, torch.ones_like(d2)))
 
                 y_scores = torch.cat((y_scores, d1))
                 y_scores = torch.cat((y_scores, d2))
