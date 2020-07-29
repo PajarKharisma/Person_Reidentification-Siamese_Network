@@ -1,9 +1,9 @@
 import torch
 import torch.nn as nn
 
-class BstCnn(nn.Module):
+class BstCnnFull(nn.Module):
     def __init__(self):
-        super(BstCnn, self).__init__()
+        super(BstCnnFull, self).__init__()
 
         self.conv5x5_1 = nn.Sequential(
             nn.ReflectionPad2d(2),
@@ -40,12 +40,10 @@ class BstCnn(nn.Module):
 
         self.maxpool = nn.MaxPool2d(kernel_size=2, stride=2, padding=0)
 
-        # self.avgpool = nn.AdaptiveAvgPool2d((16, 8)) # full images
-        self.avgpool = nn.AdaptiveAvgPool2d((8, 8)) # partial images
+        self.avgpool = nn.AdaptiveAvgPool2d((16, 8)) # full images
 
         self.fc = nn.Sequential(
-            # nn.Linear(16*16*8, 512), # full images
-            nn.Linear(16*8*8, 512), # partial images
+            nn.Linear(16*16*8, 512), # full images
             nn.ReLU(inplace=True),
             nn.Linear(512, 256)
         )
