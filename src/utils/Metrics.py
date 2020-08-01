@@ -20,8 +20,8 @@ def concatenate(dists, thresh, probs):
     result_dist = 0
     result_thresh = 0
     for d, t, p in zip(dists, thresh, probs):
-        if d < t and abs(d - t) >= 0.05:
-            d = 0
+        # if d < t and abs(d - t) >= 0.05:
+        #     d = 0
         result_dist += (d * p)
         result_thresh += (t * p)
     return result_dist, result_thresh
