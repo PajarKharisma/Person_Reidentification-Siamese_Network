@@ -389,7 +389,7 @@ def contrastive_train():
 
     dataset = contrastive_load_process()
 
-    sys.stdout.write('# FINISH READING DATASET AND START TRAINING\n\n')
+    sys.stdout.write('# FINISHED READING DATASET AND START TRAINING\n\n')
     sys.stdout.flush()
 
     training(
