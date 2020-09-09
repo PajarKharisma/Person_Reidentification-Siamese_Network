@@ -13,6 +13,6 @@ class Param():
     input_size = (64,128)
     pretrained = False
     data_type = 'PAIR'
-    desc = 'Train Dropout 0.5 ' + str(datetime.datetime.now())
+    desc = 'Train Batch Size 32 ' + str(datetime.datetime.now())
 
     threshold = -1
