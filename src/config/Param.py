@@ -9,7 +9,7 @@ class Param():
     train_batch_size = 32
     train_number_epochs = 20
     data_split = 0.8
-    learning_rate = 0.01
+    learning_rate = 0.1
     input_size = (64,128)
     pretrained = False
     data_type = 'PAIR'
