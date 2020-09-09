@@ -45,7 +45,7 @@ class BstCnnFull(nn.Module):
         self.fc = nn.Sequential(
             nn.Linear(16*16*8, 512), # full images
             nn.ReLU(inplace=True),
-            nn.Dropout(p=0.2),
+            nn.Dropout(p=0.5),
             nn.Linear(512, 256)
         )
 
