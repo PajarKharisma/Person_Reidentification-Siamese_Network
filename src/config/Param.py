@@ -7,12 +7,12 @@ class Param():
     #Hyperparameter
     device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
     train_batch_size = 32
-    train_number_epochs = 10
+    train_number_epochs = 25
     data_split = 0.8
     learning_rate = 0.1
     input_size = (64,128)
     pretrained = False
     data_type = 'PAIR'
-    desc = 'Train Epoch 10 ' + str(datetime.datetime.now())
+    desc = 'Train Epoch 25 ' + str(datetime.datetime.now())
 
     threshold = -1
