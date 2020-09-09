@@ -92,7 +92,8 @@ def contrastive_load_process(split_data = True):
         csv_path=Path.contrastive_train_csv,
         images_path=Path.train_images,
         transform=trans,
-        resize=Param.input_size
+        resize=Param.input_size,
+        count=20000
     )
 
     if split_data:
@@ -369,7 +370,7 @@ def contrastive_train():
     model = bst_full.BstCnnFull()
     model = model.to(Param.device)
 
-    optimizer = optim.Adam(model.parameters())
+    optimizer = optim.Adam(model.parameters(), lr=Param.learning_rate)
     epoch = 0
     loss = sys.float_info.max
 
