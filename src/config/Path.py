@@ -8,7 +8,7 @@ class Path():
     path = root_dir + '/dataset/cuhk02'
     log_dir = root_dir + '/log/'
     save_model = root_dir + '/models/model-' + str(uuid.uuid4().hex) + '.pth'
-    load_model = root_dir + '/models/old_model/'
+    load_model = root_dir + '/models/FULL BST CUHK02.pth'
     save_plot = root_dir+'/log/plot/'
 
     train_images = path + '/images/full/'
@@ -21,7 +21,7 @@ class Path():
     contrastive_train_csv = path +'/contrastive_train.csv'
     triplet_train_csv = path + '/triplet_train.csv'
 
-    test_path = root_dir + '/dataset/testing/diff_cam'
+    test_path = root_dir + '/dataset/testing/same_cam'
     test_csv = test_path + '/testing.csv'
     test_images = test_path + '/images/full/'
     test_images_20 = test_path + '/images/occl_20/'

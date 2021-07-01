@@ -20,8 +20,8 @@ def concatenate(dists, thresh, probs):
     result_dist = 0
     result_thresh = 0
     for d, t, p in zip(dists, thresh, probs):
-        if d < t and abs(d - t) >= 0.05:
-            d = 0
+        # if d < t and abs(d - t) >= 0.05:
+        #     d = 0
         result_dist += (d * p)
         result_thresh += (t * p)
     return result_dist, result_thresh
@@ -29,16 +29,8 @@ def concatenate(dists, thresh, probs):
 def get_distances(x1, x2):
     return F.pairwise_distance(x1, x2, keepdim = True)
 
-def distance_to_class(distances, threshold=0.5, margin=2.0):
-    if Param.data_type == 'PAIR':
-        y = [0.0 if d <= threshold else 1.0 for d in distances[0]]
-    else:
-        dist_p = distances[0]
-        dist_n = distances[1]
-        y = []
-        for i in range(len(dist_p)):
-            dist = 0.0 if dist_p[i] + margin <= dist_n[i] else 1.0
-            y.append(dist)
+def distance_to_class(distances, threshold=0.5):
+    y = [0.0 if d <= threshold else 1.0 for d in distances]
     return np.array(y)
 
 def get_acc(x1, x2, x3):
@@ -106,6 +98,14 @@ def get_roc_auc(model, dataset):
 
             else:
                 output1, output2, output3 = model(x1, x2, x3)
+                d1 = get_distances(output1, output2)
+                d2 = get_distances(output1, output3)
+
+                y_true = torch.cat((y_true, torch.zeros_like(d1)))
+                y_true = torch.cat((y_true, torch.ones_like(d2)))
+
+                y_scores = torch.cat((y_scores, d1))
+                y_scores = torch.cat((y_scores, d2))
     
     y_true = y_true.flatten().detach().cpu().numpy()
     y_scores = y_scores.flatten().detach().cpu().numpy()
@@ -116,7 +116,7 @@ def get_roc_auc(model, dataset):
     J = tpr - fpr
     ix = np.argmax(J)
     best_thresh = thresholds[ix]
-    y_pred = distance_to_class([y_scores], best_thresh)
+    y_pred = distance_to_class(y_scores, best_thresh)
     
     acc = accuracy_score(y_true, y_pred)
 
